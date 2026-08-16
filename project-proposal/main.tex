@@ -32,30 +32,30 @@
 }
 \makeatother
 
-% Hints in the section title(s)
-\newcommand{\BvrHint}[1]{%
-  {\normalfont\normalsize\itshape\hfill #1}}
-
 % -----------------------------------------------------
 
-\title{Grievance-Resolution System for a Tier-2/3 City}
+\title{Janmitra: A Voice-First Civic Scheme Guidance Platform for Rural India}
 
 \BvrSetLabInstructor{Dr. Raghav B. Venkataramaiyer}
 
 \BvrSubtitle{%
   Project Proposal for UCS503P  \\
   Submitted to: \BvrLabInstructorValue \\ \bfseries
-  Thapar Institute of Engineering and Technology% 
+  Thapar Institute of Engineering and Technology%
 }
 
 \author{
-  Vidya Vaidyanathan, CSED%
-  \thanks{Roll No: \texttt{1024030xxx}, %
-    Email: \texttt{vvaidhanathan\_be24\@thapar.edu}}
-  \and 
-  Bhanurekha Ganesan, CSED%
-  \thanks{Roll No: \texttt{1024030xxx}, %
-    Email: \texttt{bganesan\_be24\@thapar.edu}}
+  Dhruv Srivastava, CSED%
+  \thanks{Roll No: \texttt{1024170394}, %
+    Email: \texttt{dsrivastava\_be24\@thapar.edu}}
+  \and
+  Harkamal Singh Lubana, CSED%
+  \thanks{Roll No: \texttt{1024170396}, %
+    Email: \texttt{hlubana\_be24\@thapar.edu}}
+  \and
+  Paras, CSED%
+  \thanks{Roll No: \texttt{1024170395}, %
+    Email: \texttt{pparas\_be24\@thapar.edu}}
 }
 
 \date{\today}
@@ -63,180 +63,171 @@
 \begin{document}
 \maketitle
 
-\section{Higher-order goal%
-  \BvrHint{\ldots secondary framing}}
-This project aims to improve sustainable urban
-governance by reducing the time and effort required to
-resolve citizen issues. While the topic is broader than
-any single municipality, the immediate engineering
-objective is to translate \emph{efficient public
-  service delivery} into a measurable, deployable
-software solution.
+\section{Higher-order goal}
+This project aims to improve access to public welfare information for rural citizens who face language, literacy, and portal-navigation barriers when trying to discover and act on government schemes. The immediate engineering objective is to translate accessible, voice-first civic-service guidance into a measurable, deployable software solution that a citizen can reach directly over a phone call, in their own language or dialect.
 
-\section{Time-to-value %
-\BvrHint{\ldots primary heuristic}}
+\section{Time-to-value}
 \begin{itemize}[leftmargin=0.7cm]
-    \item We will deliver meaningful increments quickly by prototyping the core user workflow and validating it with users within a short iteration window.
-    \item We will prioritize fast feedback over perfection by using weekly iterations (and targeting CI-backed automation early) to reduce release friction.
-    \item Success is defined by what can be delivered and measured in the first iteration, then improved based on user feedback.
+    \item We will deliver meaningful increments quickly by prototyping the core voice-guidance workflow over a phone call and validating it end-to-end before expanding the scheme catalogue.
+    \item We will prioritize fast feedback over completeness by targeting a working voice loop at the first evaluation checkpoint, then layering catalogue breadth, the ingestion workflow, and load testing across subsequent iterations.
+    \item Success is defined by what can be demonstrated and measured at each checkpoint, not by attempting the full system at once.
 \end{itemize}
 
 \section{Problem Statement}
-Citizens in a tier-2/3 Indian city face delays and uncertainty when reporting local issues (e.g., streetlight outages, water leakage, garbage accumulation, road potholes). Common pain points include:
+Rural citizens in India face delays and confusion when trying to access government schemes, including loans, banking and financial-inclusion services, and grants. Common pain points include:
 \begin{itemize}[leftmargin=0.7cm]
-    \item \textbf{Fragmentation:} complaints are often made via multiple channels (calls, social media, paper forms), causing lost context.
-    \item \textbf{Low transparency:} citizens cannot easily see the status of their complaint (e.g., ``received'', ``assigned'', ``in progress'', ``resolved'').
-    \item \textbf{Slow coordination:} departments/field teams lack a unified, trackable workflow with clear ownership.
-    \item \textbf{Poor data quality:} duplicate or incomplete reports force rework and extend resolution time.
+    \item \textbf{Fragmentation:} scheme information is spread across formal webpages, PDFs, and notices, written in language and reading level not suited to the citizen.
+    \item \textbf{Language and dialect barriers:} citizens may be far more comfortable speaking in a regional language or dialect than reading formal Hindi or English, and existing portals rarely accommodate this.
+    \item \textbf{Low self-service comfort:} many rural citizens prefer speaking over typing or navigating multi-page government portals, and often do not own or use a smartphone with a data connection.
+    \item \textbf{Eligibility uncertainty:} citizens cannot easily tell whether they qualify, or what documents they need, without visiting an office in person.
+    \item \textbf{No graceful fallback:} when self-service information is not enough, there is often no clear, low-effort way to reach a human who can actually help.
 \end{itemize}
 
-\textbf{Why this matters now (contextual relevance):} In an urban setting with limited staff bandwidth, even small process improvements can noticeably reduce resolution delays and repeated submissions.
+Why this matters now: with schemes spread thin across departments and portals, and human staff bandwidth limited, a self-service guidance layer that reliably knows when to hand off to a person can meaningfully reduce failed attempts and wasted trips. Reaching citizens over a plain phone call also removes the smartphone and connectivity barrier that a web or app-based solution would otherwise impose.
 
-\section{Proposed Solution %
-\BvrHint{\ldots Software Proposition}}
+\section{Proposed Solution}
 \subsection{Overview}
-Build a \textbf{web-based} ``Grievance-to-Resolution'' system with the following components:
+Build a \textbf{voice-first, phone-accessible} civic-guidance platform with the following components:
 \begin{itemize}[leftmargin=0.7cm]
-    \item \textbf{Citizen submission portal:} users submit an issue with photo (optional), category, and locality/ward.
-    \item \textbf{Automated triage:} basic duplicate detection and completeness checks.
-    \item \textbf{Department workflow:} assign issues to relevant department/team and update statuses.
-    \item \textbf{Status transparency:} citizens track status and receive notifications when resolved.
-    \item \textbf{Admin/ops dashboard:} performance summaries (resolution time, backlog).
+    \item \textbf{Citizen channel:} a real-time multilingual voice conversation reachable directly over a phone call (LiveKit bridged to a phone number via a telephony/SIP trunk, with the Gemini Live API handling speech understanding and generation across 10+ Indian languages and dialects). No app install, browser, or data connection required.
+    \item \textbf{Scheme catalogue:} government schemes across as many verified categories as the team can source and document, including loans, banking/financial-inclusion, grants, and others. The catalogue grows through the semester rather than staying fixed to a small hardcoded set.
+    \item \textbf{Deterministic guidance tools:} eligibility pre-checks backed by a rule engine, and a document checklist for every scheme in the catalogue, both driven by structured JSON scheme records fetched from the database through typed tool calls.
+    \item \textbf{Human handoff:} when a request is outside the system's scope, or the citizen asks for a person, the system captures a name, an optional phone number, and a short issue summary by voice, and queues it for a human operator.
+    \item \textbf{Admin ingestion workflow:} import an official source, AI-assisted field extraction, mandatory human review, and versioned publication, managed through a web dashboard used by the team/operators.
 \end{itemize}
 
 \subsection{Core workflow}
 \begin{enumerate}[leftmargin=0.7cm]
-    \item Citizen creates a complaint and receives a complaint ID immediately.
-    \item System validates completeness and suggests possible duplicates (lightweight similarity on text/category and approximate location).
-    \item Department staff update status (Received $\rightarrow$ Assigned $\rightarrow$ In Progress $\rightarrow$ Resolved).
-    \item Citizen views status updates and resolution notes.
+    \item Citizen calls a phone number and states a need in their own words, in whichever language or dialect they are comfortable with.
+    \item System identifies the relevant scheme category and specific scheme, and retrieves the verified record from the database.
+    \item System runs the eligibility check or produces a document checklist, and cites the official source and its verification date.
+    \item If the request cannot be resolved, the system captures minimal contact details and a summary and hands the case off to a human operator.
+    \item Separately: an admin imports an official source, reviews the AI-drafted record against the original, and publishes a new version without discarding the old one.
 \end{enumerate}
 
-\subsection{Operational constraints for an educational, tier-2/3 setting}
+\subsection{Operational constraints}
 \begin{itemize}[leftmargin=0.7cm]
-    \item Keep the solution usable on low-to-mid range devices via responsive web design.
-    \item Avoid dependence on advanced research algorithms; focus on workflow, automation, and system correctness.
-    \item Design for deployability using common web hosting and managed databases.
+    \item Voice-first, reachable by any phone. No reliance on the citizen owning a smartphone, installing an app, or having a data connection.
+    \item Scheme lookup uses structured, indexed JSON records rather than a heavier retrieval system, since the catalogue is curated and grows incrementally rather than being scraped at massive scale.
+    \item Backend and admin/operator tooling deployable on common, standard web hosting.
 \end{itemize}
 
-\section{Solution Approach %
-\BvrHint{\ldots Engineering focus}}
-This is an engineering course project, so we focus on scalable administrative and workflow aspects rather than novel algorithm research.
+\section{Solution Approach}
+This is an engineering course project, so we focus on scalable workflow, data-versioning, and system correctness alongside the voice experience.
 
-\subsection{Duplicate/quality assistance %
-\BvrHint{\ldots non-research}}
-Duplicate detection will be heuristic-based:
+\subsection{Eligibility and guidance}
 \begin{itemize}[leftmargin=0.7cm]
-    \item Normalize text (category + short description keywords).
-    \item Use a simple similarity measure (e.g., token overlap / TF-IDF cosine with threshold) without claiming state-of-the-art.
-    \item Show top candidate duplicates to staff for decision; never fully auto-delete or auto-reject.
+    \item Eligibility is evaluated by a deterministic rule engine over a structured, human-reviewed rule set, so results are explainable and testable.
+    \item The Gemini Live API handles multilingual speech understanding, generation, and structured field extraction. It retrieves scheme information through typed tool calls against JSON records in the database rather than answering from memory.
+    \item Eligibility decisions, data publication, and handoff records are never produced directly by the model. They go through validated backend tools instead.
 \end{itemize}
 
-\subsection{Web architecture %
-\BvrHint{\ldots web-based solution}}
-A typical 3-tier web architecture:
+\subsection{System architecture}
 \begin{itemize}[leftmargin=0.7cm]
-    \item \textbf{Frontend:} responsive UI for citizens and staff (status pages, submission form, dashboard).
-    \item \textbf{Backend API:} authentication, complaint submission, status transitions, assignment logic.
-    \item \textbf{Database:} store users, complaints, status history, attachments metadata.
+    \item \textbf{Citizen channel:} LiveKit voice pipeline bridged to a real phone number via telephony/SIP, with Gemini Live handling speech across languages and dialects.
+    \item \textbf{Backend API:} FastAPI-based orchestration across conversation, catalogue, eligibility, ingestion, handoff, and audit modules, with scheme data fetched via typed tool calls against structured JSON fields.
+    \item \textbf{Admin/operator interface:} a web dashboard for source import, review/publish, and the handoff queue, used by the team and operators rather than the citizen.
+    \item \textbf{Database:} PostgreSQL storing services, versions, handoff requests, conversations, and audit logs.
 \end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.95\textwidth]{architecture.pdf}
+    \caption{Janmitra system architecture: a phone-reachable citizen voice channel bridged through LiveKit and Gemini Live, a backend orchestrator driving typed tool calls against a versioned PostgreSQL store, and a separate admin/operator web dashboard for ingestion and handoff review.}
+\end{figure}
 
 \subsection{CI/CD and fast delivery enabler}
 CI/CD will be used to:
 \begin{itemize}[leftmargin=0.7cm]
-    \item Automatically build and run tests on every change.
-    \item Produce repeatable deployment artifacts to staging.
-    \item Enable safe and frequent releases of incremental features.
+    \item Automatically build and run backend tests and linting on every change.
+    \item Produce repeatable deployment artifacts to a staging environment.
+    \item Enable frequent, safe demonstration-ready releases across the course's checkpoint schedule.
 \end{itemize}
 
-\section{Evaluation Criterion %
-\BvrHint{\ldots measurable and attributable}}
+\section{Evaluation Criterion}
 We define success using measurable metrics tied to the core workflow.
 
 \subsection{Primary evaluation metric}
-\textbf{Time-to-acknowledgement (TTA):} time between complaint submission and ``Received/Assigned'' status creation in the system.
+\textbf{Time-to-Guidance (TTG):} time between a citizen's call connecting and receiving a grounded, cited answer (a scheme match, an eligibility result, or a document checklist).
 \begin{itemize}[leftmargin=0.7cm]
-    \item Target: median TTA $\le$ 2 hours during pilot window.
-    \item Attribution: measured from database timestamps (submission vs. first status update by staff).
+    \item Target: median TTG established from the real-model validation run rather than claimed in advance.
+    \item Attribution: measured from call-connect and response-delivered timestamps logged by the backend.
 \end{itemize}
 
 \subsection{Secondary evaluation metrics}
 \begin{itemize}[leftmargin=0.7cm]
-    \item \textbf{Resolution time reduction:} reduce time-to-resolved compared to baseline process (even if baseline is collected via survey).
-    \item \textbf{Duplicate rate:} percentage of complaints flagged as duplicates and resolved without rework.
-    \item \textbf{User clarity:} citizen-reported clarity of status using a simple 1--5 feedback question.
-    \item \textbf{Reliability:} availability of staging/production for login and submission during business hours (e.g., $\ge$ 99\% uptime in pilot).
+    \item \textbf{Citation correctness rate:} percentage of factual answers whose cited source/version actually supports the claim.
+    \item \textbf{Eligibility-tool accuracy:} correctness on a set of boundary test cases per scheme with a rule engine.
+    \item \textbf{Handoff precision/recall:} handoff triggered when it should be, and not triggered when it should not be, on a small labeled test set.
+    \item \textbf{User-rated clarity:} citizen-reported clarity/trust using a simple 1--5 feedback question.
+    \item \textbf{Reliability:} call-handling availability during test windows.
 \end{itemize}
 
-\subsection{Pilot validation plan %
-\BvrHint{\ldots high-level}}
+\subsection{Pilot validation plan}
 \begin{itemize}[leftmargin=0.7cm]
-    \item Recruit 10--20 pilot users (citizens) and 3--5 staff roles (department simulation if real staff unavailable).
-    \item Compare metrics before/after within the iteration window by logging baseline estimates via short interviews or existing process observations.
+    \item Recruit 8--12 pilot users spanning multiple languages and dialects (family, acquaintances, or non-team classmates) and simulate 2--3 operator/admin roles within the team, since real government or CSC staff are not available.
+    \item Compare completion rate, time, and errors between a scripted government-portal task and the same task via a phone call to Janmitra, for the same two or three journeys.
 \end{itemize}
 
-\section{Scalability %
-\BvrHint{\ldots with foresight}}
-The proposition should scale in both theoretical and practical senses.
+\section{Scalability}
+Janmitra is built to support concurrent voice sessions and a growing scheme catalogue.
 
-\begin{enumerate}[leftmargin=0.7cm]
-    \item \textbf{Scalable (theoretically):} The system should support growth in number of complaints and concurrent dashboard usage by:
-    \begin{itemize}[leftmargin=0.7cm]
-        \item decoupling components (frontend/backend),
-        \item enabling pagination and indexing for common queries,
-        \item using stateless API design.
-    \end{itemize}
-    
-    \item \textbf{Operationally deployable (practically):} The system should run on common web hosting:
-    \begin{itemize}[leftmargin=0.7cm]
-        \item managed database,
-        \item containerized or platform-hosted deployment,
-        \item CI/CD pipeline for staging/production.
-    \end{itemize}
-\end{enumerate}
+\textbf{System design:}
+\begin{itemize}[leftmargin=0.7cm]
+    \item Stateless API replicas behind a load balancer, with conversational state and records kept outside the application process, so capacity scales with replica count.
+    \item LiveKit's worker-based architecture handles concurrent voice rooms by design, so scaling here is simply a matter of adding worker capacity.
+    \item Structured, indexed JSON lookup for scheme records scales cleanly as the catalogue grows; a dedicated retrieval layer is only introduced if catalogue growth actually warrants it.
+\end{itemize}
+
+\textbf{Testing methodology:}
+\begin{itemize}[leftmargin=0.7cm]
+    \item Load testing is run against a mocked model adapter to avoid per-call provider cost, with a small real-model validation run to confirm latency assumptions.
+    \item Deployment via containers with replica counts (1, 2, 4) compared during testing, and a CI/CD pipeline to staging for repeatable deployments.
+    \item Results are reported as measured throughput, latency, and the first bottleneck found, along with the fix applied and the before/after comparison.
+\end{itemize}
 
 \section{Engine availability heuristic}
-A mature set of ``engines'' (tooling/services) is available to implement this as a web-based project:
+A mature set of ``engines'' (tooling/services) is available to implement this platform, several of which the team has direct prior experience building with:
 \begin{itemize}[leftmargin=0.7cm]
-    \item Web framework for REST APIs and templated/reactive pages.
-    \item Managed relational or document database.
-    \item Authentication approach (token-based or session-based).
-    \item Object storage for optional attachments (or local storage for pilot).
-    \item Test framework for unit/integration tests.
-    \item CI runner and staging deployment target.
+    \item Real-time voice/media layer: LiveKit, bridged to telephony via SIP.
+    \item Speech understanding, generation, and multilingual handling: Gemini Live API.
+    \item Backend web framework: FastAPI (Python).
+    \item Managed relational database: PostgreSQL.
+    \item Load-testing tool: k6 or Locust.
+    \item CI runner and staging deployment target: GitHub Actions.
 \end{itemize}
-We will use these mature components to focus on workflow design, correctness, and measurement rather than inventing new infrastructure.
+We rely on these mature, already-available components so that engineering effort concentrates on the workflow, the eligibility engine, the versioning/review gate, and measured scalability.
 
-\section{Project scope and deliverables %
-\BvrHint{\ldots iteration-friendly}}
-\subsection{Initial deliverable %
-\BvrHint{\ldots first iteration}}
+\section{Project scope and deliverables}
+\subsection{Initial deliverable}
 \begin{itemize}[leftmargin=0.7cm]
-    \item Citizen submission form + complaint ID generation
-    \item Staff workflow: update status and assignment
-    \item Citizen status page: view timeline/history
-    \item Basic logging and timestamps for TTA measurement
+    \item Phone-accessible voice session (LiveKit + telephony bridge) with Gemini Live handling the full range of supported languages and dialects
+    \item Discovery and retrieval for an initial working set of schemes, extensible to more
+    \item Deterministic eligibility pre-check and document checklist for at least one scheme
+    \item Basic session and audit logging
     \item CI: build + backend unit tests + linting
-    \item CD to staging with a single command or pipeline job
+    \item CD to staging with a single pipeline job
 \end{itemize}
 
 \subsection{Subsequent deliverables}
 \begin{itemize}[leftmargin=0.7cm]
-    \item Lightweight duplicate suggestions with staff review
-    \item Notification layer (email/SMS optional in later iteration; can start with in-app notifications)
-    \item Admin dashboard for metrics and backlog
-    \item Improved search/filtering and indexed queries for scale readiness
+    \item Expand the scheme catalogue across as many verified categories as sourced, including loans, banking, grants, and others
+    \item Admin import $\rightarrow$ AI-assisted extraction $\rightarrow$ human review $\rightarrow$ versioned publish workflow
+    \item Human handoff workflow and operator queue
+    \item Load-testing harness (mocked adapter), a measured breaking point, an applied fix, and a before/after result
+    \item Small real-model validation run for latency and citation-quality metrics across languages
 \end{itemize}
 
 \section{Risks and mitigations}
 \begin{itemize}[leftmargin=0.7cm]
-    \item \textbf{Data privacy / consent:} minimize collected data; keep attachments optional; store only what is needed.
-    \item \textbf{Staff adoption:} provide an easy UI for status updates; keep workflow steps minimal; include shortcuts.
-    \item \textbf{Evaluation measurement ambiguity:} instrument timestamps and define clear status transitions before development begins.
-    \item \textbf{Operational issues in pilot:} use staging early; ensure CI/CD produces repeatable deployments.
+    \item \textbf{Data privacy / consent:} no Aadhaar numbers, bank details, or OTPs are stored; handoff contact information is optional and minimal.
+    \item \textbf{Rural-user adoption:} voice-first design, short spoken confirmations, and a handoff framed like a familiar phone-helpline transfer rather than a digital ticket.
+    \item \textbf{Evaluation measurement ambiguity:} define call/response timestamps and handoff trigger conditions before development begins.
+    \item \textbf{Scope creep across a 15-week timeline:} explicit non-goals and cuts are recorded as architecture decision records and reviewed at each checkpoint.
+    \item \textbf{Operational issues in demo/pilot:} rely on a locally seeded, stable demonstration mode (verified corpus, source snapshots, and a recorded voice fallback) so the live demo does not depend on a government website being reachable.
 \end{itemize}
 
 \section{Summary}
-This project proposes a deployable web platform to reduce grievance handling delays in a tier-2/3 city context. It meets the course criteria by emphasizing time-to-value through rapid iterations, implementing CI/CD to support frequent safe releases, and using measurable evaluation criteria (especially time-to-acknowledgement). It remains focused on engineering workflow and scalability readiness rather than research-driven novelty.
+This project is a deployable, voice-first civic guidance platform that citizens can reach over a normal phone call. It helps rural citizens discover and understand government schemes across loans, banking, grants, and more, in whichever language or dialect they speak. It is backed by a deterministic eligibility engine, a versioned and human-reviewed knowledge base, and a simple human handoff for anything beyond the system's scope. It meets the course criteria by emphasizing time-to-value through a phased build mapped to the course's own checkpoints, using CI/CD for frequent safe releases, and defining measurable evaluation criteria (time-to-guidance, citation correctness, handoff precision/recall). Scalability is demonstrated as a measured capacity model, built on components (LiveKit and the Gemini Live API) that the team has already used to build production voice systems.
 
 \end{document}
