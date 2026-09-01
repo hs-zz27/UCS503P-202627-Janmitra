@@ -1,0 +1,40 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: janmitra
+      POSTGRES_PASSWORD: janmitra
+      POSTGRES_DB: janmitra
+    ports:
+      - "127.0.0.1:5438:5432"
+    volumes:
+      - janmitra_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U janmitra -d janmitra"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ./code/backend
+    environment:
+      JANMITRA_ENV: local
+      JANMITRA_DATABASE_URL: postgresql+asyncpg://janmitra:janmitra@postgres:5432/janmitra
+      JANMITRA_MODEL_ADAPTER: mock
+      JANMITRA_ADMIN_API_KEY: dev-admin-key
+      JANMITRA_OPERATOR_API_KEY: dev-operator-key
+      JANMITRA_VOICE_API_KEY: dev-voice-key
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  janmitra_postgres_data:

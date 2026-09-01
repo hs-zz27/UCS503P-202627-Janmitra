@@ -6,7 +6,13 @@ handoff or service record" requirement (context.md §13) has a test that can act
 
 from __future__ import annotations
 
-from app.adapters.model.base import DraftRecord, Intent, IssueSummary, ModelAdapter, ModelUnavailable
+from app.adapters.model.base import (
+    DraftRecord,
+    Intent,
+    IssueSummary,
+    ModelAdapter,
+    ModelUnavailable,
+)
 
 
 class FailureModelAdapter(ModelAdapter):

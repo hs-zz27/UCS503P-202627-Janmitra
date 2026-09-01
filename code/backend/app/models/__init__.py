@@ -135,8 +135,12 @@ class Conversation(Base, TimestampMixin):
     __tablename__ = "conversations"
 
     id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=_uuid)
-    channel: Mapped[str] = mapped_column(String(16), nullable=False, default=ConversationChannel.PHONE)
-    status: Mapped[str] = mapped_column(String(16), nullable=False, default=ConversationStatus.ACTIVE)
+    channel: Mapped[str] = mapped_column(
+        String(16), nullable=False, default=ConversationChannel.PHONE
+    )
+    status: Mapped[str] = mapped_column(
+        String(16), nullable=False, default=ConversationStatus.ACTIVE
+    )
     language: Mapped[str | None] = mapped_column(String(16), nullable=True)
     category: Mapped[str | None] = mapped_column(String(32), nullable=True)
     livekit_room: Mapped[str | None] = mapped_column(String(128), nullable=True)

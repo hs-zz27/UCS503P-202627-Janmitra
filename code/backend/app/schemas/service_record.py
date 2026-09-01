@@ -96,9 +96,10 @@ class Comparison(BaseModel):
     def _check_value_shape(self) -> Comparison:
         if self.op in ("in", "not_in") and not isinstance(self.value, list):
             raise ValueError(f"op {self.op!r} on {self.var!r} needs a list value")
-        if self.op == "between":
-            if not isinstance(self.value, list) or len(self.value) != 2:
-                raise ValueError(f"op 'between' on {self.var!r} needs a [low, high] value")
+        if self.op == "between" and (
+            not isinstance(self.value, list) or len(self.value) != 2
+        ):
+            raise ValueError(f"op 'between' on {self.var!r} needs a [low, high] value")
         return self
 
 
@@ -111,6 +112,9 @@ class Condition(BaseModel):
     id: Slug
     description: LocalizedText
     source_text: str | None = None
+    #: Guards make a condition conditional without turning the rule set into an opaque
+    #: expression tree. Every guard must pass before `test` applies.
+    applies_when: list[Comparison] = Field(default_factory=list)
     test: Comparison
 
 
@@ -144,17 +148,22 @@ class RuleSet(BaseModel):
 
     @model_validator(mode="after")
     def _check_references(self) -> RuleSet:
-        question_ids = {q.id for q in self.questions}
+        question_id_list = [q.id for q in self.questions]
+        if len(question_id_list) != len(set(question_id_list)):
+            raise ValueError("duplicate question ids in rule set")
+        question_ids = set(question_id_list)
         condition_ids = [c.id for c in self.conditions]
         if len(condition_ids) != len(set(condition_ids)):
             raise ValueError("duplicate condition ids in rule set")
 
         for condition in self.conditions:
-            if condition.test.var not in question_ids:
-                raise ValueError(
-                    f"condition {condition.id!r} tests {condition.test.var!r}, "
-                    "which is not a declared question"
-                )
+            comparisons = [*condition.applies_when, condition.test]
+            for comparison in comparisons:
+                if comparison.var not in question_ids:
+                    raise ValueError(
+                        f"condition {condition.id!r} tests {comparison.var!r}, "
+                        "which is not a declared question"
+                    )
 
         known = set(condition_ids)
         referenced = set(self.decision.all_of) | set(self.decision.any_of) | set(

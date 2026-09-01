@@ -66,6 +66,7 @@ class ConditionTrace(BaseModel):
 
     id: str
     description: str
+    applicable: bool | None
     passed: bool | None
     depends_on: str
     source_text: str | None = None

@@ -17,6 +17,7 @@ from app.adapters.model.base import ModelAdapter, ModelUnavailable
 from app.adapters.model.factory import get_model_adapter
 from app.config import Settings, get_settings
 from app.db import get_session
+from app.models import ConversationStatus
 from app.modules.audit import service as audit
 from app.modules.catalogue import service as catalogue
 from app.modules.conversation import service as conversations
@@ -347,6 +348,7 @@ async def request_handoff(
         entity_id=str(handoff.id),
         payload={"trigger_reason": trigger.value, "has_phone": bool(handoff.contact_phone)},
     )
+    await conversations.end(session, conversation, status=ConversationStatus.HANDED_OFF.value)
 
     return RequestHandoffResponse(
         handoff=HandoffView.model_validate(handoff),

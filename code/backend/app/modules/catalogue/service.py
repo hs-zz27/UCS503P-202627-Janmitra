@@ -18,10 +18,19 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import Service, ServiceVersion
-from app.schemas.service_record import PublicationStatus, ServiceCategory, ServiceRecord
+from app.schemas.service_record import (
+    PublicationStatus,
+    ServiceCategory,
+    ServiceRecord,
+    VerificationState,
+)
 
 
 class ServiceNotFound(LookupError):
+    pass
+
+
+class RecordNotVerified(ValueError):
     pass
 
 
@@ -189,6 +198,11 @@ async def publish(
     Creates the service on first publication. Existing versions are left exactly as they
     are — publication is append-plus-repoint, never an update.
     """
+    if record.citation.verification_state is not VerificationState.VERIFIED:
+        raise RecordNotVerified(
+            f"service {record.slug!r} must be human-verified before publication"
+        )
+
     service = (
         await session.execute(select(Service).where(Service.slug == record.slug))
     ).scalar_one_or_none()
