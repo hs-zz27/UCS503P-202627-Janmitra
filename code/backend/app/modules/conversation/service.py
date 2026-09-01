@@ -74,7 +74,7 @@ async def get(session: AsyncSession, conversation_id: uuid.UUID) -> Conversation
 
 async def get_active(session: AsyncSession, conversation_id: uuid.UUID) -> Conversation:
     conversation = await get(session, conversation_id)
-    if conversation.status == ConversationStatus.ENDED:
+    if conversation.status != ConversationStatus.ACTIVE:
         raise ConversationClosed(str(conversation_id))
     return conversation
 

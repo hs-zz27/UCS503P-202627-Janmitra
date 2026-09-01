@@ -44,6 +44,8 @@ class AnswerValidationError(ValueError):
 class ConditionResult:
     id: str
     description: str
+    #: False means the condition's guards made it irrelevant; None means a guard is unknown.
+    applicable: bool | None
     #: True / False / None, where None means an answer it depends on is missing.
     passed: bool | None
     depends_on: str
@@ -102,9 +104,13 @@ def _coerce(question: EligibilityQuestion, raw: Any) -> Any:
             except (TypeError, ValueError) as exc:
                 raise ValueError(f"{question.id}: expected a number, got {raw!r}") from exc
             if question.min is not None and value < question.min:
-                raise ValueError(f"{question.id}: {value} is below the allowed minimum {question.min}")
+                raise ValueError(
+                    f"{question.id}: {value} is below the allowed minimum {question.min}"
+                )
             if question.max is not None and value > question.max:
-                raise ValueError(f"{question.id}: {value} is above the allowed maximum {question.max}")
+                raise ValueError(
+                    f"{question.id}: {value} is above the allowed maximum {question.max}"
+                )
             return value
         case AnswerType.ENUM:
             value = str(raw)
@@ -153,7 +159,9 @@ def _as_number(value: Any) -> float:
     return float(value)
 
 
-def evaluate(rule_set: RuleSet, answers: dict[str, Any], *, language: str = "en") -> EligibilityResult:
+def evaluate(
+    rule_set: RuleSet, answers: dict[str, Any], *, language: str = "en"
+) -> EligibilityResult:
     """Run a rule set against a citizen's answers.
 
     Answers are validated first; a validation failure raises rather than guessing. The
@@ -164,13 +172,34 @@ def evaluate(rule_set: RuleSet, answers: dict[str, Any], *, language: str = "en"
 
     results: list[ConditionResult] = []
     by_id: dict[str, bool | None] = {}
+    applicability: dict[str, bool | None] = {}
+    missing_by_condition: dict[str, list[str]] = {}
     for condition in rule_set.conditions:
-        passed = evaluate_comparison(condition.test, cleaned)
+        guard_states = [evaluate_comparison(guard, cleaned) for guard in condition.applies_when]
+        if any(state is False for state in guard_states):
+            applies = False
+            passed = None
+            missing = []
+        elif any(state is None for state in guard_states):
+            applies = None
+            passed = None
+            missing = [
+                guard.var
+                for guard, state in zip(condition.applies_when, guard_states, strict=True)
+                if state is None
+            ]
+        else:
+            applies = True
+            passed = evaluate_comparison(condition.test, cleaned)
+            missing = [condition.test.var] if passed is None else []
+        applicability[condition.id] = applies
         by_id[condition.id] = passed
+        missing_by_condition[condition.id] = missing
         results.append(
             ConditionResult(
                 id=condition.id,
                 description=localized(condition.description, language),
+                applicable=applies,
                 passed=passed,
                 depends_on=condition.test.var,
                 source_text=condition.source_text,
@@ -183,26 +212,36 @@ def evaluate(rule_set: RuleSet, answers: dict[str, Any], *, language: str = "en"
 
     # all_of: every condition must hold.
     for cid in decision.all_of:
-        if by_id[cid] is False:
+        if applicability[cid] is False:
+            continue
+        if applicability[cid] is None:
+            undecided.append(cid)
+        elif by_id[cid] is False:
             failed.append(cid)
         elif by_id[cid] is None:
             undecided.append(cid)
 
     # none_of: every condition must be false.
     for cid in decision.none_of:
-        if by_id[cid] is True:
+        if applicability[cid] is False:
+            continue
+        if applicability[cid] is None:
+            undecided.append(cid)
+        elif by_id[cid] is True:
             failed.append(cid)
         elif by_id[cid] is None:
             undecided.append(cid)
 
     # any_of: at least one must hold. Only decisive once every branch is known.
     if decision.any_of:
-        states = [by_id[cid] for cid in decision.any_of]
-        if not any(state is True for state in states):
-            if any(state is None for state in states):
-                undecided.extend(cid for cid in decision.any_of if by_id[cid] is None)
-            else:
-                failed.extend(decision.any_of)
+        applicable_ids = [cid for cid in decision.any_of if applicability[cid] is True]
+        unknown_ids = [cid for cid in decision.any_of if applicability[cid] is None]
+        if not any(by_id[cid] is True for cid in applicable_ids):
+            unresolved_ids = [cid for cid in applicable_ids if by_id[cid] is None]
+            if unknown_ids or unresolved_ids:
+                undecided.extend([*unknown_ids, *unresolved_ids])
+            elif applicable_ids:
+                failed.extend(applicable_ids)
 
     # A definite failure is decisive even if other conditions are still unknown: no further
     # question can rescue a mandatory condition that has already failed.
@@ -214,9 +253,9 @@ def evaluate(rule_set: RuleSet, answers: dict[str, Any], *, language: str = "en"
         outcome = Outcome.ELIGIBLE
 
     missing = _ordered_unique(
-        condition.test.var
-        for condition in rule_set.conditions
-        if condition.id in undecided
+        question_id
+        for condition_id in undecided
+        for question_id in missing_by_condition[condition_id]
     )
     return EligibilityResult(
         outcome=outcome,

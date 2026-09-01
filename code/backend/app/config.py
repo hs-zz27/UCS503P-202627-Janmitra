@@ -30,7 +30,7 @@ class Settings(BaseSettings):
     env: str = "local"
     log_level: str = "INFO"
 
-    database_url: str = "postgresql+asyncpg://janmitra:janmitra@localhost:5432/janmitra"
+    database_url: str = "postgresql+asyncpg://janmitra:janmitra@localhost:5438/janmitra"
     db_pool_size: int = 10
     db_max_overflow: int = 20
     db_echo: bool = False
@@ -46,6 +46,16 @@ class Settings(BaseSettings):
     admin_api_key: str = "dev-admin-key"
     operator_api_key: str = "dev-operator-key"
     voice_api_key: str = "dev-voice-key"
+
+    # Optional LiveKit/Gemini voice worker. It uses the typed HTTP tool surface and never
+    # reads the database directly.
+    backend_base_url: str = "http://127.0.0.1:8000"
+    livekit_url: str = ""
+    livekit_api_key: str = ""
+    livekit_api_secret: str = ""
+    livekit_agent_name: str = "janmitra-agent"
+    gemini_live_model: str = "gemini-3.1-flash-live-preview"
+    gemini_live_voice: str = "Puck"
 
     # Deterministic handoff trigger thresholds (context.md §18.3). Kept in config so the
     # labelled precision/recall run in §14 can be repeated against a recorded value.

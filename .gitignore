@@ -466,3 +466,8 @@ TSWLatexianTemp*
 # Uncomment the next line to have this generated file ignored.
 #*Notes.bib
 context.md
+
+# Next.js frontend
+.next/
+node_modules/
+.env.local

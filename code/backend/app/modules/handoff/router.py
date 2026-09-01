@@ -51,7 +51,9 @@ async def get_handoff(
     try:
         handoff = await handoffs.get(session, handoff_id)
     except handoffs.HandoffNotFound:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="no such handoff") from None
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="no such handoff"
+        ) from None
 
     conversation = await conversations.get(session, handoff.conversation_id)
     view = ConversationView.model_validate(conversation)
@@ -74,7 +76,9 @@ async def update_handoff(
     try:
         handoff = await handoffs.get(session, handoff_id)
     except handoffs.HandoffNotFound:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="no such handoff") from None
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="no such handoff"
+        ) from None
 
     previous = handoff.status
     try:
