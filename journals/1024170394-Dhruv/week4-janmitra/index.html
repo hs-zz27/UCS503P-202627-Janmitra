@@ -1,0 +1,1657 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../week3-janmitra/">
+      
+      
+        <link rel="next" href="../../1024170395-paras/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+  <title>UCS503: Software Engineering; Raghav
+    B. Venkataramaiyer @TIET</title>
+
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%2020c-4.41%200-8-3.59-8-8s3.59-8%208-8%208%203.59%208%208-3.59%208-8%208m0-18A10%2010%200%200%200%202%2012a10%2010%200%200%200%2010%2010%2010%2010%200%200%200%2010-10A10%2010%200%200%200%2012%202m1%205h-2v4H7v2h4v4h2v-4h4v-2h-4z%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="amber" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#janmitra-weekly-engineering-journal" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Janmitra" class="md-header__button md-logo" aria-label="Janmitra" data-md-component="logo">
+      
+  <img src="../../../assets/tiet-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Janmitra
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Janmitra — Weekly Engineering Journal
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Janmitra" class="md-nav__button md-logo" aria-label="Janmitra" data-md-component="logo">
+      
+  <img src="../../../assets/tiet-logo.svg" alt="logo">
+
+    </a>
+    Janmitra
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../criteria-for-project-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Criteria for Project Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Journals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Journals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1024170394 Dhruv
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1024170394 Dhruv
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../week1-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../week2-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra - Week 2 Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../week3-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#week-4-the-tool-surface-the-model-adapter-and-the-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Week 4 — The Tool Surface, the Model Adapter, and the API
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-objective-for-the-week" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Objective for the week
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-day-by-day-activity-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Day-by-day activity log
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Day-by-day activity log">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#day-1-typed-tool-envelopes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day 1 — Typed tool envelopes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#day-2-the-tool-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day 2 — The tool endpoints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#day-3-the-model-adapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day 3 — The model adapter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#day-4-access-control-and-error-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day 4 — Access control and error mapping
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#day-5-routers-and-the-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day 5 — Routers and the application
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#day-6-a-schema-change-we-did-not-expect-to-make-and-a-stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day 6 — A schema change we did not expect to make, and a stop
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-individual-work-log-dhruv-srivastava-1024170394" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Individual work log — Dhruv Srivastava (1024170394)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Individual work log — Dhruv Srivastava (1024170394)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-the-adapter-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 The adapter interface
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-the-mock-adapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 The mock adapter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-the-failure-adapter-and-the-gemini-adapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 The failure adapter and the Gemini adapter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-access-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Access control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-error-mapping-and-the-application-factory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Error mapping and the application factory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-what-i-did-not-do-and-one-thing-i-got-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 What I did not do, and one thing I got wrong
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-decisions-taken-this-week" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Decisions taken this week
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-problems-hit-and-how-they-were-resolved" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Problems hit and how they were resolved
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Problems hit and how they were resolved">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-seeded-records-would-have-claimed-to-be-human-verified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Seeded records would have claimed to be human-verified
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-four-weeks-of-code-none-of-it-ever-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Four weeks of code, none of it ever run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-which-layer-owns-a-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Which layer owns a "not found"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-deliverables-produced-this-week" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Deliverables produced this week
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-contribution-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Contribution split
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-risks-reviewed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Risks reviewed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-carried-into-week-5-in-this-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Carried into Week 5 — in this order
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../1024170395-paras/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1024170395 paras
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1024170395 paras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170395-paras/week1-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170395-paras/week2-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170395-paras/week3-jantmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170395-paras/week4-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../1024170396-Harkamal/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1024170396 Harkamal
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1024170396 Harkamal
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170396-Harkamal/week1-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170396-Harkamal/week2-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170396-Harkamal/week3-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170396-Harkamal/week4-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="janmitra-weekly-engineering-journal">Janmitra — Weekly Engineering Journal</h1>
+<h2 id="week-4-the-tool-surface-the-model-adapter-and-the-api">Week 4 — The Tool Surface, the Model Adapter, and the API</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Course</td>
+<td>UCS503 / UCS503P — Software Engineering</td>
+</tr>
+<tr>
+<td>Institute</td>
+<td>Thapar Institute of Engineering and Technology, Patiala</td>
+</tr>
+<tr>
+<td>Project</td>
+<td>Janmitra — a voice-first civic scheme guidance platform</td>
+</tr>
+<tr>
+<td>Week</td>
+<td>25 – 31 August 2026</td>
+</tr>
+<tr>
+<td>Member</td>
+<td>Dhruv Srivastava (1024170394)</td>
+</tr>
+<tr>
+<td>Status at end of week</td>
+<td>The backend is structurally complete: four typed tool endpoints, the model adapter in three modes, role-based access, the dashboard routers and the application factory. <strong>None of it has been executed.</strong> No migration, no fixtures, no tests, no CI. By our own standing rule, nothing this week is done.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>On individual logs.</strong> Sections 1, 2, 5, 6, 7, 8 and 9 are common to the team. Section 4 is this member's individual work log.</p>
+<p><strong>On Week 2.</strong> My own Week 2 entry is a shorter record of proposal finalisation and backend planning. The fuller shared Week 2 write-up — the scope-reconciliation decisions D-19 to D-28, the day-by-day log and the risk review — is kept in the team's Week 2 journal, and the cross-references below point there.</p>
+</blockquote>
+<hr />
+<h2 id="1-objective-for-the-week">1. Objective for the week</h2>
+<p>Week 3 produced the logic. This week put a surface on it — but in the order the build plan insists on: <strong>tools before voice</strong>. Every capability the voice agent will eventually call is first a plain HTTP endpoint with a typed request and a typed response. When the telephony leg is integrated and something goes wrong, we will be able to tell a voice problem from a logic problem in one <code>curl</code>.</p>
+<p>The week's targets:</p>
+<ol>
+<li>The four tool endpoints — <code>find_service</code>, <code>check_eligibility</code>, <code>get_documents</code>, <code>request_handoff</code> — with typed envelopes, citations on every factual response, audit and conversation events on every call.</li>
+<li>The model adapter in its three modes, with schema validation as a hard gate on everything it returns.</li>
+<li>Role-based access for the three seeded accounts, enforced by a real dependency.</li>
+<li>The dashboard routers: catalogue with version history and diff, the operator queue, the audit query.</li>
+<li>Domain-error to HTTP-status mapping in one place.</li>
+</ol>
+<p>And one honest assessment at the end of it, recorded in Section 6.</p>
+<hr />
+<h2 id="2-day-by-day-activity-log">2. Day-by-day activity log</h2>
+<h3 id="day-1-typed-tool-envelopes">Day 1 — Typed tool envelopes</h3>
+<p>We wrote the request and response models before any handler. Two rules were fixed:</p>
+<ul>
+<li><strong>Every factual response carries <code>citation</code> and <code>service_version</code>.</strong> FR-04 asks for the source and its verification date on every factual answer; we added the version number as well, because a citation without a version cannot be checked six weeks later once the record has moved on.</li>
+<li><strong>Requests forbid unknown fields.</strong> A tool call arriving with a misspelled field fails loudly rather than silently proceeding with a default.</li>
+</ul>
+<h3 id="day-2-the-tool-endpoints">Day 2 — The tool endpoints</h3>
+<p>The handlers are thin and do the same four things in the same order: load and check the conversation, do the deterministic work, record a conversation event and an audit event, return a typed response.</p>
+<p>The behaviour worth recording is where the TTG clock stops. A cited scheme match stops it. A decided eligibility result stops it. A delivered document checklist stops it. A follow-up question does <strong>not</strong> — <code>needs_more_info</code> is not guidance, and letting it stop the clock would make the primary metric flattering and meaningless.</p>
+<p><code>request_handoff</code> was the interesting one: it computes the trigger from reported signals and <strong>refuses with a conflict when no trigger fires</strong>. The tool telling the agent "no, keep helping" is what makes the handoff precision half of the precision/recall measurement a property of the system rather than of the prompt.</p>
+<h3 id="day-3-the-model-adapter">Day 3 — The model adapter</h3>
+<p>Three implementations behind one interface. Every method returns a validated Pydantic model, which is the Week 1 invariant expressed in code: model output that does not fit the schema never reaches a backend tool.</p>
+<p>The mock is deterministic, including its failure injection — same input, same verdict, every run. A load test whose failures move between runs cannot support a before/after comparison, which is the entire point of the exercise.</p>
+<h3 id="day-4-access-control-and-error-mapping">Day 4 — Access control and error mapping</h3>
+<p>Three seeded keys mapping to admin, operator and voice, with a dependency factory that returns 401 for an unknown key and 403 for a known key in the wrong role. Small, but it has to be real: §14 lists unauthorised admin/operator action tests, and those tests need something that actually refuses.</p>
+<p>Domain exceptions are mapped to HTTP statuses in one registry, so the modules can raise meaningful errors without importing FastAPI, and no domain error can escape as a 500 with a stack trace. Every error response carries the request ID.</p>
+<h3 id="day-5-routers-and-the-application">Day 5 — Routers and the application</h3>
+<p>Catalogue reads and publication, version history and the field-level diff (admin only), the operator queue including full conversation context, and the audit query filterable by conversation, request ID and action. Then the application factory wiring middleware, error handlers and six routers together.</p>
+<h3 id="day-6-a-schema-change-we-did-not-expect-to-make-and-a-stop">Day 6 — A schema change we did not expect to make, and a stop</h3>
+<p>Preparing the seed fixtures, we hit the honesty problem described in Section 6.1 and changed the citation schema in response. Then we stopped, deliberately, rather than starting the fixtures: see Section 6.2.</p>
+<hr />
+<h2 id="4-individual-work-log-dhruv-srivastava-1024170394">4. Individual work log — Dhruv Srivastava (1024170394)</h2>
+<p>I built the model adapter, access control, error handling and the application wiring.</p>
+<h3 id="41-the-adapter-interface">4.1 The adapter interface</h3>
+<p>An abstract base with three methods: <code>extract_intent</code>, <code>summarize_issue</code> and <code>draft_service_record</code>. Each returns a Pydantic model — <code>Intent</code>, <code>IssueSummary</code>, <code>DraftRecord</code> — and that is the whole enforcement mechanism for the project's central invariant. Model output that does not fit the schema raises <code>ModelOutputInvalid</code> and never reaches a tool. There is no path from raw provider text into a database row.</p>
+<p><code>Intent</code> deserves a note. It carries the action, an optional category, the query, any eligibility answers the citizen volunteered, a confidence score, a <code>wants_human</code> flag and the detected language. The confidence and the flag are <em>inputs to a deterministic trigger function</em>, never the trigger themselves — the model reports what it observed and the backend decides.</p>
+<p>I also scoped the adapter explicitly in its docstring: it covers the text and structured-extraction calls the backend makes. The realtime speech leg — Gemini Live inside the LiveKit worker — does not pass through the API at all. Without that written down, someone will eventually look for the voice pipeline in this file.</p>
+<h3 id="42-the-mock-adapter">4.2 The mock adapter</h3>
+<p>The important property is determinism, including failures. Failure injection hashes the input and compares against the configured rate, so the same call fails on every run. Random failure, even seeded, drifts as soon as call ordering changes under concurrency — and a load test whose failures move between runs cannot support the before/after comparison the scalability plan is built on.</p>
+<p>Intent extraction is keyword-driven across English and romanised Hindi hints for each category, plus phrases that indicate wanting a person. Confidence is derived from how much of the utterance the mock actually recognised, which means a vague request deterministically lands below the handoff threshold. That is what lets us test the low-confidence trigger without a real model.</p>
+<p>Latency is injectable, so the load rig can model a slow provider without paying for one.</p>
+<h3 id="43-the-failure-adapter-and-the-gemini-adapter">4.3 The failure adapter and the Gemini adapter</h3>
+<p>The failure adapter raises <code>ModelUnavailable</code> from every method. It exists so the requirement that a failed model call must return a recoverable message and must not corrupt a handoff or service record has a test that can actually be run.</p>
+<p>The Gemini adapter imports <code>google-genai</code> lazily inside its constructor, so the package's absence is a clear configuration error at startup rather than an import error at collection time. It uses JSON response mode at temperature zero, parses, then validates through the same Pydantic gate. Its system instructions state explicitly: never invent scheme facts, copy values from the source, omit any field the source does not support.</p>
+<p>The factory selects by configuration and caches one adapter per process, and refuses <code>real</code> mode when no API key is configured rather than failing on the first citizen call.</p>
+<h3 id="44-access-control">4.4 Access control</h3>
+<p>Three seeded keys, one header, a <code>Role</code> enum, and a <code>require(*roles)</code> dependency factory. An unknown key is 401; a known key in the wrong role is 403. Tool routes accept voice and admin; the operator queue accepts operator and admin; version history, publication and audit are admin only.</p>
+<p>It is intentionally not an auth product. It is also intentionally not a comment — §14 lists unauthorised-action tests, and those need something that refuses.</p>
+<h3 id="45-error-mapping-and-the-application-factory">4.5 Error mapping and the application factory</h3>
+<p>One registry maps every domain exception to a status: not-found to 404, closed conversation and invalid transition to 409, answer validation to 422 with the error list, model unavailable to 503, invalid model output to 502. Every error body carries the request ID.</p>
+<p>The 503 case has a comment I want to keep visible: it is recoverable <em>by contract</em> — no handoff and no service record has been written when it fires.</p>
+<p>The factory configures logging, adds the request-ID middleware, registers the handlers and includes the six routers.</p>
+<h3 id="46-what-i-did-not-do-and-one-thing-i-got-wrong">4.6 What I did not do, and one thing I got wrong</h3>
+<p>No CI. I made the same call as in Week 2 — a pipeline running zero tests is a signal that means nothing — but I have now deferred it twice, and the build plan asked for it in Week 2. It is on the Week 5 list with the first tests, and I am recording the deferral rather than quietly carrying it.</p>
+<p>The mistake I want on the record: I let error handling end up in two places. Some tool handlers catch a missing service and raise a 404 themselves while the global registry also maps that exception. It works, but it is two places to change, and I only noticed while writing this entry. Consolidating into the registry is a Week 5 task, done once tests exist to confirm no status code moves.</p>
+<p>Nothing I wrote this week has been executed.</p>
+<h2 id="5-decisions-taken-this-week">5. Decisions taken this week</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Decision</th>
+<th>Rationale</th>
+<th>Alternatives rejected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D-42</td>
+<td>Every factual tool response carries both the citation and the service version number</td>
+<td>A citation without a version cannot be verified once the record moves on</td>
+<td>Citation only</td>
+</tr>
+<tr>
+<td>D-43</td>
+<td>Tool request models forbid unknown fields</td>
+<td>A misspelled field must fail loudly, not silently take a default</td>
+<td>Ignore extras</td>
+</tr>
+<tr>
+<td>D-44</td>
+<td>The TTG clock stops on a scheme match, a decided eligibility result, or a delivered checklist — never on a follow-up question</td>
+<td>A metric that a clarifying question can improve is not measuring guidance</td>
+<td>Stop on any tool response</td>
+</tr>
+<tr>
+<td>D-45</td>
+<td><code>request_handoff</code> refuses when no deterministic trigger fires</td>
+<td>Makes handoff precision a property of the system, not of the prompt</td>
+<td>Create a handoff whenever asked</td>
+</tr>
+<tr>
+<td>D-46</td>
+<td>Every model adapter method returns a validated Pydantic model</td>
+<td>The Week 1 invariant, in code: unvalidated model output never reaches a tool</td>
+<td>Return raw dicts and validate at the call site</td>
+</tr>
+<tr>
+<td>D-47</td>
+<td>Mock failure injection is hash-derived, not random</td>
+<td>A load test must be reproducible to support a before/after claim</td>
+<td>Random failure with a seed</td>
+</tr>
+<tr>
+<td>D-48</td>
+<td>The Gemini SDK is an optional dependency, imported lazily</td>
+<td>Backend, tests and load rig must all run without it</td>
+<td>Hard dependency</td>
+</tr>
+<tr>
+<td>D-49</td>
+<td>A failed summary call degrades to the raw transcript rather than failing the handoff</td>
+<td>Never drop a citizen because a model call failed; the operator gets worse prose but the same context</td>
+<td>Fail the request; queue with an empty summary</td>
+</tr>
+<tr>
+<td>D-50</td>
+<td><code>Citation</code> carries a verification state and the name of the verifier; seeded records are <code>pending_review</code></td>
+<td>The catalogue is described as human-reviewed, so a record must be able to say when it is not yet</td>
+<td>Trust the <code>verified_on</code> date alone</td>
+</tr>
+<tr>
+<td>D-51</td>
+<td>Role checks are a real dependency returning 401 and 403</td>
+<td>The unauthorised-action tests need something that actually refuses</td>
+<td>Document the roles; enforce later</td>
+</tr>
+<tr>
+<td>D-52</td>
+<td>Domain-error to HTTP mapping lives in one registry</td>
+<td>Modules stay free of FastAPI imports; no domain error escapes as a 500</td>
+<td>Try/except in each handler</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-problems-hit-and-how-they-were-resolved">6. Problems hit and how they were resolved</h2>
+<h3 id="61-seeded-records-would-have-claimed-to-be-human-verified">6.1 Seeded records would have claimed to be human-verified</h3>
+<p>Every service record carries a citation with a <code>verified_on</code> date, and <code>context.md</code> describes the catalogue as <em>verified</em> and <em>human-reviewed</em>. Writing the first fixtures, the problem became obvious: a seeded record would carry a verification date that no human had earned. It would be indistinguishable from a record someone had actually checked against the official page, and the citizen would be told "verified on this date" on the strength of nothing.</p>
+<p>Fixed in the schema rather than in a convention. <code>Citation</code> now carries:</p>
+<ul>
+<li><code>verification_state</code>, either <code>pending_review</code> or <code>verified</code>, defaulting to <code>pending_review</code>;</li>
+<li><code>verified_by</code>, the person who checked it, which the schema <strong>requires</strong> once the state is <code>verified</code>.</li>
+</ul>
+<p>Seeded and freshly imported records are <code>pending_review</code>. A record becomes verified when a named team member checks it against the official source and says so. The rule follows: no scheme appears in a demo or a pilot run while it is <code>pending_review</code>.</p>
+<p>This is the sort of thing that would have been very difficult to retrofit — by the time anyone noticed, there would be a dozen fixtures with unearned dates and no way to tell which had actually been checked.</p>
+<h3 id="62-four-weeks-of-code-none-of-it-ever-run">6.2 Four weeks of code, none of it ever run</h3>
+<p>The honest status at the end of this week: the backend is structurally complete and has <strong>never been executed</strong>. Dependencies have not been installed. The database layer has not opened a connection. There is no Alembic migration, so no schema exists to connect to. There are no seed fixtures, no tests, and no CI job.</p>
+<p>Our own standing rule from the build plan is that <em>nothing counts as done until it has a test and a place in the demo script</em>. By that rule, none of Weeks 2, 3 or 4 is done. What exists is written and reviewable, not verified.</p>
+<p>We considered pressing on into ingestion and stopped instead. The reasoning: the further we build on unexecuted code, the larger the eventual debugging surface, and the first import will tell us more about four weeks of assumptions than another week of typing would. Section 10 is the order in which that gets fixed, and it goes ahead of every new feature.</p>
+<p>We also note the build plan asked for CI on day one and we do not have it. That was a judged trade — a green pipeline that runs no tests teaches the team to trust a signal that means nothing — but it has now been deferred twice, so it is scheduled explicitly rather than left to sit.</p>
+<h3 id="63-which-layer-owns-a-not-found">6.3 Which layer owns a "not found"</h3>
+<p>Some tool handlers translate a missing service into a 404 themselves; the global registry also maps that exception. Duplication that works today, but it is two places to change. Marked for consolidation into the registry when the tests are written and can confirm no status code moves.</p>
+<hr />
+<h2 id="7-deliverables-produced-this-week">7. Deliverables produced this week</h2>
+<ul>
+<li>Typed tool envelopes, with citation and service version on every factual response</li>
+<li>Four tool endpoints: <code>find_service</code>, <code>check_eligibility</code>, <code>get_documents</code>, <code>request_handoff</code></li>
+<li>Model adapter interface, deterministic mock, always-failing failure adapter, Gemini adapter, and the selection factory</li>
+<li>Role-based access for the three seeded accounts, with 401/403 behaviour</li>
+<li>Catalogue routes including admin-only version history and field-level diff</li>
+<li>Operator queue routes returning the handoff together with its conversation context</li>
+<li>Audit query route filterable by conversation, request ID and action</li>
+<li>Domain-error to HTTP-status registry, with the request ID on every error response</li>
+<li>Application factory wiring middleware, handlers and six routers</li>
+<li>Citation verification state added to the canonical record</li>
+</ul>
+<hr />
+<h2 id="8-contribution-split">8. Contribution split</h2>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Week 4 contribution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dhruv Srivastava (1024170394)</td>
+<td>Joint review of the TTG stopping rule and the handoff refusal behaviour. Individually: the model adapter family and the selection factory, role-based access control, the domain-error registry, the application factory and health wiring.</td>
+</tr>
+<tr>
+<td>Harkamal Singh Lubana (1024170396)</td>
+<td>Joint review of the TTG stopping rule and the handoff refusal behaviour. Individually: the typed tool envelopes and the four tool endpoints, the catalogue, conversation, handoff-queue and audit routers, and the citation verification-state change.</td>
+</tr>
+<tr>
+<td>Paras (1024170395)</td>
+<td>Joint review of the TTG stopping rule and the handoff refusal behaviour. Individual log maintained in his own journal and not duplicated here.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="9-risks-reviewed">9. Risks reviewed</h2>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Status this week</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Four weeks of unexecuted code</td>
+<td><strong>The dominant risk now.</strong> Everything written since Week 2 is unverified. Week 5 is migration, fixtures, tests and CI, ahead of any new feature.</td>
+</tr>
+<tr>
+<td>CI deferred past the point the build plan asked for it</td>
+<td>Deferred twice. Now scheduled with the first test suite rather than left open-ended.</td>
+</tr>
+<tr>
+<td>Telephony / SIP provisioning delay</td>
+<td>Unchanged. Still the largest schedule risk and still untouched by anything built so far.</td>
+</tr>
+<tr>
+<td>Seeded data presenting itself as verified</td>
+<td><strong>Closed</strong> by D-50. The schema now distinguishes pending from verified and names the verifier.</td>
+</tr>
+<tr>
+<td>Rule model expressiveness (<code>applies_when</code>)</td>
+<td>Still open from Week 3. Scheduled for Week 5 with the flagship fixture, since the fixture cannot be encoded correctly without it.</td>
+</tr>
+<tr>
+<td>Scope creep</td>
+<td>None. Ingestion was explicitly not started despite the module directory existing.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="10-carried-into-week-5-in-this-order">10. Carried into Week 5 — in this order</h2>
+<ol>
+<li>Alembic migration for the seven tables, applied against a real Postgres.</li>
+<li>The <code>applies_when</code> guard extension to the evaluator, with its boundary tests.</li>
+<li>Seed fixtures: the initial working set of schemes as hand-reviewed JSON, all <code>pending_review</code>, with the flagship fully rule-backed.</li>
+<li>Test suite — evaluator boundary cases first, then the tool endpoints, versioning, handoff transitions and the unauthorised-action tests.</li>
+<li>CI: build, lint and tests on every push. No further feature work until this is green.</li>
+<li>Dockerfile and Compose for Postgres plus the API, as the basis for the replica-count comparison later.</li>
+</ol>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 3, 2026 05:18:12 UTC">September 3, 2026</span>
+  </span>
+
+    
+    
+    
+      
+  
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Contributors">
+      
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9z"/></svg>
+      
+    </span>
+    <nav>
+      
+    </nav>
+  </span>
+
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../week3-janmitra/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Janmitra — Weekly Engineering Journal">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Janmitra — Weekly Engineering Journal
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../1024170395-paras/" class="md-footer__link md-footer__link--next" aria-label="Next: 1024170395 paras">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                1024170395 paras
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Janmitra project team, TIET
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.footer", "header.autohide", "content.tabs.link", "navigation.tracking", "navigation.top", "toc.integrate", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="../../../javascript/arithmatex.js"></script>
+      
+    
+  </body>
+</html>

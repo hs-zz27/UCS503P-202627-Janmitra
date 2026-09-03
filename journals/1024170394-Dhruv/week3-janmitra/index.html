@@ -1,0 +1,1666 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../week2-janmitra/">
+      
+      
+        <link rel="next" href="../week4-janmitra/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+  <title>UCS503: Software Engineering; Raghav
+    B. Venkataramaiyer @TIET</title>
+
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%2020c-4.41%200-8-3.59-8-8s3.59-8%208-8%208%203.59%208%208-3.59%208-8%208m0-18A10%2010%200%200%200%202%2012a10%2010%200%200%200%2010%2010%2010%2010%200%200%200%2010-10A10%2010%200%200%200%2012%202m1%205h-2v4H7v2h4v4h2v-4h4v-2h-4z%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="amber" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#janmitra-weekly-engineering-journal" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Janmitra" class="md-header__button md-logo" aria-label="Janmitra" data-md-component="logo">
+      
+  <img src="../../../assets/tiet-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Janmitra
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Janmitra — Weekly Engineering Journal
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Janmitra" class="md-nav__button md-logo" aria-label="Janmitra" data-md-component="logo">
+      
+  <img src="../../../assets/tiet-logo.svg" alt="logo">
+
+    </a>
+    Janmitra
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../criteria-for-project-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Criteria for Project Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Journals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Journals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1024170394 Dhruv
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1024170394 Dhruv
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../week1-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../week2-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra - Week 2 Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#week-3-the-deterministic-core-rule-evaluator-catalogue-conversation-state-handoff-triggers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Week 3 — The Deterministic Core: Rule Evaluator, Catalogue, Conversation State, Handoff Triggers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-objective-for-the-week" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Objective for the week
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-day-by-day-activity-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Day-by-day activity log
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Day-by-day activity log">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#day-1-boundary-cases-before-the-evaluator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day 1 — Boundary cases before the evaluator
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#day-2-the-evaluator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day 2 — The evaluator
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#day-3-where-the-rule-model-broke-and-what-we-chose-to-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day 3 — Where the rule model broke, and what we chose to do
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#day-4-catalogue-reads-search-publication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day 4 — Catalogue: reads, search, publication
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#day-5-conversation-state-and-the-ttg-clock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day 5 — Conversation state and the TTG clock
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#day-6-handoff-triggers-and-the-state-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day 6 — Handoff triggers and the state machine
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-individual-work-log-dhruv-srivastava-1024170394" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Individual work log — Dhruv Srivastava (1024170394)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Individual work log — Dhruv Srivastava (1024170394)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-catalogue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Catalogue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-conversation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Conversation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-handoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Handoff
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-audit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Audit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-what-i-did-not-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 What I did not do
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-decisions-taken-this-week" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Decisions taken this week
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-problems-hit-and-how-they-were-resolved" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Problems hit and how they were resolved
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Problems hit and how they were resolved">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-the-rule-model-could-not-express-a-real-government-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 The rule model could not express a real government rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-neutral-is-not-the-same-as-true" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Neutral is not the same as true
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-concurrent-turn-writes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Concurrent turn writes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-deliverables-produced-this-week" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Deliverables produced this week
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-contribution-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Contribution split
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-risks-reviewed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Risks reviewed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-carried-into-week-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Carried into Week 4
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../week4-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../1024170395-paras/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1024170395 paras
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1024170395 paras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170395-paras/week1-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170395-paras/week2-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170395-paras/week3-jantmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170395-paras/week4-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../1024170396-Harkamal/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1024170396 Harkamal
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1024170396 Harkamal
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170396-Harkamal/week1-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170396-Harkamal/week2-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170396-Harkamal/week3-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170396-Harkamal/week4-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="janmitra-weekly-engineering-journal">Janmitra — Weekly Engineering Journal</h1>
+<h2 id="week-3-the-deterministic-core-rule-evaluator-catalogue-conversation-state-handoff-triggers">Week 3 — The Deterministic Core: Rule Evaluator, Catalogue, Conversation State, Handoff Triggers</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Course</td>
+<td>UCS503 / UCS503P — Software Engineering</td>
+</tr>
+<tr>
+<td>Institute</td>
+<td>Thapar Institute of Engineering and Technology, Patiala</td>
+</tr>
+<tr>
+<td>Project</td>
+<td>Janmitra — a voice-first civic scheme guidance platform</td>
+</tr>
+<tr>
+<td>Week</td>
+<td>18 – 24 August 2026</td>
+</tr>
+<tr>
+<td>Member</td>
+<td>Dhruv Srivastava (1024170394)</td>
+</tr>
+<tr>
+<td>Status at end of week</td>
+<td>The deterministic core is written: eligibility evaluator, catalogue reads and versioned publication, conversation state and the TTG clock, handoff trigger rules and state machine, audit writer. Still no HTTP endpoints, and nothing has been executed.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>On individual logs.</strong> Sections 1, 2, 5, 6, 7, 8 and 9 are common to the team. Section 4 is this member's individual work log.</p>
+<p><strong>On Week 2.</strong> My own Week 2 entry is a shorter record of proposal finalisation and backend planning. The fuller shared Week 2 write-up — the scope-reconciliation decisions D-19 to D-28, the day-by-day log and the risk review — is kept in the team's Week 2 journal, and the cross-references below point there.</p>
+</blockquote>
+<hr />
+<h2 id="1-objective-for-the-week">1. Objective for the week</h2>
+<p>Everything Janmitra says to a citizen with a correctness obligation attached — you qualify, you do not qualify, bring these documents, this came from this source on this date, I am passing you to a person — is supposed to be decided by code we can test, not by a language model. This week was that code.</p>
+<p>The order was chosen so that nothing depends on something unwritten:</p>
+<ol>
+<li>The eligibility evaluator, as pure functions over a rule set and a dictionary of answers: no database, no network, no model.</li>
+<li>Catalogue reads that can only see published versions, and a publication path that is append-only.</li>
+<li>Conversation state, including the two timestamps the primary metric is computed from.</li>
+<li>The handoff trigger rules, in one function, so "when do we hand off" has exactly one answer in the codebase.</li>
+<li>The audit writer.</li>
+</ol>
+<p>We also held to the rule from the build plan: <strong>tools before voice</strong>. None of this week's work knows that a phone call exists. If the voice leg misbehaves later, it cannot be confused with a logic bug here.</p>
+<hr />
+<h2 id="2-day-by-day-activity-log">2. Day-by-day activity log</h2>
+<h3 id="day-1-boundary-cases-before-the-evaluator">Day 1 — Boundary cases before the evaluator</h3>
+<p>Before writing the evaluator we wrote down what the answers <em>should</em> be for the flagship scheme — the age boundary at exactly 18, an applicant who has answered nothing, an applicant who has answered everything but one question, an applicant who fails one mandatory condition while another is still unanswered.</p>
+<p>That last case decided the design. If a citizen has already failed a mandatory condition, no further question can rescue them, so the evaluator must return a decisive result rather than continue asking. Conversely, if a condition is simply unanswered, the honest answer is <em>I need to ask you something else</em>, not <em>no</em>.</p>
+<p>So the evaluator is <strong>three-valued</strong>: true, false, and unknown, where unknown means nobody has asked yet. Treating a missing answer as false would be the single most damaging bug this system could ship — it would tell a citizen they do not qualify for a scheme when in fact the question was never put to them.</p>
+<h3 id="day-2-the-evaluator">Day 2 — The evaluator</h3>
+<p>Written as pure functions. Answers are validated and coerced against the question types first; a validation failure raises rather than degrading into a verdict, because a bad extraction from the model must surface as a validation error and never as a wrong eligibility result.</p>
+<p>The evaluator returns a full trace — every condition, whether it passed, failed or is unknown, which answer it depended on, and the sentence from the official source behind it. The agent reads the failing lines back to the citizen. The trace is also what the boundary tests assert against, condition by condition, rather than only checking the final verdict.</p>
+<h3 id="day-3-where-the-rule-model-broke-and-what-we-chose-to-do">Day 3 — Where the rule model broke, and what we chose to do</h3>
+<p>Encoding the flagship scheme's real published rules exposed a genuine gap, which is recorded in full in Section 6. In short: some official rules are <em>conditional on other answers</em> — a qualification requirement that only applies above a cost threshold that itself differs by sector — and a flat list of conditions cannot express that. We compared three ways out and chose one; the implementation is carried into Week 5.</p>
+<p>This is exactly the kind of thing we wanted the journal to record: the design met the real world, the real world won, and the fix is a small extension to the data model rather than a patch in the evaluator.</p>
+<h3 id="day-4-catalogue-reads-search-publication">Day 4 — Catalogue: reads, search, publication</h3>
+<p>Reads go only through the version a service currently points at, and only if that version is published. A draft is never visible on a citizen path — that is a stated non-functional requirement, and it is enforced in the query rather than in a caller's discipline.</p>
+<p>Discovery is deterministic token matching over name, aliases and description, filtered by category first. No vector database, as decided in Week 1. Two properties we insisted on: category filtering happens before scoring, and ties break on slug so the same query returns the same order on every run. Load tests and the AI evaluation set both depend on repeatability.</p>
+<p>Publication writes a new version row and repoints the service; existing versions are never touched. We also wrote the field-level diff the admin review screen will need — it flattens both records to dotted paths so a reviewer sees <code>rule_set.conditions.0.test.value: 18 → 21</code> instead of two walls of JSON.</p>
+<h3 id="day-5-conversation-state-and-the-ttg-clock">Day 5 — Conversation state and the TTG clock</h3>
+<p>Conversation state lives in Postgres, not in the voice worker, which is what allows N identical replicas behind a load balancer. The two metric timestamps are written by the system that owns them: <code>connected_at</code> when the call is answered, <code>first_guidance_at</code> the first time a grounded, cited answer goes out. <code>first_guidance_at</code> is written once and never moved, so a later answer cannot flatter the number.</p>
+<h3 id="day-6-handoff-triggers-and-the-state-machine">Day 6 — Handoff triggers and the state machine</h3>
+<p>The four deterministic triggers — the citizen asked for a person, tools failed repeatedly, the request is out of scope or nothing matched, agent confidence below the configured floor — live in one function that returns a trigger or nothing at all. The model may <em>report</em> signals into it; it does not decide, and it cannot create the record.</p>
+<p>Trigger order is not arbitrary: an explicit request for a person outranks every inference the system makes about the citizen. If someone asks for a human, they get a human, regardless of how confident the agent was.</p>
+<p>The queue state machine — <code>NEW → CONTACTED → RESOLVED</code> — is enforced in code, with an invalid transition raising rather than silently succeeding.</p>
+<hr />
+<h2 id="4-individual-work-log-dhruv-srivastava-1024170394">4. Individual work log — Dhruv Srivastava (1024170394)</h2>
+<p>I took the four service modules around the evaluator: catalogue, conversation, handoff and audit.</p>
+<h3 id="41-catalogue">4.1 Catalogue</h3>
+<p><strong>Reads.</strong> <code>get_published</code> and <code>list_published</code> join a service to the version it currently points at and require that version's status to be <code>published</code>. Both conditions are in the SQL. A draft cannot reach a citizen path even if a caller forgets to filter, which is the only way I am willing to enforce a stated non-functional requirement.</p>
+<p><strong>Search.</strong> Category filter first, then token scoring over name, aliases and description. Tokens are lowercased, stripped of a small stopword list — "scheme", "how", "need", "want", and similar, which carry no signal in a spoken civic request — and scored in tiers: a phrase or alias appearing verbatim in the query scores highest, then overlap with name and alias tokens, then description overlap with a hard ceiling so a long description cannot outrank an actual name match.</p>
+<p>Two deliberate properties: the same query returns the same results in the same order every run, with slug as the tie-break; and the whole thing is a single function, so if catalogue growth ever makes token matching the wrong tool, a retrieval layer replaces this function's body without touching a caller.</p>
+<p><strong>Publication.</strong> <code>publish</code> creates the service on first publication, computes the next version number from the highest existing one, writes a new immutable row and then repoints <code>current_version_id</code>. Nothing existing is modified. Reject and draft handling belongs to the ingestion module and is not written yet.</p>
+<p><strong>Diff.</strong> <code>diff_records</code> flattens both payloads to dotted paths and returns before/after per changed path. Recursing through lists by index means a reviewer sees <code>rule_set.conditions.2.test.value</code> changed rather than "the conditions array changed", which is the difference between a review that catches a wrong threshold and one that does not.</p>
+<h3 id="42-conversation">4.2 Conversation</h3>
+<p><code>create</code>, <code>get</code>, <code>get_active</code>, <code>append_event</code>, <code>mark_guidance_delivered</code>, <code>note_tool_failure</code>, <code>clear_tool_failures</code>, <code>set_category</code>, <code>end</code>, and a <code>time_to_guidance</code> helper.</p>
+<p>The parts that matter:</p>
+<ul>
+<li><strong><code>get_active</code> refuses a conversation that has already ended</strong>, so a stray tool call from a worker that has not noticed the call dropped cannot append to a finished transcript.</li>
+<li><strong><code>mark_guidance_delivered</code> is idempotent</strong> — it writes <code>first_guidance_at</code> only when it is null. TTG measures the <em>first</em> grounded answer, and a metric that improves the more you talk is not a metric.</li>
+<li><strong><code>append_event</code> derives its sequence number inside the transaction</strong> and relies on the unique constraint to reject a concurrent duplicate.</li>
+<li><strong><code>note_tool_failure</code> and <code>clear_tool_failures</code></strong> maintain the streak counter in the database, because the streak is a handoff trigger and the next request may land on a different replica.</li>
+</ul>
+<h3 id="43-handoff">4.3 Handoff</h3>
+<p><code>decide_trigger</code> is one function taking the settings and the observed signals, returning a trigger or <code>None</code>. Ordering, and the reasoning for it:</p>
+<ol>
+<li><strong>The citizen asked for a person.</strong> Outranks everything. If someone asks for a human they get a human, regardless of how confident the agent was.</li>
+<li><strong>Repeated tool failures</strong>, at or above the configured streak length. The system is broken; do not make the citizen keep trying.</li>
+<li><strong>Out of scope</strong>, as reported by the agent.</li>
+<li><strong>No match</strong> from discovery.</li>
+<li><strong>Confidence below the configured floor.</strong></li>
+</ol>
+<p>Returning <code>None</code> is a real outcome, not an edge case: it means the agent should keep helping. The endpoint layer turns it into a refusal in Week 4.</p>
+<p><code>create</code> accepts a null name and a null phone. A citizen who will not give a number still gets queued, and the operator still sees the category and the conversation context — that was decision D-11 in Week 1 and this is where it becomes code. Blank strings are normalised to null so the queue does not show empty-looking rows that are technically populated.</p>
+<p><code>update_status</code> checks an explicit transition table. <code>NEW</code> may go to <code>CONTACTED</code> or straight to <code>RESOLVED</code>; <code>CONTACTED</code> may go to <code>RESOLVED</code>; <code>RESOLVED</code> goes nowhere. An invalid transition raises rather than silently succeeding — a resolved case quietly reopening is a data-integrity bug no operator would ever spot.</p>
+<h3 id="44-audit">4.4 Audit</h3>
+<p>One <code>record</code> function that writes an audit row with the current request ID pulled from the context variable, and simultaneously emits a structured log line with the same fields. Two sinks, one call site, no chance of a critical action being in the log but not the table.</p>
+<h3 id="45-what-i-did-not-do">4.5 What I did not do</h3>
+<p>No ingestion module. It is Week 6 work in the build plan and depends on the review screen, and I did not want a half-written importer sitting in the tree pretending to be a deliverable.</p>
+<p>Nothing this week has been run. Same admission as Harkamal's: no migration, no fixtures, no tests. The database layer has never opened a connection.</p>
+<h2 id="5-decisions-taken-this-week">5. Decisions taken this week</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Decision</th>
+<th>Rationale</th>
+<th>Alternatives rejected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D-29</td>
+<td>Eligibility evaluation is three-valued: a missing answer is <em>unknown</em>, never false</td>
+<td>Telling a citizen they do not qualify because nobody asked is the worst failure this system could have</td>
+<td>Two-valued logic treating missing as false</td>
+</tr>
+<tr>
+<td>D-30</td>
+<td>A definite failure is decisive even while other conditions remain unknown</td>
+<td>No further question can rescue a mandatory condition that has already failed; continuing to ask wastes a phone call</td>
+<td>Ask every question before deciding anything</td>
+</tr>
+<tr>
+<td>D-31</td>
+<td>Answers are validated and coerced before evaluation; a validation failure raises</td>
+<td>A bad extraction must surface as a validation error, never as a wrong verdict</td>
+<td>Coerce leniently and evaluate anyway</td>
+</tr>
+<tr>
+<td>D-32</td>
+<td>The evaluator returns a per-condition trace, not just a verdict</td>
+<td>The agent must be able to say <em>why</em>, and boundary tests assert per condition</td>
+<td>Return the outcome only</td>
+</tr>
+<tr>
+<td>D-33</td>
+<td>A document gated on an unanswered question stays in the checklist, marked conditional</td>
+<td>On a phone call, "you may also need X" is more useful than silence</td>
+<td>Drop unresolved documents</td>
+</tr>
+<tr>
+<td>D-34</td>
+<td>Discovery is deterministic keyword matching with category filtering first and slug as tie-break</td>
+<td>Repeatability is required by both the load tests and the AI evaluation set</td>
+<td>Vector search; unordered results</td>
+</tr>
+<tr>
+<td>D-35</td>
+<td>Catalogue reads see only the currently published version, enforced in the query</td>
+<td>A draft must never reach a citizen path, regardless of caller discipline</td>
+<td>Filter in the service layer</td>
+</tr>
+<tr>
+<td>D-36</td>
+<td>Publication is append-plus-repoint; version rows are immutable</td>
+<td>Non-destructive versioning is a graded deliverable and an audit requirement</td>
+<td>Update in place with a history table</td>
+</tr>
+<tr>
+<td>D-37</td>
+<td>The version diff is computed on flattened dotted paths</td>
+<td>A reviewer needs to see the changed field, not two JSON blobs</td>
+<td>Whole-document diff</td>
+</tr>
+<tr>
+<td>D-38</td>
+<td><code>first_guidance_at</code> is written exactly once</td>
+<td>A later answer must not improve the measured TTG</td>
+<td>Update on each grounded answer</td>
+</tr>
+<tr>
+<td>D-39</td>
+<td>All four handoff triggers live in one function, ordered so an explicit request wins</td>
+<td>One place to test, one place to change, and the citizen's own words outrank our inference</td>
+<td>Trigger checks spread across call sites</td>
+</tr>
+<tr>
+<td>D-40</td>
+<td>The handoff state machine rejects invalid transitions in code</td>
+<td>A resolved case silently reopening is a data-integrity bug an operator would never notice</td>
+<td>Trust the dashboard to send valid transitions</td>
+</tr>
+<tr>
+<td>D-41</td>
+<td>Conditions gain an <code>applies_when</code> guard list (design agreed, implementation in Week 5)</td>
+<td>Real official rules are conditional on other answers; the flat model cannot express them</td>
+<td>Derived question computed by the model; nested expression tree</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-problems-hit-and-how-they-were-resolved">6. Problems hit and how they were resolved</h2>
+<h3 id="61-the-rule-model-could-not-express-a-real-government-rule">6.1 The rule model could not express a real government rule</h3>
+<p>Encoding the flagship loan scheme, we hit this published requirement: an applicant needs a minimum educational qualification <strong>only</strong> for projects above ₹10 lakh in the manufacturing sector, or above ₹5 lakh in the service sector. The requirement is conditional on two other answers at once, and the threshold itself depends on one of them.</p>
+<p>Our flat list of conditions combined by <code>all_of</code> / <code>any_of</code> / <code>none_of</code> cannot say that. We considered three options:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ask the agent for a derived answer such as "is this project above the education threshold?"</td>
+<td><strong>Rejected.</strong> It moves a piece of the eligibility rule into the model, which breaks the invariant the whole project rests on.</td>
+</tr>
+<tr>
+<td>Replace the flat list with a nested boolean expression tree</td>
+<td><strong>Rejected.</strong> Fully general, but it makes a rule set much harder for a human reviewer to read, and human review is the gate that makes the catalogue trustworthy.</td>
+</tr>
+<tr>
+<td>Give each condition an optional <code>applies_when</code> list of guard comparisons, all of which must hold for the condition to apply</td>
+<td><strong>Chosen.</strong> It reads the way the official text reads — "for projects above X in sector Y, the applicant must…" — and it keeps a rule set a flat, reviewable list.</td>
+</tr>
+</tbody>
+</table>
+<p>Semantics agreed: if any guard is false, the condition does not apply and is neutral — skipped in <code>all_of</code>, ignored in <code>any_of</code>, and skipped in <code>none_of</code>. If a guard is unknown, the condition is unknown, and the <em>guard's</em> question is what the agent should ask next, not the condition's. An <code>any_of</code> group in which every branch turns out to be inapplicable is satisfied, since nothing bars the applicant.</p>
+<p>The evaluator currently implements the flat model. The guard extension is scheduled for Week 5 alongside the first seeded fixtures, and until it lands we will not claim the flagship scheme is fully encoded.</p>
+<h3 id="62-neutral-is-not-the-same-as-true">6.2 Neutral is not the same as true</h3>
+<p>While specifying the above, we caught a trap: making an inapplicable condition evaluate to <em>true</em> works for <code>all_of</code> and breaks <code>none_of</code>, where a "true" condition means the applicant is barred. Neutral has to mean <strong>ignored by whichever group references it</strong>, not a fixed boolean. Written down before implementation rather than found by a wrong answer later.</p>
+<h3 id="63-concurrent-turn-writes">6.3 Concurrent turn writes</h3>
+<p>Two replicas appending a turn to the same conversation could both compute the same sequence number. Resolved with the unique constraint from Week 2 plus deriving the sequence inside the transaction, so one write fails loudly instead of two succeeding at the same position.</p>
+<hr />
+<h2 id="7-deliverables-produced-this-week">7. Deliverables produced this week</h2>
+<ul>
+<li>Deterministic three-valued eligibility evaluator with per-condition tracing</li>
+<li>Answer validation and coercion for all five answer types, with range checking</li>
+<li>Next-question selection driven by what the evaluator still needs</li>
+<li>Deterministic document-checklist builder, including conditional entries</li>
+<li>Catalogue: published-only reads, category-filtered deterministic search, append-only publication, field-level version diff</li>
+<li>Conversation state, turn-event sequencing, tool-failure tracking, and the TTG clock</li>
+<li>Handoff trigger rules and the <code>NEW → CONTACTED → RESOLVED</code> state machine</li>
+<li>Audit writer with request-ID tagging</li>
+<li>Written specification for the <code>applies_when</code> guard extension, with the two rejected alternatives</li>
+</ul>
+<hr />
+<h2 id="8-contribution-split">8. Contribution split</h2>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Week 3 contribution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dhruv Srivastava (1024170394)</td>
+<td>Joint boundary-case derivation and the <code>applies_when</code> design review. Individually: catalogue service, conversation service and the TTG clock, handoff trigger rules and state machine, audit writer.</td>
+</tr>
+<tr>
+<td>Harkamal Singh Lubana (1024170396)</td>
+<td>Joint boundary-case derivation and the <code>applies_when</code> design review. Individually: the eligibility evaluator, answer validation and coercion, next-question selection, document-checklist builder.</td>
+</tr>
+<tr>
+<td>Paras (1024170395)</td>
+<td>Joint boundary-case derivation and the <code>applies_when</code> design review. Individual log maintained in his own journal and not duplicated here.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="9-risks-reviewed">9. Risks reviewed</h2>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Status this week</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Telephony / SIP provisioning delay</td>
+<td>Unchanged and still the largest schedule risk. Nothing written this week depends on it, which was the intent.</td>
+</tr>
+<tr>
+<td>Rule model not expressive enough for real schemes</td>
+<td><strong>Materialised.</strong> Caught early, on the first real scheme, with a chosen fix and two recorded alternatives. Cost is one small schema change plus evaluator work in Week 5.</td>
+</tr>
+<tr>
+<td>Nothing written so far has been executed</td>
+<td><strong>New and growing.</strong> Three weeks of code exist with no migration, no fixtures, no tests and no CI. Flagged here explicitly; see Week 4's carried-forward list.</td>
+</tr>
+<tr>
+<td>Scope creep</td>
+<td>None this week. Every item built maps to a named requirement or to §18.2 of the build plan.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="10-carried-into-week-4">10. Carried into Week 4</h2>
+<p>The tool surface: <code>find_service</code>, <code>check_eligibility</code>, <code>get_documents</code> and <code>request_handoff</code> as plain HTTP endpoints, the model adapter in its three modes, role-based access, and the routers the dashboard will use.</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 3, 2026 05:18:12 UTC">September 3, 2026</span>
+  </span>
+
+    
+    
+    
+      
+  
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Contributors">
+      
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9z"/></svg>
+      
+    </span>
+    <nav>
+      
+    </nav>
+  </span>
+
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../week2-janmitra/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Janmitra - Week 2 Journal">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Janmitra - Week 2 Journal
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../week4-janmitra/" class="md-footer__link md-footer__link--next" aria-label="Next: Janmitra — Weekly Engineering Journal">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Janmitra — Weekly Engineering Journal
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Janmitra project team, TIET
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.footer", "header.autohide", "content.tabs.link", "navigation.tracking", "navigation.top", "toc.integrate", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="../../../javascript/arithmatex.js"></script>
+      
+    
+  </body>
+</html>

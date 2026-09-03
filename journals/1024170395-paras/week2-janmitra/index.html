@@ -1,0 +1,1598 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../week1-janmitra/">
+      
+      
+        <link rel="next" href="../week3-jantmitra/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+  <title>UCS503: Software Engineering; Raghav
+    B. Venkataramaiyer @TIET</title>
+
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%2020c-4.41%200-8-3.59-8-8s3.59-8%208-8%208%203.59%208%208-3.59%208-8%208m0-18A10%2010%200%200%200%202%2012a10%2010%200%200%200%2010%2010%2010%2010%200%200%200%2010-10A10%2010%200%200%200%2012%202m1%205h-2v4H7v2h4v4h2v-4h4v-2h-4z%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="amber" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#janmitra-weekly-engineering-journal" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Janmitra" class="md-header__button md-logo" aria-label="Janmitra" data-md-component="logo">
+      
+  <img src="../../../assets/tiet-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Janmitra
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Janmitra — Weekly Engineering Journal
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Janmitra" class="md-nav__button md-logo" aria-label="Janmitra" data-md-component="logo">
+      
+  <img src="../../../assets/tiet-logo.svg" alt="logo">
+
+    </a>
+    Janmitra
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../criteria-for-project-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Criteria for Project Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Journals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Journals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../1024170394-Dhruv/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1024170394 Dhruv
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1024170394 Dhruv
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170394-Dhruv/week1-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170394-Dhruv/week2-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra - Week 2 Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170394-Dhruv/week3-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170394-Dhruv/week4-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1024170395 paras
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1024170395 paras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../week1-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#week-2-frontend-planning-interface-design-and-repository-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Week 2 — Frontend Planning, Interface Design and Repository Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-objective-for-the-week" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Objective for the week
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-day-by-day-activity-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Day-by-day activity log
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Day-by-day activity log">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#day-1-understanding-the-frontend-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day 1 — Understanding the frontend requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#day-2-frontend-technology-planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day 2 — Frontend technology planning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#day-3-interface-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day 3 — Interface structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#day-4-voice-interaction-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day 4 — Voice interaction components
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#day-5-frontend-integration-planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day 5 — Frontend integration planning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#day-6-initial-frontend-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day 6 — Initial frontend setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-individual-work-log-paras-1024170395" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Individual work log — Paras (1024170395)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Individual work log — Paras (1024170395)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-frontend-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Frontend architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-voicecall-component-planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 VoiceCall component planning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-user-interface-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 User interface design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-livekit-integration-direction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 LiveKit integration direction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-what-i-did-not-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 What I did not do
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-decisions-taken-this-week" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Decisions taken this week
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-problems-hit-and-how-they-were-resolved" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Problems hit and how they were resolved
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-deliverables-produced-this-week" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Deliverables produced this week
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-contribution-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Contribution split
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-risks-reviewed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Risks reviewed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-carried-into-week-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Carried into Week 3
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../week3-jantmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../week4-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../1024170396-Harkamal/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1024170396 Harkamal
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1024170396 Harkamal
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170396-Harkamal/week1-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170396-Harkamal/week2-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170396-Harkamal/week3-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170396-Harkamal/week4-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="janmitra-weekly-engineering-journal">Janmitra — Weekly Engineering Journal</h1>
+<h2 id="week-2-frontend-planning-interface-design-and-repository-setup">Week 2 — Frontend Planning, Interface Design and Repository Setup</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Course</td>
+<td>UCS503 / UCS503P — Software Engineering</td>
+</tr>
+<tr>
+<td>Institute</td>
+<td>Thapar Institute of Engineering and Technology, Patiala</td>
+</tr>
+<tr>
+<td>Project</td>
+<td>Janmitra — a voice-first civic scheme guidance platform</td>
+</tr>
+<tr>
+<td>Week</td>
+<td>11 – 17 August 2026</td>
+</tr>
+<tr>
+<td>Member</td>
+<td>Paras (1024170395)</td>
+</tr>
+<tr>
+<td>Status at end of week</td>
+<td>Project scope and architecture were finalised with the team. The frontend direction was planned around a browser-based voice-call harness using Next.js and LiveKit, with the initial frontend structure and component responsibilities identified.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-objective-for-the-week">1. Objective for the week</h2>
+<p>The main objective this week was to finalise the project scope with the team and define how the frontend would provide a simple interface for interacting with the Janmitra voice assistant.</p>
+<p>Since Janmitra is primarily a voice-first system, the frontend was planned as a browser-based development and testing harness rather than the final citizen-facing channel. The interface needed to keep the interaction simple, with clear call controls, connection status and feedback about the current voice session.</p>
+<p>The frontend direction was planned around Next.js and LiveKit, while keeping the frontend independent from the core eligibility and government-service logic handled by the backend.</p>
+<p>Concretely:</p>
+<ol>
+<li>Understand the final project requirements and frontend responsibilities.</li>
+<li>Decide the frontend technology and basic application structure.</li>
+<li>Plan the browser voice-call interface around LiveKit.</li>
+<li>Define the major UI elements required for starting, managing and ending a voice session.</li>
+<li>Keep the frontend structure simple enough to integrate with the backend and voice agent in later weeks.</li>
+</ol>
+<hr />
+<h2 id="2-day-by-day-activity-log">2. Day-by-day activity log</h2>
+<h3 id="day-1-understanding-the-frontend-requirements">Day 1 — Understanding the frontend requirements</h3>
+<p>I reviewed the project proposal and discussed with the team how the frontend would fit into the overall Janmitra architecture.</p>
+<p>The frontend would not contain the government-scheme eligibility logic or make independent decisions. Its main responsibility would be to provide the browser interface through which the voice agent could be tested.</p>
+<p>We identified the main user interaction as a voice call with Janmitra, requiring a clear start/end call action, microphone control and connection feedback.</p>
+<h3 id="day-2-frontend-technology-planning">Day 2 — Frontend technology planning</h3>
+<p>We decided to use <strong>Next.js</strong> for the browser application because it provides a suitable React-based structure for building the interface while also allowing server-side functionality required for the LiveKit token route.</p>
+<p>LiveKit was selected for handling the real-time voice communication between the browser and the Janmitra agent.</p>
+<p>I reviewed how the frontend would communicate with the LiveKit session and how environment variables would be used for the LiveKit configuration.</p>
+<h3 id="day-3-interface-structure">Day 3 — Interface structure</h3>
+<p>I planned the initial interface structure around three main areas:</p>
+<ul>
+<li>A top navigation/header area identifying Janmitra and the voice harness.</li>
+<li>A central call area containing the assistant status, call timer and voice interaction controls.</li>
+<li>Supporting side panels containing session information, connection status and guidance/privacy information.</li>
+</ul>
+<p>The goal was to avoid unnecessary UI elements and keep the interface focused on the voice interaction.</p>
+<h3 id="day-4-voice-interaction-components">Day 4 — Voice interaction components</h3>
+<p>I broke the frontend into reusable responsibilities and identified the main <code>VoiceCall</code> component as the core of the browser harness.</p>
+<p>The component would be responsible for managing the LiveKit session, starting and ending calls, controlling the microphone and displaying the current state of the agent.</p>
+<p>I also planned visual states for situations such as Ready, Connecting, Listening, Thinking, Speaking and Connected.</p>
+<h3 id="day-5-frontend-integration-planning">Day 5 — Frontend integration planning</h3>
+<p>I discussed with the team how the frontend would integrate with the backend and voice worker.</p>
+<p>The frontend would obtain the LiveKit session token through the server-side token route rather than exposing sensitive LiveKit credentials directly in the browser.</p>
+<p>This separation keeps the frontend responsible for presentation and session interaction while the backend remains responsible for application logic and secure configuration.</p>
+<h3 id="day-6-initial-frontend-setup">Day 6 — Initial frontend setup</h3>
+<p>The initial Next.js frontend structure was organised under <code>code/frontend</code>, with separate <code>app</code> and <code>components</code> directories.</p>
+<p>The main page was planned to load the <code>VoiceCall</code> component, keeping the page itself lightweight and allowing the voice interface to remain isolated as a reusable component.</p>
+<hr />
+<h2 id="4-individual-work-log-paras-1024170395">4. Individual work log — Paras (1024170395)</h2>
+<p>My individual contribution this week focused on the <strong>frontend planning and initial frontend structure</strong>.</p>
+<h3 id="41-frontend-architecture">4.1 Frontend architecture</h3>
+<p>I worked on defining the browser harness structure using Next.js and React.</p>
+<p>The frontend was kept separate from the backend modules so that UI changes would not affect the deterministic government-service logic.</p>
+<p>The initial structure consisted of:</p>
+<ul>
+<li><code>app/</code> for Next.js application pages and configuration.</li>
+<li><code>components/</code> for reusable frontend components.</li>
+<li><code>VoiceCall.tsx</code> as the main voice interaction component.</li>
+<li>Environment configuration for LiveKit integration.</li>
+</ul>
+<h3 id="42-voicecall-component-planning">4.2 VoiceCall component planning</h3>
+<p>I defined the responsibilities of the main <code>VoiceCall</code> component.</p>
+<p>It would manage:</p>
+<ul>
+<li>Creating the LiveKit token source.</li>
+<li>Starting a voice session.</li>
+<li>Ending a voice session.</li>
+<li>Enabling and disabling the microphone.</li>
+<li>Tracking the connection state.</li>
+<li>Displaying the agent state.</li>
+<li>Showing the elapsed call time.</li>
+<li>Displaying errors when a call could not be started or the microphone could not be updated.</li>
+</ul>
+<p>The component was designed around the actual voice workflow rather than adding unnecessary dashboard functionality.</p>
+<h3 id="43-user-interface-design">4.3 User interface design</h3>
+<p>I planned the main visual sections of the voice interface:</p>
+<ul>
+<li>Janmitra branding and environment indicator.</li>
+<li>Current-session information.</li>
+<li>Government scheme guidance heading.</li>
+<li>Voice activity indicator.</li>
+<li>Current agent status.</li>
+<li>Call timer.</li>
+<li>Start/End call button.</li>
+<li>Microphone mute/unmute control.</li>
+<li>Connection status.</li>
+<li>Privacy and guidance information.</li>
+</ul>
+<p>This structure was later reflected in the frontend implementation, where the main page renders the <code>VoiceCall</code> component and the component provides the complete browser voice-call interface.</p>
+<h3 id="44-livekit-integration-direction">4.4 LiveKit integration direction</h3>
+<p>I also worked through how the browser would connect to the LiveKit agent.</p>
+<p>The frontend was planned to use the <code>/api/livekit/token</code> route to obtain the session token, while keeping the LiveKit API key and secret on the server side.</p>
+<p>This was important because sensitive credentials should not be exposed to the browser.</p>
+<h3 id="45-what-i-did-not-do">4.5 What I did not do</h3>
+<p>I did not work on the backend data model, eligibility engine or database implementation this week.</p>
+<p>Those areas were handled separately by the team, while my focus was the frontend structure and voice interaction design.</p>
+<hr />
+<h2 id="5-decisions-taken-this-week">5. Decisions taken this week</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Decision</th>
+<th>Rationale</th>
+<th>Alternatives rejected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F-01</td>
+<td>Use Next.js for the browser frontend</td>
+<td>Provides a suitable React-based structure for the voice harness</td>
+<td>Plain HTML/JS application</td>
+</tr>
+<tr>
+<td>F-02</td>
+<td>Use LiveKit for browser voice communication</td>
+<td>Provides the real-time communication layer required for the voice agent</td>
+<td>Building a custom WebRTC layer</td>
+</tr>
+<tr>
+<td>F-03</td>
+<td>Keep the browser interface as a development/test harness</td>
+<td>The actual citizen channel is planned around telephony/SIP</td>
+<td>Treating the browser as the final citizen channel</td>
+</tr>
+<tr>
+<td>F-04</td>
+<td>Keep the main voice interaction inside a reusable <code>VoiceCall</code> component</td>
+<td>Makes the page simple and keeps voice-session logic isolated</td>
+<td>Putting all logic directly inside <code>page.tsx</code></td>
+</tr>
+<tr>
+<td>F-05</td>
+<td>Keep LiveKit credentials server-side</td>
+<td>Prevents sensitive API credentials from being exposed to the browser</td>
+<td>Sending credentials directly to the client</td>
+</tr>
+<tr>
+<td>F-06</td>
+<td>Keep the interface focused on voice interaction</td>
+<td>Reduces unnecessary UI complexity and keeps the primary workflow clear</td>
+<td>Building a large dashboard in the initial frontend</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-problems-hit-and-how-they-were-resolved">6. Problems hit and how they were resolved</h2>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Resolution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The frontend could easily become confused with the final citizen-facing application</td>
+<td>The browser application was explicitly defined as a voice development/test harness</td>
+</tr>
+<tr>
+<td>Voice-session logic could make the main page difficult to maintain</td>
+<td>The interaction was separated into the <code>VoiceCall</code> component</td>
+</tr>
+<tr>
+<td>LiveKit credentials should not be exposed to the client</td>
+<td>Planned the server-side <code>/api/livekit/token</code> route for token generation</td>
+</tr>
+<tr>
+<td>The voice assistant has multiple connection states</td>
+<td>Planned explicit UI states such as Ready, Connecting, Listening, Thinking and Speaking</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-deliverables-produced-this-week">7. Deliverables produced this week</h2>
+<ul>
+<li>Finalised the frontend direction with the team.</li>
+<li>Selected Next.js for the browser interface.</li>
+<li>Planned LiveKit integration for real-time voice communication.</li>
+<li>Defined the structure of the browser voice harness.</li>
+<li>Designed the main <code>VoiceCall</code> component responsibilities.</li>
+<li>Planned call, microphone and connection-status controls.</li>
+<li>Established the separation between frontend presentation and backend decision-making.</li>
+<li>Organised the initial <code>code/frontend</code> application structure.</li>
+</ul>
+<hr />
+<h2 id="8-contribution-split">8. Contribution split</h2>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Week 2 contribution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dhruv Srivastava (1024170394)</td>
+<td>Joint scope reconciliation and build-order planning. Individually: repository scaffold, configuration layer, structured logging, request-ID propagation and database-layer planning.</td>
+</tr>
+<tr>
+<td>Harkamal Singh Lubana (1024170396)</td>
+<td>Joint scope reconciliation and build-order planning. Individually: canonical service-record schema, validation rules and persistence model.</td>
+</tr>
+<tr>
+<td>Paras (1024170395)</td>
+<td>Joint scope reconciliation and build-order planning. Individually: frontend architecture planning, Next.js application structure, LiveKit voice-harness design and <code>VoiceCall</code> component planning.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="9-risks-reviewed">9. Risks reviewed</h2>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Status this week</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frontend becoming the final citizen channel instead of a development harness</td>
+<td>Mitigated by clearly defining the browser application as a test/development interface.</td>
+</tr>
+<tr>
+<td>Voice-session complexity affecting the UI</td>
+<td>Reduced by isolating the interaction inside the <code>VoiceCall</code> component.</td>
+</tr>
+<tr>
+<td>Exposure of LiveKit credentials</td>
+<td>Mitigated by planning server-side token generation.</td>
+</tr>
+<tr>
+<td>Frontend/backend integration issues</td>
+<td>Remains open and will be addressed during the implementation and integration phases.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="10-carried-into-week-3">10. Carried into Week 3</h2>
+<p>The frontend work carried into Week 3 includes implementing the planned voice-call interface, connecting the <code>VoiceCall</code> component to the LiveKit session, adding call and microphone controls, displaying agent states and integrating the frontend with the backend token route.</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 3, 2026 05:18:12 UTC">September 3, 2026</span>
+  </span>
+
+    
+    
+    
+      
+  
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Contributors">
+      
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9z"/></svg>
+      
+    </span>
+    <nav>
+      
+    </nav>
+  </span>
+
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../week1-janmitra/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Janmitra — Weekly Engineering Journal">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Janmitra — Weekly Engineering Journal
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../week3-jantmitra/" class="md-footer__link md-footer__link--next" aria-label="Next: Janmitra — Weekly Engineering Journal">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Janmitra — Weekly Engineering Journal
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Janmitra project team, TIET
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.footer", "header.autohide", "content.tabs.link", "navigation.tracking", "navigation.top", "toc.integrate", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="../../../javascript/arithmatex.js"></script>
+      
+    
+  </body>
+</html>
