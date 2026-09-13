@@ -1,0 +1,1693 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../week4-janmitra/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+  <title>UCS503: Software Engineering; Raghav
+    B. Venkataramaiyer @TIET</title>
+
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%2020c-4.41%200-8-3.59-8-8s3.59-8%208-8%208%203.59%208%208-3.59%208-8%208m0-18A10%2010%200%200%200%202%2012a10%2010%200%200%200%2010%2010%2010%2010%200%200%200%2010-10A10%2010%200%200%200%2012%202m1%205h-2v4H7v2h4v4h2v-4h4v-2h-4z%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="amber" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#janmitra-weekly-engineering-journal" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Janmitra" class="md-header__button md-logo" aria-label="Janmitra" data-md-component="logo">
+      
+  <img src="../../../assets/tiet-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Janmitra
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Janmitra — Weekly Engineering Journal
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Janmitra" class="md-nav__button md-logo" aria-label="Janmitra" data-md-component="logo">
+      
+  <img src="../../../assets/tiet-logo.svg" alt="logo">
+
+    </a>
+    Janmitra
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../criteria-for-project-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Criteria for Project Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Journals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Journals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../1024170394-Dhruv/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1024170394 Dhruv
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1024170394 Dhruv
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170394-Dhruv/week1-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170394-Dhruv/week2-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra - Week 2 Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170394-Dhruv/week3-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170394-Dhruv/week4-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../1024170395-paras/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1024170395 paras
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1024170395 paras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170395-paras/week1-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170395-paras/week2-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170395-paras/week3-jantmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1024170395-paras/week4-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1024170396 Harkamal
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1024170396 Harkamal
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../week1-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../week2-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../week3-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../week4-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#week-5-running-the-code-for-the-first-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Week 5 — Running the Code for the First Time
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-objective-for-the-week" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Objective for the week
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-sequence-of-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Sequence of work
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Sequence of work">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-what-arrived-from-the-rest-of-the-team-first" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 What arrived from the rest of the team first
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-first-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 First execution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-the-test-harness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 The test harness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-the-suites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 The suites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-the-defect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 The defect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-the-count" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 The count
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-individual-work-log-harkamal-singh-lubana-1024170396" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Individual work log — Harkamal Singh Lubana (1024170396)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Individual work log — Harkamal Singh Lubana (1024170396)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-the-test-harness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 The test harness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-the-suites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 The suites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-the-defect-the-suite-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 The defect the suite found
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-what-i-did-not-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 What I did not do
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-decisions-taken-this-week" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Decisions taken this week
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-problems-hit-and-how-they-were-resolved" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Problems hit and how they were resolved
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Problems hit and how they were resolved">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-the-tool-failure-handoff-trigger-cannot-fire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 The tool-failure handoff trigger cannot fire
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-three-of-my-own-test-expectations-were-wrong-not-the-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Three of my own test expectations were wrong, not the code
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-the-slug-pattern-rejects-short-identifiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 The slug pattern rejects short identifiers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-what-sqlite-does-not-cover" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 What SQLite does not cover
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-deliverables-produced-this-week" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Deliverables produced this week
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-contribution-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Contribution split
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-risks-reviewed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Risks reviewed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-carried-into-week-6-in-this-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Carried into Week 6 — in this order
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="janmitra-weekly-engineering-journal">Janmitra — Weekly Engineering Journal</h1>
+<h2 id="week-5-running-the-code-for-the-first-time">Week 5 — Running the Code for the First Time</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Course</td>
+<td>UCS503 / UCS503P — Software Engineering</td>
+</tr>
+<tr>
+<td>Institute</td>
+<td>Thapar Institute of Engineering and Technology, Patiala</td>
+</tr>
+<tr>
+<td>Project</td>
+<td>Janmitra — a voice-first civic scheme guidance platform</td>
+</tr>
+<tr>
+<td>Week</td>
+<td>1 – 7 September 2026</td>
+</tr>
+<tr>
+<td>Member</td>
+<td>Harkamal Singh Lubana (1024170396)</td>
+</tr>
+<tr>
+<td>Status at end of week</td>
+<td>The backend has been executed. 197 tests collected, 194 passing, 3 <code>xfail</code> documenting one real defect the suite found. <code>ruff</code> clean. CI runs lint and tests on every push and the signal now means something. The dominant risk carried since Week 2 — four weeks of code that had never run — is closed.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>On individual logs.</strong> Sections 1, 2, 5, 6, 7, 8 and 9 are common to the team. Section 4 is this member's individual work log.</p>
+<p><strong>On Section 2.</strong> Previous weeks logged work by day. This week's verification pass was done in one concentrated sitting rather than spread across six days, so Section 2 is ordered by the sequence the work was actually done in. Recording it as six days would be a tidier log and a false one.</p>
+</blockquote>
+<hr />
+<h2 id="1-objective-for-the-week">1. Objective for the week</h2>
+<p>Week 4 closed with an assessment rather than a deliverable: <em>the backend is structurally complete and has never been executed.</em> By our own standing rule — nothing counts as done until it has a test and a place in the demo script — none of Weeks 2, 3 or 4 was done. Everything written since the persistence layer was reviewable, not verified.</p>
+<p>Week 5 had exactly one objective: <strong>make that statement false.</strong> No new backend features until the existing ones have been run.</p>
+<p>The targets, in the dependency order Week 4 §10 set out:</p>
+<ol>
+<li>Install the dependencies and get an interpreter to import the package at all.</li>
+<li>A test harness that can stand up the whole application — routers, middleware, error handlers, database — without a Postgres container.</li>
+<li>Test suites over every module written in Weeks 2–4, at the level the requirement is stated at, not at the level of the function.</li>
+<li>CI running lint and tests on every push.</li>
+<li>An honest count at the end of what is covered and what still is not.</li>
+</ol>
+<hr />
+<h2 id="2-sequence-of-work">2. Sequence of work</h2>
+<h3 id="21-what-arrived-from-the-rest-of-the-team-first">2.1 What arrived from the rest of the team first</h3>
+<p>Before the verification pass began, a substantial merge landed from Dhruv: the LiveKit voice worker and its Gemini Live agent, a Next.js browser harness with a LiveKit token route, <code>docker-compose.yml</code> for Postgres plus the API, the Alembic migration for the seven tables, the <code>applies_when</code> guard extension to the evaluator that Week 3 had left open, the <code>janmitra-seed</code> loader, and the two GitHub Actions workflows. Eleven tests came with it, covering the evaluator's guards, two publication and handoff cases, and the voice worker's HTTP client.</p>
+<p>That closed three of the six items carried into Week 5 (migration, guard extension, CI) before this week's individual work started. It also meant the verification pass had a real CI job to land in rather than a hypothetical one.</p>
+<h3 id="22-first-execution">2.2 First execution</h3>
+<p>The dependencies had genuinely never been installed. A virtual environment, <code>pip install -e ".[dev]"</code>, and then the first ever <code>pytest</code> against this codebase. Eleven tests, all green — which proves that the modules import and that the evaluator and the voice client work, and proves nothing whatsoever about the API surface, access control, versioning, conversation state or the adapters.</p>
+<p>That gap was the week's work.</p>
+<h3 id="23-the-test-harness">2.3 The test harness</h3>
+<p>Written before any test. Described in Section 4.1.</p>
+<h3 id="24-the-suites">2.4 The suites</h3>
+<p>Ten test modules, written module by module against the requirement each one exists to satisfy. Detailed in Section 4.2.</p>
+<h3 id="25-the-defect">2.5 The defect</h3>
+<p>The suite found a real one on its first full run — the tool-failure handoff trigger cannot fire. Section 6.1.</p>
+<h3 id="26-the-count">2.6 The count</h3>
+<p>197 tests, <code>ruff</code> clean, CI green on both. Section 7.</p>
+<hr />
+<h2 id="4-individual-work-log-harkamal-singh-lubana-1024170396">4. Individual work log — Harkamal Singh Lubana (1024170396)</h2>
+<p>I wrote the verification pass over the backend I built in Weeks 3 and 4.</p>
+<h3 id="41-the-test-harness">4.1 The test harness</h3>
+<p><code>tests/conftest.py</code>. The decisions in it matter more than its length:</p>
+<p><strong>SQLite in memory, not a Postgres container.</strong> The portable <code>JSON</code>/<code>JSONB</code> column variant written in Week 2 was written for exactly this, and this is the week it paid. <code>pytest</code> stays a single command with no Docker dependency, which is what lets CI run the suite on a plain runner in seconds. Production and staging still get JSONB indexing. The cost is stated in Section 6.4.</p>
+<p><strong>A file-backed database, not <code>:memory:</code>.</strong> My first version used <code>:memory:</code> with a shared connection pool, and I changed it before writing a single test. With one shared connection a fixture session and a request session are the same transaction, which would have made the suite pass on interleaving that would deadlock or dirty-read against Postgres. A temporary file gives two real connections to one database — the shape production actually has.</p>
+<p><strong>A fresh schema and a fresh <code>create_app()</code> per test.</strong> No test can see another's rows, request IDs, published versions or dependency overrides. Test order cannot become load-bearing.</p>
+<p><strong>Settings built explicitly with <code>_env_file=None</code>.</strong> The suite must never pick up a developer's local <code>.env</code>. A test that passes because someone's machine happens to have <code>JANMITRA_ADMIN_API_KEY</code> set is worse than no test.</p>
+<p><strong>Record factories rather than fixtures on disk.</strong> <code>loan_record()</code> is a fully rule-backed scheme with an age band, a residency list, a guarded income ceiling and a conditional document; <code>pension_record()</code> is a scheme with no rule set at all, published on a checklist and a citation alone. Between them they cover both halves of the catalogue, and both shapes exist in every suite that needs them.</p>
+<h3 id="42-the-suites">4.2 The suites</h3>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Tests</th>
+<th>What it pins down</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>test_api_auth.py</code></td>
+<td>13</td>
+<td>401 for a missing or unknown key, 403 for a known key in the wrong role, across every router. The §14 unauthorised-action tests, made real.</td>
+</tr>
+<tr>
+<td><code>test_api_tools.py</code></td>
+<td>28</td>
+<td>The four tools end to end over HTTP: citation and version on every factual response, the TTG stopping rule, the trace from conversation event to audit row to service version.</td>
+</tr>
+<tr>
+<td><code>test_api_dashboard.py</code></td>
+<td>18</td>
+<td>Sessions, publication and version history, the reviewer's diff, the operator queue with its conversation context, audit filtering.</td>
+</tr>
+<tr>
+<td><code>test_catalogue_service.py</code></td>
+<td>17</td>
+<td>Search scoring and stable ordering, append-plus-repoint versioning, the field-level diff.</td>
+</tr>
+<tr>
+<td><code>test_conversation_service.py</code></td>
+<td>10</td>
+<td>The TTG clock written once and never back-filled, per-call event numbering, the failure streak.</td>
+</tr>
+<tr>
+<td><code>test_eligibility_answers.py</code></td>
+<td>42</td>
+<td>Answer coercion and validation, every comparison operator, <code>any_of</code> / <code>none_of</code>, document checklists, language fallback.</td>
+</tr>
+<tr>
+<td><code>test_handoff_service.py</code></td>
+<td>21</td>
+<td>The full trigger precedence table and the <code>new → contacted → resolved</code> walk.</td>
+</tr>
+<tr>
+<td><code>test_model_adapters.py</code></td>
+<td>24</td>
+<td>Mock determinism including reproducible failure injection, the failure adapter, the selection factory.</td>
+</tr>
+<tr>
+<td><code>test_resilience.py</code></td>
+<td>7</td>
+<td>Degrade-never-corrupt: an unavailable model still queues the handoff, and never leaves a half-written call.</td>
+</tr>
+<tr>
+<td><code>test_seed_records.py</code></td>
+<td>6</td>
+<td>The loader refuses unverified records, by name, before touching the database.</td>
+</tr>
+</tbody>
+</table>
+<p>186 tests added to the 11 that existed.</p>
+<p>Three of those deserve specific mention, because they test decisions rather than functions:</p>
+<p><strong>The TTG stopping rule (D-44).</strong> A cited match stops the clock; a second match does not move it; a <code>needs_more_info</code> result does not start it; a zero-match search does not start it. This is the primary evaluation metric of the project, and it is now impossible to make it flattering by accident.</p>
+<p><strong>The handoff refusal (D-45).</strong> <code>request_handoff</code> returns 409 and creates nothing when no deterministic trigger fired. The test asserts the empty queue, not just the status code — the refusal has to be a refusal to <em>write</em>, not merely a refusal to reply.</p>
+<p><strong>Degrade, never corrupt (D-49).</strong> The failure adapter is injected through the same dependency the real one uses, so the test exercises the production path. An unavailable summariser still produces a queued handoff carrying the trimmed transcript. A <code>ModelUnavailable</code> escaping a dependency maps to 503, not 500.</p>
+<h3 id="43-the-defect-the-suite-found">4.3 The defect the suite found</h3>
+<p>Described in Section 6.1. Three tests document it as <code>xfail(strict=True)</code> rather than being deleted or weakened to match the broken behaviour. I have not applied the fix — the reasoning is in 6.1.</p>
+<h3 id="44-what-i-did-not-do">4.4 What I did not do</h3>
+<p>I did not write the seed fixtures. <code>data/</code> still contains only its README; the flagship scheme is still not encoded as a reviewed record. The <code>applies_when</code> blocker that stopped me last week is gone — Dhruv shipped the guard extension and my tests cover it — so the only thing standing between here and the fixtures is the review work itself, which is exactly the work that cannot be shortcut. It is the top of my Week 6 list.</p>
+<p>I also did not touch the frontend harness or the voice worker beyond reading them. Their tests are Dhruv's.</p>
+<hr />
+<h2 id="5-decisions-taken-this-week">5. Decisions taken this week</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Decision</th>
+<th>Rationale</th>
+<th>Alternatives rejected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D-53</td>
+<td>The unit suite runs on SQLite, not a Postgres container</td>
+<td>The portable JSON column variant was written for this; <code>pytest</code> stays one command and CI needs no service container</td>
+<td>Testcontainers; a required local Postgres</td>
+</tr>
+<tr>
+<td>D-54</td>
+<td>A file-backed SQLite database, not <code>:memory:</code> with a shared connection</td>
+<td>One shared connection makes a fixture session and a request session the same transaction, hiding concurrency behaviour production would have</td>
+<td><code>:memory:</code> with <code>StaticPool</code></td>
+</tr>
+<tr>
+<td>D-55</td>
+<td>A fresh schema and a fresh application per test</td>
+<td>Test order must never become load-bearing</td>
+<td>Session-scoped schema with truncation between tests</td>
+</tr>
+<tr>
+<td>D-56</td>
+<td>Test settings are constructed with <code>_env_file=None</code></td>
+<td>A suite that passes because of a developer's local <code>.env</code> is worse than no suite</td>
+<td>Rely on the default env prefix</td>
+</tr>
+<tr>
+<td>D-57</td>
+<td>Tests are written against the requirement, not the function</td>
+<td>The value is in pinning D-44, D-45 and D-49 down, not in line coverage</td>
+<td>Coverage-target-driven testing</td>
+</tr>
+<tr>
+<td>D-58</td>
+<td>A found defect is recorded as <code>xfail(strict=True)</code>, not deleted and not fixed silently</td>
+<td>The suite stays green and honest, and the marker fails loudly the moment someone fixes the bug</td>
+<td>Weaken the test to match the bug; leave the suite red</td>
+</tr>
+<tr>
+<td>D-59</td>
+<td>The fix for the tool-failure defect is deferred to a reviewed change, not slipped into the test commit</td>
+<td>It is a transaction-boundary change in a shared dependency; it deserves its own review, not a footnote in a test PR</td>
+<td>Fix it inline this week</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-problems-hit-and-how-they-were-resolved">6. Problems hit and how they were resolved</h2>
+<h3 id="61-the-tool-failure-handoff-trigger-cannot-fire">6.1 The tool-failure handoff trigger cannot fire</h3>
+<p><strong>The defect.</strong> Three sites in <code>app/api/tools.py</code> increment the conversation's tool-failure streak and then raise <code>HTTPException</code> — the 404 for an unknown slug in <code>check_eligibility</code> and in <code>get_documents</code>, and the 422 for an answer-validation failure. <code>app/db.py</code> rolls the session back on <em>any</em> exception leaving the request.</p>
+<p>So the increment never survives the request that made it. The counter is permanently zero, and <code>HandoffTrigger.TOOL_FAILURE</code> from context.md §18.3 is unreachable through the API. A citizen whose answers the agent repeatedly cannot parse is never escalated to a person on that basis — which is precisely the failure mode the trigger exists to catch, and it is the loop I described myself as "closing" in last week's §4.2.</p>
+<p><strong>How it was found.</strong> Not by reading the code — I wrote that code four weeks ago and read it many times since. It was found by asserting the <em>requirement</em> over HTTP: call the tool twice with a bad slug, then call <code>request_handoff</code> with signals that should fire nothing else, and expect <code>tool_failure</code>. It returned 409.</p>
+<p><strong>Confirmed, not assumed.</strong> I temporarily added <code>await session.commit()</code> after each <code>note_tool_failure</code> and re-ran: all three tests flipped to <code>XPASS</code>. Then I reverted <code>app/api/tools.py</code> to the committed version — <code>git status</code> confirms no application code changed this week.</p>
+<p><strong>Why it is not fixed yet.</strong> The obvious fix commits mid-request inside a dependency whose whole contract is "one session per request, committed on a clean exit". In these three paths nothing else is pending, so committing there is safe today — but that is a property of the current handlers, not a guarantee, and someone adding a write above the failure point later would silently start committing partial work on an error path. The alternatives are a separate short-lived session for the counter, or moving the counter write into the exception handler where the request outcome is already known. That is a design decision about transaction boundaries in a shared dependency, and it belongs in its own reviewed change (D-59). The three <code>xfail(strict=True)</code> markers hold the requirement in place until then and will fail the build the moment it is fixed, so it cannot be quietly closed.</p>
+<p><strong>What it says about the four unexecuted weeks.</strong> One real defect, in a path that has no happy-case symptom — the API returns exactly the right status code and exactly the right body; only the invisible side effect is lost. It is a good argument for the rule we set and then broke: nothing counts as done until it has been run.</p>
+<h3 id="62-three-of-my-own-test-expectations-were-wrong-not-the-code">6.2 Three of my own test expectations were wrong, not the code</h3>
+<p>Worth recording because it is evidence the tests are testing something.</p>
+<p><strong>Search scoring.</strong> I asserted that a scheme whose description mentions a micro enterprise would match "small business loan". It does not — the tokeniser strips stopwords and there is no token overlap. The scorer was right and my expectation was lazy. Fixed the fixture, not the scorer.</p>
+<p><strong>Version isolation.</strong> I asserted that republishing a scheme with different aliases would make an old-alias query return nothing. It still matches, at a lower score, through the scheme's <em>name</em> tokens. Again the code was right. I rewrote the test to assert what actually matters — that search reads the current version, that the superseded alias no longer produces the strong alias-grade match, and that the new alias does.</p>
+<p><strong>The guarded question.</strong> I expected <code>annual-income</code> to be listed as a missing answer when only <code>age</code> was known. It is not, and should not be: its condition is guarded on <code>occupation</code>, which is itself unknown, so the engine asks for the guard first. That is the three-valued design from Week 3 behaving exactly as intended — the agent asks for the answer it actually needs next, rather than reading out a question it may not need at all.</p>
+<p>In all three cases I changed the test. Recording it because the opposite temptation — adjusting the code until the test I first imagined passes — is how a suite quietly stops being evidence.</p>
+<h3 id="63-the-slug-pattern-rejects-short-identifiers">6.3 The slug pattern rejects short identifiers</h3>
+<p>Writing synthetic rule sets, <code>Comparison(var="x", ...)</code> fails validation: the <code>Slug</code> type requires at least three characters. Briefly irritating, then obviously correct — a question id of <code>x</code> in a reviewed government record would be a defect. Renamed the synthetic ids and moved on. Noting it only because it is the schema's constraint reaching into a place I did not expect it to, which is what a frozen canonical record is supposed to do.</p>
+<h3 id="64-what-sqlite-does-not-cover">6.4 What SQLite does not cover</h3>
+<p>Stated plainly so it is not mistaken for coverage we have:</p>
+<ul>
+<li>The <code>JSONB</code> variant of the JSON columns is never exercised. The suite runs the portable <code>JSON</code> path.</li>
+<li>Concurrent writes are not tested. The <code>uq_conversation_event_seq</code> constraint that stops two replicas interleaving events on one call is asserted for correct single-writer numbering only; the race it exists to lose is not simulated.</li>
+<li>The Alembic migration is not applied by the unit suite, which builds the schema from the models directly. A drift between <code>alembic/versions/001_initial_schema.py</code> and <code>app/models</code> would not be caught.</li>
+</ul>
+<p>The third is the one that will bite first. A migration check against a real Postgres belongs in CI as a separate job, and it goes on the Week 6 list.</p>
+<hr />
+<h2 id="7-deliverables-produced-this-week">7. Deliverables produced this week</h2>
+<ul>
+<li><code>tests/conftest.py</code> — SQLite-backed harness standing up the full application with per-test isolation, plus rule-backed and rule-free record factories</li>
+<li>Ten test modules covering access control, the four tool endpoints, the dashboard and operator routes, catalogue search and versioning, conversation state and the TTG clock, the eligibility engine's answer handling and combinators, the handoff trigger table and status walk, the three adapter modes, model-failure degradation, and the seed loader</li>
+<li>186 tests added; 197 collected in total, 194 passing, 3 <code>xfail(strict=True)</code></li>
+<li><code>ruff check .</code> clean across the package and the suite</li>
+<li>One real defect found, confirmed by experiment, and documented in a form that fails the build when it is fixed</li>
+<li>CI (arriving from Dhruv this week) now runs lint and tests on every push — a green pipeline that means something</li>
+</ul>
+<hr />
+<h2 id="8-contribution-split">8. Contribution split</h2>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Week 5 contribution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dhruv Srivastava (1024170394)</td>
+<td>The LiveKit voice worker and Gemini Live agent, the Next.js browser harness and token route, <code>docker-compose.yml</code>, the Alembic migration, the <code>applies_when</code> guard extension, the seed loader, and the two CI workflows — with the first eleven tests.</td>
+</tr>
+<tr>
+<td>Harkamal Singh Lubana (1024170396)</td>
+<td>The test harness and the verification pass over Weeks 2–4: access control, the tool endpoints, the dashboard and operator routes, catalogue versioning and search, conversation state and TTG, the eligibility engine's answer handling, the handoff trigger table, the adapters and failure degradation, and the seed loader. Found and documented the tool-failure trigger defect.</td>
+</tr>
+<tr>
+<td>Paras (1024170395)</td>
+<td>Individual log maintained in his own journal and not duplicated here.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="9-risks-reviewed">9. Risks reviewed</h2>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Status this week</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Four weeks of unexecuted code</td>
+<td><strong>Closed.</strong> The backend has been run. 197 tests, one real defect found, CI green on lint and tests.</td>
+</tr>
+<tr>
+<td>CI deferred past the point the build plan asked for it</td>
+<td><strong>Closed.</strong> Workflows landed this week and the backend job runs <code>ruff</code> and <code>pytest</code> on every push.</td>
+</tr>
+<tr>
+<td>Rule model expressiveness (<code>applies_when</code>)</td>
+<td><strong>Closed.</strong> The guard extension shipped and is covered by the engine and answer suites.</td>
+</tr>
+<tr>
+<td>Tool-failure handoff trigger unreachable</td>
+<td><strong>New, open.</strong> Found by the suite this week. Held by three strict <code>xfail</code> markers; fix scheduled as a reviewed change in Week 6 (D-59).</td>
+</tr>
+<tr>
+<td>Seed fixtures still absent</td>
+<td><strong>Open and now the blocking one.</strong> No reviewed scheme record exists, so there is nothing to demo and nothing for an end-to-end voice run to talk about. Top of Week 6.</td>
+</tr>
+<tr>
+<td>Migration drift from the models</td>
+<td><strong>New, open.</strong> The unit suite builds the schema from the models and never applies Alembic. A Postgres migration job is needed in CI.</td>
+</tr>
+<tr>
+<td>Telephony / SIP provisioning delay</td>
+<td>Unchanged. Still the largest schedule risk. The browser harness now gives us a way to demonstrate the voice path without it, which reduces the demo risk but not the pilot risk.</td>
+</tr>
+<tr>
+<td>Scope creep</td>
+<td>None. No backend feature work this week by deliberate choice.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="10-carried-into-week-6-in-this-order">10. Carried into Week 6 — in this order</h2>
+<ol>
+<li><strong>Seed fixtures.</strong> The initial working set of schemes as hand-reviewed JSON, all <code>pending_review</code>, with the flagship fully rule-backed now that guards exist. Nothing else I do matters until there is a record to talk about.</li>
+<li><strong>The tool-failure trigger fix</strong>, as its own reviewed change, with a decision on where the counter write belongs relative to the request transaction. The three <code>xfail</code> markers come out with it.</li>
+<li><strong>A migration job in CI</strong> — apply Alembic to a real Postgres and assert no drift from the models.</li>
+<li><strong>An end-to-end run</strong> over the browser harness against seeded data: connect, ask, get a cited answer, check eligibility, request a person. This is the first time the whole system will have been exercised as one thing.</li>
+<li><strong>A first Time-to-Guidance measurement</strong> from that run — the metric has been defined and tested since Week 3 and has never once been recorded against a real conversation.</li>
+</ol>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 13, 2026 13:18:49 UTC">September 13, 2026</span>
+  </span>
+
+    
+    
+    
+      
+  
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Contributors">
+      
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9z"/></svg>
+      
+    </span>
+    <nav>
+      
+    </nav>
+  </span>
+
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../week4-janmitra/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Janmitra — Weekly Engineering Journal">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Janmitra — Weekly Engineering Journal
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Janmitra project team, TIET
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.footer", "header.autohide", "content.tabs.link", "navigation.tracking", "navigation.top", "toc.integrate", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="../../../javascript/arithmatex.js"></script>
+      
+    
+  </body>
+</html>
