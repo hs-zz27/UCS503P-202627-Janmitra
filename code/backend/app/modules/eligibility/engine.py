@@ -12,7 +12,9 @@ fact nobody asked.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from decimal import Decimal, InvalidOperation
 from enum import StrEnum
+from math import isfinite
 from typing import Any
 
 from app.schemas.service_record import (
@@ -100,8 +102,16 @@ def _coerce(question: EligibilityQuestion, raw: Any) -> Any:
             if isinstance(raw, bool):
                 raise ValueError(f"{question.id}: expected a number, got a yes/no answer")
             try:
-                value = int(raw) if question.type is AnswerType.INTEGER else float(raw)
-            except (TypeError, ValueError) as exc:
+                if question.type is AnswerType.INTEGER:
+                    number = Decimal(str(raw))
+                    if not number.is_finite() or number != number.to_integral_value():
+                        raise ValueError("number must be a finite integer")
+                    value = int(number)
+                else:
+                    value = float(raw)
+                    if not isfinite(value):
+                        raise ValueError("number must be finite")
+            except (TypeError, ValueError, OverflowError, InvalidOperation) as exc:
                 raise ValueError(f"{question.id}: expected a number, got {raw!r}") from exc
             if question.min is not None and value < question.min:
                 raise ValueError(

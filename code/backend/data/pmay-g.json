@@ -1,0 +1,31 @@
+{
+  "slug": "pmay-g",
+  "name": {"en": "Pradhan Mantri Awaas Yojana - Gramin"},
+  "aliases": ["PMAY-G", "rural housing", "rural house grant", "pucca house", "Awaas Plus"],
+  "category": "grant",
+  "description": {
+    "en": "Rural housing assistance for eligible houseless households and households living in kutcha or dilapidated houses, with beneficiary identification and verification through the programme's survey and Gram Sabha process."
+  },
+  "benefit_summary": {
+    "en": "The programme supports construction of a pucca house with basic amenities. Unit assistance depends on the area classification and can converge with sanitation, wage-employment, electricity, drinking-water, and LPG programmes under current rules."
+  },
+  "eligibility_summary": {
+    "en": "The official self-check considers rural residence, housing condition, room count, household assets, KCC limit, government employment, registered enterprise, monthly income, taxes, and landholding. Passing a self-check is not a sanction; survey inclusion and Gram Sabha or government verification still apply."
+  },
+  "rule_set": null,
+  "documents": [],
+  "steps": [
+    {"order": 1, "instruction": {"en": "Complete the current official PMAY-G eligibility self-check or Awaas+ survey where it is open."}},
+    {"order": 2, "instruction": {"en": "Contact the Gram Panchayat or block rural-development office to confirm survey-list and verification status."}},
+    {"order": 3, "instruction": {"en": "If selected and sanctioned, follow the construction-stage and account-verification instructions in AwaasSoft or the authorised local process."}}
+  ],
+  "citation": {
+    "source_url": "https://pmayg.dord.gov.in/netiayHome/questions.html",
+    "source_title": "PMAY-G Eligibility Self-Check",
+    "publisher": "Ministry of Rural Development",
+    "verified_on": "2026-09-07",
+    "verification_state": "pending_review",
+    "verified_by": null,
+    "snapshot_id": null
+  }
+}

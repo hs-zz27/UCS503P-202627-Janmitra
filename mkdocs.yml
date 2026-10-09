@@ -1,4 +1,6 @@
 site_name: "Janmitra"
+hooks:
+  - docs_hooks.py
 
 plugins:
 - search
@@ -11,7 +13,6 @@ plugins:
 - git-revision-date-localized
 # - git-committers:
 #     repository: "tiet-unc512/tiet-unc512.github.io"
-- git-authors
 - mkdocstrings:
     handlers:
       python:
@@ -27,7 +28,7 @@ plugins:
 
 theme:
   name: material
-  custom_dir: docs/assets/theme-overrides
+  custom_dir: assets/theme-overrides
   features:
     - navigation.footer
     - header.autohide
@@ -61,6 +62,7 @@ markdown_extensions:
   - attr_list
   - toc:
       permalink: true
+      toc_depth: 4
   - footnotes
   - pymdownx.arithmatex:
       generic: true
@@ -90,6 +92,4 @@ markdown_extensions:
   - pymdownx.mark
   - pymdownx.tilde
   # - mkdocs-click
-  - toc:
-      toc_depth: 4
   - sane_lists

@@ -1,0 +1,54 @@
+{
+  "slug": "apy",
+  "name": {"en": "Atal Pension Yojana"},
+  "aliases": ["APY", "Atal pension", "retirement pension", "bank pension scheme"],
+  "category": "pension",
+  "description": {
+    "en": "A voluntary contributory pension scheme for eligible Indian citizens, especially people in the unorganised sector, administered through a bank or post-office savings account."
+  },
+  "benefit_summary": {
+    "en": "After age 60, the subscriber receives the selected government-guaranteed minimum pension of Rs 1,000, Rs 2,000, Rs 3,000, Rs 4,000, or Rs 5,000 per month. Contribution depends on entry age and selected pension; spouse and nominee benefits apply under scheme rules."
+  },
+  "eligibility_summary": {
+    "en": "An Indian citizen aged 18 through 40 with a savings bank or post-office savings account may join. A person who is or has been an income-tax payer as of application cannot open a new APY account under the current rule."
+  },
+  "rule_set": {
+    "rule_set_id": "apy-basic-eligibility",
+    "questions": [
+      {"id": "age", "prompt": {"en": "What is your age in completed years?"}, "type": "integer", "min": 0, "max": 120},
+      {"id": "indian-citizen", "prompt": {"en": "Are you an Indian citizen?"}, "type": "boolean"},
+      {"id": "has-savings-account", "prompt": {"en": "Do you have a bank or post-office savings account?"}, "type": "boolean"},
+      {"id": "income-tax-payer", "prompt": {"en": "Are you, or have you been, an income-tax payer as of this application?"}, "type": "boolean"}
+    ],
+    "conditions": [
+      {"id": "minimum-entry-age", "description": {"en": "The applicant is at least 18 years old."}, "test": {"var": "age", "op": "gte", "value": 18}},
+      {"id": "maximum-entry-age", "description": {"en": "The applicant is no more than 40 years old at entry."}, "test": {"var": "age", "op": "lte", "value": 40}},
+      {"id": "citizenship", "description": {"en": "The applicant is an Indian citizen."}, "test": {"var": "indian-citizen", "op": "eq", "value": true}},
+      {"id": "savings-account", "description": {"en": "The applicant has a bank or post-office savings account."}, "test": {"var": "has-savings-account", "op": "eq", "value": true}},
+      {"id": "taxpayer-exclusion", "description": {"en": "The applicant is or has been an income-tax payer as of application."}, "test": {"var": "income-tax-payer", "op": "eq", "value": true}}
+    ],
+    "decision": {
+      "all_of": ["minimum-entry-age", "maximum-entry-age", "citizenship", "savings-account"],
+      "none_of": ["taxpayer-exclusion"]
+    }
+  },
+  "documents": [
+    {"id": "apy-form", "name": {"en": "Completed APY registration form or eAPY application"}},
+    {"id": "savings-account", "name": {"en": "Bank or post-office savings account details"}},
+    {"id": "identity-kyc", "name": {"en": "Identity and KYC details requested by the account provider"}}
+  ],
+  "steps": [
+    {"order": 1, "instruction": {"en": "Use eAPY or approach the bank branch or post office where the savings account is held."}},
+    {"order": 2, "instruction": {"en": "Choose the pension amount and review the age-based contribution before enrolling."}},
+    {"order": 3, "instruction": {"en": "Maintain the account balance required for scheduled contributions and keep spouse and nominee details current."}}
+  ],
+  "citation": {
+    "source_url": "https://pfrda.org.in/web/pfrda/schemes/atal-pension-yojana-apy",
+    "source_title": "Atal Pension Yojana (APY)",
+    "publisher": "Pension Fund Regulatory and Development Authority",
+    "verified_on": "2026-09-07",
+    "verification_state": "pending_review",
+    "verified_by": null,
+    "snapshot_id": null
+  }
+}

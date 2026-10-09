@@ -471,3 +471,9 @@ context.md
 .next/
 node_modules/
 .env.local
+# Local generated smoke-test audio and runtime logs.
+.janmitra/
+
+# Keep application source visible despite the generic Python lib/ rule.
+!code/frontend/lib/
+!code/frontend/lib/**

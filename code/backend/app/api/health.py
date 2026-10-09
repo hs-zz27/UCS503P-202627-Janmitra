@@ -25,12 +25,13 @@ async def healthz(settings: Settings = Depends(get_settings)) -> dict[str, str]:
 @router.get("/readyz")
 async def readyz(
     response: Response,
-    session: AsyncSession = Depends(get_session),
+    session: AsyncSession = Depends(get_session, scope="function"),
 ) -> dict[str, str]:
     """Readiness: can this replica actually serve a request."""
     try:
         await session.execute(text("SELECT 1"))
-    except Exception as exc:
+    except Exception:
+        await session.rollback()
         response.status_code = status.HTTP_503_SERVICE_UNAVAILABLE
-        return {"status": "unavailable", "database": "error", "detail": str(exc)[:200]}
+        return {"status": "unavailable", "database": "error"}
     return {"status": "ready", "database": "ok"}

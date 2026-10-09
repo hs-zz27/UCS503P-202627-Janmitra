@@ -10,6 +10,7 @@ from app.adapters.model.base import (
     DraftRecord,
     Intent,
     IssueSummary,
+    KnowledgeAnswer,
     ModelAdapter,
     ModelUnavailable,
 )
@@ -22,6 +23,15 @@ class FailureModelAdapter(ModelAdapter):
         raise ModelUnavailable("failure adapter: model is unavailable")
 
     async def summarize_issue(self, transcript: str, *, language: str = "en") -> IssueSummary:
+        raise ModelUnavailable("failure adapter: model is unavailable")
+
+    async def answer_scheme_question(
+        self,
+        query: str,
+        *,
+        language: str = "en",
+        reference_records: list[dict[str, object]] | None = None,
+    ) -> KnowledgeAnswer:
         raise ModelUnavailable("failure adapter: model is unavailable")
 
     async def draft_service_record(self, source_text: str, *, source_url: str) -> DraftRecord:

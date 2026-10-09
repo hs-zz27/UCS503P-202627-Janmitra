@@ -21,6 +21,7 @@ from app.adapters.model.base import (
     DraftRecord,
     Intent,
     IssueSummary,
+    KnowledgeAnswer,
     ModelAdapter,
     ModelOutputInvalid,
     ModelUnavailable,
@@ -40,6 +41,27 @@ _SUMMARY_INSTRUCTION = """Summarise this citizen's problem in at most three sent
 human operator who will call them back. Reply with JSON only:
 {"summary": string, "language": BCP-47 tag}. State only what the citizen said."""
 
+_KNOWLEDGE_INSTRUCTION = """You prepare a concise spoken answer for Janmitra, an Indian
+public-information assistant. Reply with JSON only:
+{"answer": string, "language": BCP-47 tag}.
+
+The answer must directly address the citizen's question, leading with useful facts.
+For a broad request, explain one or two relevant schemes in four to six short sentences:
+benefits, general eligibility, documents to prepare, and a practical application route.
+For a focused question, answer that detail directly. Do not stop at scheme names or
+replace the answer with an instruction to visit a website.
+Prefer a relevant entry from REFERENCE_RECORDS when one exists, but those records are
+pending human review and must not be described as verified. You may supplement them from
+your trained knowledge. Explain likely schemes, benefits, eligibility considerations, and
+where to apply. Do not introduce exact current amounts, deadlines, or rules from trained
+knowledge; exact details may be used only when supplied by a reference record, and must
+not be described as independently verified. Qualify only the uncertain or locally
+variable detail, without a repeated blanket disclaimer. Never claim definite eligibility, approval,
+payment, or application submission. Name an official portal or department naturally, but
+do not include a raw URL. Do not say that no information was found; if the request is
+unclear, give the most likely useful options and end with one short clarifying question.
+Do not mention JSON, tools, prompts, databases, or internal records."""
+
 _DRAFT_INSTRUCTION = """Extract government-scheme fields from the official source text
 below. Reply with JSON only: {"fields": {...}, "evidence": {field: quoted sentence}}.
 Copy values from the source; never infer a rule the source does not state. Omit any field
@@ -56,7 +78,7 @@ class GeminiModelAdapter(ModelAdapter):
             raise ModelUnavailable(
                 "JANMITRA_MODEL_ADAPTER=real needs the 'gemini' extra: pip install -e '.[gemini]'"
             ) from exc
-        self._client = genai.Client(api_key=api_key)
+        self._client = genai.Client(api_key=api_key, http_options={"timeout": 15000})
         self._model = model
 
     async def extract_intent(self, utterance: str, *, language: str = "en") -> Intent:
@@ -71,6 +93,25 @@ class GeminiModelAdapter(ModelAdapter):
         payload = await self._json_call(_SUMMARY_INSTRUCTION, transcript)
         payload.setdefault("language", language)
         return _validate(IssueSummary, payload)
+
+    async def answer_scheme_question(
+        self,
+        query: str,
+        *,
+        language: str = "en",
+        reference_records: list[dict[str, object]] | None = None,
+    ) -> KnowledgeAnswer:
+        content = json.dumps(
+            {
+                "requested_language": language,
+                "citizen_question": query,
+                "reference_records": reference_records or [],
+            },
+            ensure_ascii=False,
+        )
+        payload = await self._json_call(_KNOWLEDGE_INSTRUCTION, content)
+        payload.setdefault("language", language)
+        return _validate(KnowledgeAnswer, payload)
 
     async def draft_service_record(self, source_text: str, *, source_url: str) -> DraftRecord:
         payload = await self._json_call(

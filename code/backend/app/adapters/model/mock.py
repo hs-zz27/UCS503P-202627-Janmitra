@@ -16,6 +16,7 @@ from app.adapters.model.base import (
     Intent,
     IntentAction,
     IssueSummary,
+    KnowledgeAnswer,
     ModelAdapter,
     ModelUnavailable,
 )
@@ -87,6 +88,30 @@ class MockModelAdapter(ModelAdapter):
         await self._simulate(transcript)
         collapsed = " ".join(transcript.split())
         return IssueSummary(summary=collapsed[:1000] or "(no summary captured)", language=language)
+
+    async def answer_scheme_question(
+        self,
+        query: str,
+        *,
+        language: str = "en",
+        reference_records: list[dict[str, object]] | None = None,
+    ) -> KnowledgeAnswer:
+        await self._simulate(query)
+        records = reference_records or []
+        if records:
+            name = str(records[0].get("name", "a government scheme"))
+            answer = (
+                f"This is general information that Janmitra has not yet verified and it may "
+                f"be outdated. A potentially relevant programme is {name}. Please confirm "
+                "the current rules through its official government source."
+            )
+        else:
+            answer = (
+                "This is general information that Janmitra has not yet verified and it may "
+                f"be outdated. Government support may be available for: {query}. Please "
+                "confirm the current scheme and rules through an official government source."
+            )
+        return KnowledgeAnswer(answer=answer, language=language)
 
     async def draft_service_record(self, source_text: str, *, source_url: str) -> DraftRecord:
         await self._simulate(source_url)

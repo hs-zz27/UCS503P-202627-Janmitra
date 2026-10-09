@@ -15,21 +15,26 @@ vice versa.
 | PostgreSQL | `docker-compose.yml` | Durable conversations, records, handoffs, and audit data |
 | Alembic | `code/backend/alembic` | Repeatable schema creation and upgrades |
 | Voice worker | `code/backend/app/voice` | LiveKit room lifecycle, Gemini Live session, and HTTP tool calls |
-| Browser harness | `code/frontend` | Development-only microphone/call interface |
+| Browser voice interface | `code/frontend` | Microphone input, streamed audio output, call controls |
 
 The system remains a modular monolith. The voice worker does not duplicate eligibility,
-catalogue, or handoff rules: it calls the API with the voice role. This keeps phone and
-browser channels behaviorally consistent and makes domain decisions testable without a
-model or media session.
+catalogue, or handoff rules: it calls the API with the voice role. This keeps browser
+voice consistent with the API and makes domain decisions testable without a
+model or media session. The current product uses the browser channel; SIP trunks,
+telephone dialing, and live phone transfers are outside this implementation.
 
 ## Request flow
 
 1. The worker creates a conversation when a LiveKit participant connects.
 2. User and assistant transcript events are persisted through the conversation API.
-3. Gemini may invoke only the exposed tools: service search, eligibility, documents,
-   and handoff.
-4. Factual responses originate from a published, verified service record and retain its
-   citation and service version.
+3. Gemini can invoke the exposed tools for service search, eligibility, documents, and
+   handoff.
+4. Scheme retrieval ranks published records and pending references together, with a
+   published version replacing a local draft of the same slug. At most three records
+   return in total; `context_order` preserves ranking across both kinds. Citations,
+   versions and review metadata remain attached. Spoken answers lead with grounded
+   facts and qualify actual uncertainty. The voice path does not wait for a separate
+   text model to draft an answer.
 5. A deterministic trigger creates a handoff. The conversation is marked `handed_off`
    immediately, preventing later writes from changing the closed record.
 6. Operators view the queued request with its conversation events; administrators can
@@ -41,27 +46,31 @@ model or media session.
 - LiveKit API secrets stay in the Next.js server-side token route and worker process.
 - Service publication rejects records whose citations are not verified.
 - Eligibility rules are evaluated by code, not inferred by the language model.
+- Trained-knowledge fallback cannot claim verified eligibility, submission, approval,
+  payment, or appointment status.
+- Pending source records remain unverified even when their contents are useful retrieval
+  context. They cannot support a verified eligibility verdict.
 - The seed command validates every record through the same Pydantic schema and refuses
   unverified data.
 
-## Parallel prototype adoption
+## Voice design
 
-The useful implementation in `D:\Janmitra` was adopted selectively:
+The browser sends microphone audio over WebRTC to LiveKit. The worker maintains one
+native audio session with `gemini-3.1-flash-live-preview`; tool results return to that
+same model for the spoken response. There is no separate speech-to-text or text-to-speech
+stage and no alternate voice-model fallback. Gemini handles turn detection with explicit
+speech endpointing and `low` thinking by default. The thinking level is configurable
+within the same model. Backend text tasks remain separate from
+the latency-sensitive voice retrieval path.
 
-- LiveKit/Gemini voice integration and a browser call harness
-- initial database migration and containerized development workflow
-- seed-command and CI patterns
-- focused voice-client and lifecycle tests
-
-It was not copied wholesale. Its narrower database and direct worker persistence would
-have replaced the current versioned catalogue, deterministic eligibility engine, audit
-trail, and role-gated API. The adopted worker instead uses the existing API as its single
-domain boundary. Prototype package versions were also updated where security advisories
-or incompatible duplicate protocol types were present.
+See [Voice architecture](voice-architecture.md) for the retrieval contract, assistance
+behavior, timing instrumentation, evaluation method and known limitations.
 
 ## Service data
 
-No government-service facts are fabricated or seeded by default. Add one reviewed JSON
-record per service under `code/backend/data`, ensure every citation is marked verified,
-then run `janmitra-seed data` from `code/backend`. Publication creates an immutable new
-version while the service points to its current published version.
+Bundled service records under `code/backend/data` remain pending human review. They may
+provide explicitly unverified retrieval context, but they are not automatically seeded
+as verified facts. Check the official sources listed in `data/REVIEW.md` before using the
+reviewer's explicit `janmitra-seed data --confirm-reviewed --actor "Your Name"`
+attestation. Publication creates an immutable new version while the service points to
+its current published version.

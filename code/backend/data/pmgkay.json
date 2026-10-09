@@ -1,0 +1,34 @@
+{
+  "slug": "pmgkay",
+  "name": {"en": "Pradhan Mantri Garib Kalyan Anna Yojana"},
+  "aliases": ["PMGKAY", "free ration", "free food grain", "ration card food", "One Nation One Ration Card"],
+  "category": "grant",
+  "description": {
+    "en": "Free foodgrain through the Targeted Public Distribution System for eligible Antyodaya Anna Yojana and Priority Household ration-card beneficiaries."
+  },
+  "benefit_summary": {
+    "en": "Antyodaya households receive 35 kg of foodgrain per family per month and Priority Household beneficiaries receive 5 kg per person per month under the current central entitlement. Portability is supported through One Nation One Ration Card."
+  },
+  "eligibility_summary": {
+    "en": "The household or person must be identified under the applicable Antyodaya Anna Yojana or Priority Household category and hold the relevant ration-card entitlement. State and Union Territory authorities identify eligible households."
+  },
+  "rule_set": null,
+  "documents": [
+    {"id": "ration-card", "name": {"en": "Valid AAY or PHH ration card or entitlement details"}},
+    {"id": "aadhaar-if-seeded", "name": {"en": "Aadhaar authentication where it is linked and required by the ration system"}, "notes": {"en": "Ask the fair-price shop or food department about an approved exception when authentication fails."}}
+  ],
+  "steps": [
+    {"order": 1, "instruction": {"en": "Check the household's AAY or PHH ration-card entitlement with the state food department."}},
+    {"order": 2, "instruction": {"en": "Collect the monthly entitlement from an authorised fair-price shop, including through portability where available."}},
+    {"order": 3, "instruction": {"en": "Use the state food-department grievance channel if quantity, authentication, or portability fails."}}
+  ],
+  "citation": {
+    "source_url": "https://www.myscheme.gov.in/schemes/pm-gkay?_x_tr_hist=true",
+    "source_title": "Pradhan Mantri Garib Kalyan Anna Yojana",
+    "publisher": "Department of Food and Public Distribution via myScheme",
+    "verified_on": "2026-09-07",
+    "verification_state": "pending_review",
+    "verified_by": null,
+    "snapshot_id": null
+  }
+}

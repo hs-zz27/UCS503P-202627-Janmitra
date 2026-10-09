@@ -58,6 +58,15 @@ class IssueSummary(BaseModel):
     language: str = "en"
 
 
+class KnowledgeAnswer(BaseModel):
+    """A ready-to-speak, explicitly unverified answer for a catalogue gap."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    answer: str = Field(min_length=1, max_length=4000)
+    language: str = "en"
+
+
 class DraftRecord(BaseModel):
     """Fields proposed from an imported source, for human review. Deliberately loose: the
     reviewer, not the model, is what makes it a service record (context.md §18.3)."""
@@ -79,6 +88,15 @@ class ModelAdapter(ABC):
 
     @abstractmethod
     async def summarize_issue(self, transcript: str, *, language: str = "en") -> IssueSummary: ...
+
+    @abstractmethod
+    async def answer_scheme_question(
+        self,
+        query: str,
+        *,
+        language: str = "en",
+        reference_records: list[dict[str, object]] | None = None,
+    ) -> KnowledgeAnswer: ...
 
     @abstractmethod
     async def draft_service_record(self, source_text: str, *, source_url: str) -> DraftRecord: ...

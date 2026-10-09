@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import uuid
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -25,9 +25,9 @@ async def list_audit_events(
     conversation_id: uuid.UUID | None = None,
     request_id: str | None = None,
     action: str | None = None,
-    limit: int = 100,
-    offset: int = 0,
-    session: AsyncSession = Depends(get_session),
+    limit: int = Query(default=100, ge=1, le=200),
+    offset: int = Query(default=0, ge=0),
+    session: AsyncSession = Depends(get_session, scope="function"),
 ) -> list[AuditEventView]:
     stmt = select(AuditEvent).order_by(AuditEvent.created_at.desc(), AuditEvent.id)
     if conversation_id is not None:

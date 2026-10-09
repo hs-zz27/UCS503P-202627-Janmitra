@@ -12,7 +12,7 @@ from app.config import get_settings
 from app.db import Base
 
 config = context.config
-config.set_main_option("sqlalchemy.url", get_settings().database_url)
+config.set_main_option("sqlalchemy.url", get_settings().database_url.replace("%", "%%"))
 if config.config_file_name:
     fileConfig(config.config_file_name)
 target_metadata = Base.metadata
@@ -50,4 +50,8 @@ async def run_migrations_online() -> None:
 if context.is_offline_mode():
     run_migrations_offline()
 else:
-    asyncio.run(run_migrations_online())
+    existing_connection = config.attributes.get("connection")
+    if existing_connection is not None:
+        _run_sync_migrations(existing_connection)
+    else:
+        asyncio.run(run_migrations_online())

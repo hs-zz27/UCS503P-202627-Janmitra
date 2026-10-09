@@ -1,0 +1,45 @@
+{
+  "slug": "kcc",
+  "name": {"en": "Kisan Credit Card"},
+  "aliases": [
+    "KCC",
+    "farmer loan",
+    "crop loan",
+    "agriculture loan",
+    "dairy loan",
+    "fisheries working capital"
+  ],
+  "category": "loan",
+  "description": {
+    "en": "Flexible bank credit for cultivation, post-harvest expenses, produce marketing, farm-household needs, maintenance of farm assets, and agriculture or allied activities such as dairy and fisheries."
+  },
+  "benefit_summary": {
+    "en": "The bank fixes the credit limit. Government interest support and a prompt-repayment incentive can reduce the effective rate on eligible short-term KCC credit; current limits and security requirements depend on the loan and lender."
+  },
+  "eligibility_summary": {
+    "en": "Owner cultivators, tenant farmers, oral lessees, sharecroppers, and eligible farmer Self Help Groups or Joint Liability Groups may apply. The lending bank makes the final credit decision."
+  },
+  "rule_set": null,
+  "documents": [
+    {"id": "application-form", "name": {"en": "Completed KCC application form"}},
+    {"id": "photographs", "name": {"en": "Two passport-size photographs"}},
+    {"id": "identity-proof", "name": {"en": "Accepted identity proof"}},
+    {"id": "address-proof", "name": {"en": "Accepted address proof"}},
+    {"id": "landholding-proof", "name": {"en": "Landholding proof certified by revenue authorities"}, "notes": {"en": "The bank may use different evidence for tenants, lessees, sharecroppers, SHGs, or JLGs."}},
+    {"id": "cropping-details", "name": {"en": "Cropping pattern and acreage details"}}
+  ],
+  "steps": [
+    {"order": 1, "instruction": {"en": "Choose a participating bank and obtain its current KCC application."}},
+    {"order": 2, "instruction": {"en": "Submit the form and supporting documents online or at the bank branch."}},
+    {"order": 3, "instruction": {"en": "Ask the bank to explain the sanctioned limit, interest, security, repayment schedule, and applicable subsidy before accepting."}}
+  ],
+  "citation": {
+    "source_url": "https://www.myscheme.gov.in/schemes/kcc",
+    "source_title": "Kisan Credit Card",
+    "publisher": "Ministry of Agriculture and Farmers Welfare via myScheme",
+    "verified_on": "2026-09-07",
+    "verification_state": "pending_review",
+    "verified_by": null,
+    "snapshot_id": null
+  }
+}

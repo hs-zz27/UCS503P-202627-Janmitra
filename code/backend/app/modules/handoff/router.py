@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import uuid
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db import get_session
@@ -35,9 +35,9 @@ router = APIRouter(
 @router.get("", response_model=list[HandoffView])
 async def list_queue(
     status_filter: HandoffStatus | None = None,
-    limit: int = 50,
-    offset: int = 0,
-    session: AsyncSession = Depends(get_session),
+    limit: int = Query(default=50, ge=1, le=200),
+    offset: int = Query(default=0, ge=0),
+    session: AsyncSession = Depends(get_session, scope="function"),
 ) -> list[HandoffView]:
     rows = await handoffs.queue(session, status=status_filter, limit=limit, offset=offset)
     return [HandoffView.model_validate(row) for row in rows]
@@ -46,7 +46,7 @@ async def list_queue(
 @router.get("/{handoff_id}", response_model=HandoffContextView)
 async def get_handoff(
     handoff_id: uuid.UUID,
-    session: AsyncSession = Depends(get_session),
+    session: AsyncSession = Depends(get_session, scope="function"),
 ) -> HandoffContextView:
     try:
         handoff = await handoffs.get(session, handoff_id)
@@ -70,7 +70,7 @@ async def get_handoff(
 async def update_handoff(
     handoff_id: uuid.UUID,
     payload: UpdateHandoffRequest,
-    session: AsyncSession = Depends(get_session),
+    session: AsyncSession = Depends(get_session, scope="function"),
     role: Role = Depends(require(Role.OPERATOR, Role.ADMIN)),
 ) -> HandoffView:
     try:

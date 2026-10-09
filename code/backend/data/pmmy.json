@@ -1,0 +1,44 @@
+{
+  "slug": "pmmy",
+  "name": {"en": "Pradhan Mantri MUDRA Yojana"},
+  "aliases": [
+    "PMMY",
+    "MUDRA",
+    "Mudra loan",
+    "small business loan",
+    "micro enterprise loan",
+    "rural business loan"
+  ],
+  "category": "loan",
+  "description": {
+    "en": "Collateral-free institutional credit for micro enterprises, including non-agricultural businesses and agriculture-allied activities such as poultry, dairy, and beekeeping."
+  },
+  "benefit_summary": {
+    "en": "Collateral-free business credit has four categories: Shishu up to Rs 50,000; Kishore above Rs 50,000 and up to Rs 5 lakh; Tarun above Rs 5 lakh and up to Rs 10 lakh; and Tarun Plus above Rs 10 lakh and up to Rs 20 lakh. Tarun Plus is only for eligible entrepreneurs who successfully repaid an earlier Tarun loan. Term loans and working capital are supported. This is a repayable loan, not a grant or an automatic Rs 20 lakh entitlement."
+  },
+  "eligibility_summary": {
+    "en": "An otherwise loan-eligible individual with a small-business plan for income-generating manufacturing, trading, services, or agriculture-allied work such as dairy, poultry, or beekeeping can approach a member lender. Tarun Plus additionally requires successful repayment of a previous Tarun loan. The lender assesses the business plan, repayment capacity, and applicable documents; the category ceiling is not a promise of sanction. Ask the business activity, amount needed, and whether an earlier Tarun loan was repaid before suggesting a category."
+  },
+  "rule_set": null,
+  "documents": [
+    {"id": "lender-application", "name": {"en": "The lender's completed MUDRA application"}},
+    {"id": "identity-address", "name": {"en": "Identity and address documents accepted by the lender"}},
+    {"id": "business-proposal", "name": {"en": "Business plan describing the activity, project cost, and term-loan or working-capital requirement"}},
+    {"id": "tarun-repayment", "name": {"en": "Previous Tarun loan and repayment details if seeking Tarun Plus"}, "notes": {"en": "Tarun Plus requires a successfully repaid Tarun loan; confirm the evidence needed with the chosen lender."}},
+    {"id": "lender-documents", "name": {"en": "Any additional documents required by the selected lender"}}
+  ],
+  "steps": [
+    {"order": 1, "instruction": {"en": "Prepare the business purpose, expected cost, and amount required."}},
+    {"order": 2, "instruction": {"en": "Apply through a participating bank, Regional Rural Bank, Small Finance Bank, NBFC, or MFI; Jan Samarth also provides a self-service or assisted application route for supported loans. Ask that lender for its current document checklist."}},
+    {"order": 3, "instruction": {"en": "Obtain the lender's actual interest rate, charges, repayment schedule, and sanction conditions before accepting. No universal interest rate or guaranteed approval is quoted in this catalogue; compare the written offer and repay according to the agreement."}}
+  ],
+  "citation": {
+    "source_url": "https://financialservices.gov.in/pradhan-mantri-mudra-yojana-pmmy",
+    "source_title": "Pradhan Mantri MUDRA Yojana (PMMY)",
+    "publisher": "Department of Financial Services, Ministry of Finance",
+    "verified_on": "2026-09-07",
+    "verification_state": "pending_review",
+    "verified_by": null,
+    "snapshot_id": null
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "slug": "pmjjby",
+  "name": {"en": "Pradhan Mantri Jeevan Jyoti Bima Yojana"},
+  "aliases": ["PMJJBY", "life insurance", "low cost life cover", "death insurance"],
+  "category": "insurance",
+  "description": {
+    "en": "A renewable one-year term life-insurance scheme for eligible individual bank or post-office account holders, covering death due to any cause."
+  },
+  "benefit_summary": {
+    "en": "Rs 2 lakh is payable to the nominee on the subscriber's death due to any cause. The current full-year premium shown by the official source is Rs 436 per subscriber, paid by auto-debit; first-time mid-year enrolment and the initial lien period have special rules."
+  },
+  "eligibility_summary": {
+    "en": "An individual account holder aged 18 through 50 may join through one participating bank or post-office account. Cover can continue by annual renewal under the scheme's age and account conditions."
+  },
+  "rule_set": {
+    "rule_set_id": "pmjjby-basic-eligibility",
+    "questions": [
+      {"id": "age", "prompt": {"en": "What is your age in completed years?"}, "type": "integer", "min": 0, "max": 120},
+      {"id": "has-eligible-account", "prompt": {"en": "Do you have an individual account at a participating bank or post office?"}, "type": "boolean"}
+    ],
+    "conditions": [
+      {"id": "minimum-entry-age", "description": {"en": "The applicant is at least 18 years old."}, "test": {"var": "age", "op": "gte", "value": 18}},
+      {"id": "maximum-entry-age", "description": {"en": "The applicant is no more than 50 years old at entry."}, "test": {"var": "age", "op": "lte", "value": 50}},
+      {"id": "eligible-account", "description": {"en": "The applicant has an eligible individual bank or post-office account."}, "test": {"var": "has-eligible-account", "op": "eq", "value": true}}
+    ],
+    "decision": {"all_of": ["minimum-entry-age", "maximum-entry-age", "eligible-account"]}
+  },
+  "documents": [
+    {"id": "enrolment-form", "name": {"en": "PMJJBY enrolment and consent form"}},
+    {"id": "account-details", "name": {"en": "Participating bank or post-office account details"}},
+    {"id": "autodebit-consent", "name": {"en": "Auto-debit authorisation for the premium"}}
+  ],
+  "steps": [
+    {"order": 1, "instruction": {"en": "Ask the participating bank or post office for the current PMJJBY terms and enrolment form."}},
+    {"order": 2, "instruction": {"en": "Submit the consent and auto-debit authorisation through only one eligible account."}},
+    {"order": 3, "instruction": {"en": "Keep the nominee details current and maintain enough balance for renewal."}}
+  ],
+  "citation": {
+    "source_url": "https://www.financialservices.gov.in/pmjjby",
+    "source_title": "Pradhan Mantri Jeevan Jyoti Bima Yojana (PMJJBY)",
+    "publisher": "Department of Financial Services, Ministry of Finance",
+    "verified_on": "2026-09-07",
+    "verification_state": "pending_review",
+    "verified_by": null,
+    "snapshot_id": null
+  }
+}

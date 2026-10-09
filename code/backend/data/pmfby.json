@@ -1,0 +1,36 @@
+{
+  "slug": "pmfby",
+  "name": {"en": "Pradhan Mantri Fasal Bima Yojana"},
+  "aliases": ["PMFBY", "crop insurance", "farmer insurance", "crop loss", "farming loss claim"],
+  "category": "insurance",
+  "description": {
+    "en": "Crop insurance that provides financial support for insured farmers when a notified crop suffers covered loss or damage from specified non-preventable risks."
+  },
+  "benefit_summary": {
+    "en": "The farmer premium share is capped at 2% of the sum insured for Kharif food and oilseed crops, 1.5% for Rabi food and oilseed crops, and 5% for annual commercial or horticultural crops, or the actuarial rate if lower. For a Rs 1 lakh sum insured, these caps are Rs 2,000, Rs 1,500, and Rs 5,000 respectively, before any additional State subsidy. Insured losses may include notified yield loss, prevented sowing, localised calamities, and specified post-harvest loss for crops kept in the field for drying up to 14 days. The payout is assessed under the covered risk; it is not an automatic fixed cash grant."
+  },
+  "eligibility_summary": {
+    "en": "Enrolment is voluntary for all farmers, including farmers with crop loans. Owners, tenants, and sharecroppers growing a notified crop in a notified area can apply if they have insurable interest and the required cultivation or tenancy evidence. The insured crop and area must match the actual crop and land records. The State or Union Territory season notification determines participating crops, areas, insurer, sum insured, and deadline; ask the farmer's State, district, crop, and season before quoting those local details."
+  },
+  "rule_set": null,
+  "documents": [
+    {"id": "farmer-identity", "name": {"en": "Aadhaar identity or permitted enrolment details for the official application"}, "notes": {"en": "Supply identity only through the authorised application channel, never dictate Aadhaar numbers to the voice agent."}},
+    {"id": "bank-details", "name": {"en": "Bank passbook or account details for premium and claim settlement"}},
+    {"id": "land-crop-proof", "name": {"en": "Land record or accepted tenancy/sharecropping evidence, plus sowing certificate or permitted crop declaration"}, "notes": {"en": "Exact acceptable evidence is set by the State notification; the farmer must have insurable interest in the declared crop."}},
+    {"id": "seasonal-requirements", "name": {"en": "Any additional document required by the State notification or insurer"}}
+  ],
+  "steps": [
+    {"order": 1, "instruction": {"en": "Check the current State crop calendar and notification for the village, crop, insurer, sum insured, premium, and last date. Use the official PMFBY premium calculator; do not assume one nationwide enrolment deadline."}},
+    {"order": 2, "instruction": {"en": "Enrol through the official portal, designated bank, Common Service Centre, or authorised channel before the cut-off."}},
+    {"order": 3, "instruction": {"en": "Keep the acknowledgement and policy details. Report covered localised or post-harvest loss within 72 hours through the Crop Insurance App, insurer, bank, or agriculture office; the official Krishi Rakshak helpline is 14447. Keep the loss intimation reference and ask the insurer about assessment."}}
+  ],
+  "citation": {
+    "source_url": "https://pmfby.gov.in/guidelines",
+    "source_title": "Pradhan Mantri Fasal Bima Yojana Guidelines",
+    "publisher": "Ministry of Agriculture and Farmers Welfare",
+    "verified_on": "2026-09-07",
+    "verification_state": "pending_review",
+    "verified_by": null,
+    "snapshot_id": null
+  }
+}

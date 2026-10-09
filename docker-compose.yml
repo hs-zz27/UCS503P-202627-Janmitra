@@ -21,10 +21,13 @@ services:
     environment:
       JANMITRA_ENV: local
       JANMITRA_DATABASE_URL: postgresql+asyncpg://janmitra:janmitra@postgres:5432/janmitra
-      JANMITRA_MODEL_ADAPTER: mock
-      JANMITRA_ADMIN_API_KEY: dev-admin-key
-      JANMITRA_OPERATOR_API_KEY: dev-operator-key
-      JANMITRA_VOICE_API_KEY: dev-voice-key
+      JANMITRA_MODEL_ADAPTER: ${JANMITRA_MODEL_ADAPTER:-mock}
+      JANMITRA_GEMINI_API_KEY: ${JANMITRA_GEMINI_API_KEY:-}
+      JANMITRA_GEMINI_MODEL: ${JANMITRA_GEMINI_MODEL:-gemini-3.1-flash-lite}
+      JANMITRA_GEMINI_LIVE_MODEL: gemini-3.1-flash-live-preview
+      JANMITRA_ADMIN_API_KEY: ${JANMITRA_ADMIN_API_KEY:-dev-admin-key}
+      JANMITRA_OPERATOR_API_KEY: ${JANMITRA_OPERATOR_API_KEY:-dev-operator-key}
+      JANMITRA_VOICE_API_KEY: ${JANMITRA_VOICE_API_KEY:-dev-voice-key}
     ports:
       - "127.0.0.1:8000:8000"
     depends_on:

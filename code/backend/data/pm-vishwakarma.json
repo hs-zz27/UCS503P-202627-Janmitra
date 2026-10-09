@@ -1,0 +1,42 @@
+{
+  "slug": "pm-vishwakarma",
+  "name": {"en": "PM Vishwakarma"},
+  "aliases": [
+    "Vishwakarma scheme",
+    "artisan loan",
+    "craftsperson loan",
+    "toolkit incentive",
+    "traditional trade support"
+  ],
+  "category": "loan",
+  "description": {
+    "en": "Recognition, skills, tools, affordable credit, digital-payment incentives, and marketing support for artisans and craftspeople working in notified traditional trades."
+  },
+  "benefit_summary": {
+    "en": "Benefits include a certificate and ID card, skill training with stipend, a toolkit incentive up to Rs 15,000, and collateral-free enterprise-development loans up to Rs 3 lakh in two tranches at the scheme's concessional interest rate, subject to its conditions."
+  },
+  "eligibility_summary": {
+    "en": "An adult artisan or craftsperson working with hands and tools in one of the notified family-based traditional trades may register. Registration and local verification determine final inclusion and access to each benefit."
+  },
+  "rule_set": null,
+  "documents": [
+    {"id": "aadhaar", "name": {"en": "Aadhaar for identity verification"}},
+    {"id": "mobile", "name": {"en": "Mobile number used for registration"}},
+    {"id": "bank-details", "name": {"en": "Bank account details"}},
+    {"id": "family-trade-details", "name": {"en": "Family and traditional-trade details requested during registration"}}
+  ],
+  "steps": [
+    {"order": 1, "instruction": {"en": "Register through the official PM Vishwakarma process or an authorised Common Service Centre."}},
+    {"order": 2, "instruction": {"en": "Complete the prescribed local verification and skill assessment or training stages."}},
+    {"order": 3, "instruction": {"en": "Use only the benefit or credit stage for which the portal confirms eligibility."}}
+  ],
+  "citation": {
+    "source_url": "https://msme.gov.in/sites/default/files/Scheme-booklet-Eng.pdf",
+    "source_title": "MSME Schemes Booklet - PM Vishwakarma",
+    "publisher": "Ministry of Micro, Small and Medium Enterprises",
+    "verified_on": "2026-09-07",
+    "verification_state": "pending_review",
+    "verified_by": null,
+    "snapshot_id": null
+  }
+}

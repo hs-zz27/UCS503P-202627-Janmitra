@@ -1,0 +1,40 @@
+{
+  "slug": "pmjdy",
+  "name": {"en": "Pradhan Mantri Jan-Dhan Yojana"},
+  "aliases": [
+    "PMJDY",
+    "Jan Dhan",
+    "zero balance account",
+    "basic bank account",
+    "bank account for unbanked"
+  ],
+  "category": "banking",
+  "description": {
+    "en": "A national financial-inclusion programme through which an unbanked person can open a basic savings bank deposit account at a bank branch or Bank Mitra outlet."
+  },
+  "benefit_summary": {
+    "en": "The account has no minimum-balance requirement, earns deposit interest, provides a RuPay debit card, can receive direct benefit transfers, and may provide accident cover and an overdraft up to Rs 10,000 subject to the current scheme conditions."
+  },
+  "eligibility_summary": {
+    "en": "It is intended for an unbanked person who does not already have another bank account. The bank applies current KYC and account-opening rules."
+  },
+  "rule_set": null,
+  "documents": [
+    {"id": "aadhaar-or-ovd", "name": {"en": "Aadhaar or another officially valid KYC document"}, "notes": {"en": "The official page lists alternatives and simplified rules when Aadhaar is unavailable; confirm the bank's current KYC requirement."}},
+    {"id": "account-form", "name": {"en": "Completed basic account-opening form"}}
+  ],
+  "steps": [
+    {"order": 1, "instruction": {"en": "Visit a bank branch or authorised Bank Mitra outlet."}},
+    {"order": 2, "instruction": {"en": "Ask to open a PMJDY basic savings bank deposit account and complete KYC."}},
+    {"order": 3, "instruction": {"en": "Ask the bank to explain RuPay-card activation, insurance conditions, direct-benefit transfer linkage, and overdraft eligibility."}}
+  ],
+  "citation": {
+    "source_url": "https://pmjdy.gov.in/scheme",
+    "source_title": "Pradhan Mantri Jan-Dhan Yojana - Scheme Details",
+    "publisher": "Department of Financial Services, Ministry of Finance",
+    "verified_on": "2026-09-07",
+    "verification_state": "pending_review",
+    "verified_by": null,
+    "snapshot_id": null
+  }
+}

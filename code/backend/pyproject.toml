@@ -5,12 +5,12 @@ build-backend = "hatchling.build"
 [project]
 name = "janmitra-backend"
 version = "0.1.0"
-description = "Janmitra backend orchestrator: conversation, catalogue, eligibility, ingestion, handoff, audit"
+description = "Janmitra backend orchestrator: conversation, catalogue, eligibility, handoff, audit"
 readme = "README.md"
 requires-python = ">=3.12"
 license = { text = "MIT" }
 dependencies = [
-  "fastapi>=0.115.0",
+  "fastapi>=0.121.0",
   "uvicorn[standard]>=0.32.0",
   "sqlalchemy[asyncio]>=2.0.36",
   "alembic>=1.14.0",
@@ -30,11 +30,12 @@ dev = [
   "ruff>=0.7.0",
 ]
 gemini = [
-  "google-genai>=0.3.0",
+  "google-genai>=2.29.0,<3",
 ]
 voice = [
-  "livekit-agents==1.6.8",
-  "livekit-plugins-google==1.6.8",
+  "livekit-agents==1.8.5",
+  "livekit-plugins-google==1.8.5",
+  "google-genai>=2.29.0,<3",
 ]
 
 [project.scripts]
@@ -48,6 +49,7 @@ packages = ["app"]
 include = ["app/**/*.py", "app/voice/system_prompt.md"]
 
 [tool.pytest.ini_options]
+cache_dir = "../../.janmitra/pytest-cache"
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
 testpaths = ["tests"]

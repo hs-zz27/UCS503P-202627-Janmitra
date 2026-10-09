@@ -13,7 +13,7 @@ from fastapi.responses import JSONResponse
 
 from app.adapters.model.base import ModelOutputInvalid, ModelUnavailable
 from app.context import get_request_id
-from app.modules.catalogue.service import RecordNotVerified, ServiceNotFound
+from app.modules.catalogue.service import PublicationConflict, RecordNotVerified, ServiceNotFound
 from app.modules.conversation.service import ConversationClosed, ConversationNotFound
 from app.modules.eligibility.engine import AnswerValidationError
 from app.modules.handoff.service import HandoffNotFound, InvalidTransition
@@ -28,6 +28,10 @@ def _problem(status_code: int, message: str, **extra) -> JSONResponse:
 
 
 def register_exception_handlers(app: FastAPI) -> None:
+    @app.exception_handler(PublicationConflict)
+    async def _publication_conflict(request: Request, exc: PublicationConflict):
+        return _problem(status.HTTP_409_CONFLICT, "service publication conflict; retry the request")
+
     @app.exception_handler(ConversationNotFound)
     async def _conversation_not_found(request: Request, exc: ConversationNotFound):
         return _problem(status.HTTP_404_NOT_FOUND, f"no conversation {exc.args[0]!r}")

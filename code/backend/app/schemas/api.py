@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import uuid
 from datetime import datetime
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -16,7 +16,7 @@ class CreateConversationRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     channel: ConversationChannel = ConversationChannel.PHONE
-    language: str | None = None
+    language: str | None = Field(default=None, max_length=16)
     livekit_room: str | None = Field(default=None, max_length=128)
     #: Provider call identifier from the SIP trunk, so a call can be traced end to end.
     sip_call_id: str | None = Field(default=None, max_length=128)
@@ -65,7 +65,7 @@ class AppendEventRequest(BaseModel):
 class EndConversationRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    status: ConversationStatus = ConversationStatus.ENDED
+    status: Literal[ConversationStatus.ENDED] = ConversationStatus.ENDED
 
 
 class ServiceVersionView(BaseModel):
