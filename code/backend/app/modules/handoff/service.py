@@ -94,7 +94,9 @@ async def create(
 
 
 async def get(session: AsyncSession, handoff_id: uuid.UUID) -> HandoffRequest:
-    handoff = await session.get(HandoffRequest, handoff_id)
+    handoff = await session.get(
+        HandoffRequest, handoff_id, with_for_update=True, populate_existing=True
+    )
     if handoff is None:
         raise HandoffNotFound(str(handoff_id))
     return handoff

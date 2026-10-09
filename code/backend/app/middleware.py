@@ -24,7 +24,12 @@ REQUEST_ID_HEADER = "X-Request-ID"
 
 class RequestContextMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next) -> Response:
-        request_id = request.headers.get(REQUEST_ID_HEADER) or uuid.uuid4().hex
+        inbound_id = request.headers.get(REQUEST_ID_HEADER, "")
+        request_id = (
+            inbound_id
+            if 1 <= len(inbound_id) <= 64 and inbound_id.isascii() and inbound_id.isprintable()
+            else uuid.uuid4().hex
+        )
         set_request_id(request_id)
         request.state.request_id = request_id
 

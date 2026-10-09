@@ -1,56 +1,36 @@
 # Janmitra backend
 
-FastAPI orchestrator for versioned civic-scheme records, deterministic eligibility,
-conversation state, human handoff, and audit events.
+FastAPI modular monolith for conversations, versioned civic-service records,
+deterministic eligibility, documents, human handoff requests and audit events.
 
-## Docker development
+Use [Run and test](../../docs/run-and-test.md) for canonical installation, configuration,
+startup, migration and test commands. The API is on port 8000; local Compose PostgreSQL
+is on host port 5438. Containers apply Alembic migrations before API startup.
 
-From the repository root:
+## Component boundaries
 
-```powershell
-docker compose up --build -d
-```
+The LiveKit worker calls `JANMITRA_BACKEND_BASE_URL` with `JANMITRA_VOICE_API_KEY`; it
+does not access the database directly. Voice uses only `gemini-3.1-flash-live-preview`
+for native audio, with no separate STT/TTS stage or telephone integration.
 
-The API container applies Alembic migrations before starting. API documentation is at
-`http://127.0.0.1:8000/docs`; PostgreSQL is exposed on host port `5438`.
+Voice retrieval requests `response_mode="context"`, merging published records and
+pending references in one ranked result. Gemini Live answers from compact facts
+without a second answer-generation call. Existing API clients retain the default
+`prepared_answer` mode. Ingestion and optional handoff summaries use the backend text
+adapter; the mock adapter supports offline development.
 
-## Local development
-
-```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-pip install -e ".[dev]"
-alembic upgrade head
-uvicorn app.main:app --reload
-```
-
-The optional LiveKit worker requires `pip install -e ".[voice]"` and the LiveKit/Gemini
-settings documented in `.env.example`.
-
-Copy `.env.example` to `.env`, supply real LiveKit and Gemini credentials, then run:
-
-```powershell
-janmitra-voice dev
-```
-
-The worker calls the API configured by `JANMITRA_BACKEND_BASE_URL` and authenticates with
-`JANMITRA_VOICE_API_KEY`. It does not access the database directly.
+Only reviewed, published records support deterministic eligibility and verified
+checklists. Pending references retain their provenance and cannot become official
+personal eligibility decisions. Handoff creates an operator queue item, not a transfer.
 
 ## Service records
 
-Place reviewed data at `data/services.json`; see `data/README.md` for the format. Import
-and publish it with:
+`data` contains one JSON record per service. Human reviewers must check
+[data/REVIEW.md](data/REVIEW.md) and the linked official evidence before publication.
+`janmitra-seed` validates records and requires a named, explicit review attestation for
+pending records. Publication creates immutable versions. Never confirm review merely
+to populate a demo.
 
-```powershell
-janmitra-seed data --actor team-member
-```
-
-The command validates all records before writing and rejects citations that are not
-marked `verified`.
-
-## Checks
-
-```powershell
-pytest
-ruff check .
-```
+See [Architecture](../../docs/architecture.md) and
+[Voice architecture](../../docs/voice-architecture.md) for contracts, timing boundaries,
+evaluation methods and known limitations.

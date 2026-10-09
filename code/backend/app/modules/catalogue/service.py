@@ -14,10 +14,12 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any
 
-from sqlalchemy import select
+from sqlalchemy import select, text
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import Service, ServiceVersion
+from app.modules.catalogue.search import expand_query
 from app.schemas.service_record import (
     PublicationStatus,
     ServiceCategory,
@@ -32,6 +34,10 @@ class ServiceNotFound(LookupError):
 
 class RecordNotVerified(ValueError):
     pass
+
+
+class PublicationConflict(RuntimeError):
+    """Another writer created this service; the caller may retry publication."""
 
 
 @dataclass(frozen=True)
@@ -101,7 +107,7 @@ async def list_versions(session: AsyncSession, slug: str) -> list[ServiceVersion
     )
 
 
-_TOKEN_RE = re.compile(r"[a-z0-9]+")
+_TOKEN_RE = re.compile(r"[\w\u0900-\u097f\u0a00-\u0a7f]+")
 #: Words that carry no discriminating signal in a spoken civic request.
 _STOPWORDS = frozenset(
     {
@@ -112,7 +118,9 @@ _STOPWORDS = frozenset(
 
 
 def _tokens(text: str) -> set[str]:
-    return {t for t in _TOKEN_RE.findall(text.lower()) if t not in _STOPWORDS and len(t) > 1}
+    return {
+        t for t in _TOKEN_RE.findall(expand_query(text)) if t not in _STOPWORDS and len(t) > 1
+    }
 
 
 async def search(
@@ -122,48 +130,54 @@ async def search(
     category: ServiceCategory | None = None,
     limit: int = 5,
 ) -> list[Match]:
-    """Deterministic keyword match over the published catalogue.
+    """Rank published facts by expressed needs and named schemes, preserving versions."""
+    # References use the same scoring primitives from this module. Import the shared
+    # ranker at call time so both search paths agree without an import cycle.
+    from app.modules.catalogue.references import ranked_records
 
-    Structured lookup rather than a vector database (context.md §10): the catalogue is
-    curated and asked about category-first, so token overlap against name, aliases and
-    description is enough and is reproducible test-to-test. If catalogue growth ever makes
-    this the wrong tool, the replacement is a retrieval layer behind this same function.
-    """
     candidates = await list_published(session, category)
     query_tokens = _tokens(query)
     if not query_tokens:
         return []
 
+    by_slug = {candidate.record.slug: candidate for candidate in candidates}
+    selected = ranked_records(
+        tuple(candidate.record for candidate in candidates), query, category=category, limit=limit
+    )
     matches: list[Match] = []
-    for candidate in candidates:
+    for record in selected:
+        candidate = by_slug[record.slug]
         score, matched_on = _score(candidate.record, query, query_tokens)
-        if score > 0:
-            matches.append(
-                Match(
-                    service_id=candidate.service_id,
-                    version_id=candidate.version_id,
-                    version=candidate.version,
-                    published_at=candidate.published_at,
-                    record=candidate.record,
-                    score=round(score, 4),
-                    matched_on=matched_on,
-                )
+        matches.append(
+            Match(
+                service_id=candidate.service_id,
+                version_id=candidate.version_id,
+                version=candidate.version,
+                published_at=candidate.published_at,
+                record=candidate.record,
+                score=round(score, 4) if score > 0 else 0.5,
+                matched_on=matched_on or "need",
             )
+        )
 
-    # Slug breaks ties so results are stable across runs — load tests and the AI evaluation
-    # set both depend on the same query returning the same order every time.
-    matches.sort(key=lambda m: (-m.score, m.record.slug))
-    return matches[:limit]
+    # Keep the shared ranker's need coverage; sorting again by token score would lose
+    # secondary needs such as housing in a story that also names a farming scheme.
+    return matches
 
 
 def _score(record: ServiceRecord, query: str, query_tokens: set[str]) -> tuple[float, str]:
-    lowered = query.lower()
+    lowered = expand_query(query)
+    names = [v for v in record.name.model_dump().values() if isinstance(v, str) and v.strip()]
 
-    for alias in [record.name.en, *record.aliases]:
-        if alias.lower() in lowered:
+    for alias in [*names, *record.aliases]:
+        if alias.strip() and alias.casefold() in lowered:
             return 1.0, "alias"
 
     name_tokens = _tokens(record.name.en) | {t for a in record.aliases for t in _tokens(a)}
+    for name in names:
+        localized_tokens = _tokens(name)
+        if query_tokens & localized_tokens and name != record.name.en:
+            name_tokens |= localized_tokens
     if name_tokens:
         overlap = len(query_tokens & name_tokens) / len(name_tokens)
         if overlap:
@@ -177,6 +191,11 @@ def _score(record: ServiceRecord, query: str, query_tokens: set[str]) -> tuple[f
             record.eligibility_summary.en if record.eligibility_summary else "",
         )
         if part
+    )
+    body += " " + " ".join(
+        value for field in (record.description, record.benefit_summary, record.eligibility_summary)
+        if field is not None for key, value in field.model_dump().items()
+        if key != "en" and isinstance(value, str)
     )
     body_tokens = _tokens(body)
     hits = len(query_tokens & body_tokens)
@@ -203,14 +222,27 @@ async def publish(
             f"service {record.slug!r} must be human-verified before publication"
         )
 
+    # The slug lock serializes first publication too, before a parent row exists.
+    if session.bind is not None and session.bind.dialect.name == "postgresql":
+        await session.execute(
+            text("SELECT pg_advisory_xact_lock(hashtextextended(:slug, 0))"),
+            {"slug": record.slug},
+        )
     service = (
-        await session.execute(select(Service).where(Service.slug == record.slug))
+        await session.execute(
+            select(Service).where(Service.slug == record.slug).with_for_update()
+            .execution_options(populate_existing=True)
+        )
     ).scalar_one_or_none()
 
     if service is None:
         service = Service(slug=record.slug, category=record.category.value)
-        session.add(service)
-        await session.flush()
+        try:
+            async with session.begin_nested():
+                session.add(service)
+                await session.flush()
+        except IntegrityError as exc:
+            raise PublicationConflict(record.slug) from exc
         next_version = 1
     else:
         service.category = record.category.value

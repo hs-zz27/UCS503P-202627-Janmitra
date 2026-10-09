@@ -1,0 +1,62 @@
+{
+  "slug": "pm-sym",
+  "name": {"en": "Pradhan Mantri Shram Yogi Maan-dhan"},
+  "aliases": [
+    "PM-SYM",
+    "Shram Yogi pension",
+    "unorganised worker pension",
+    "labour pension",
+    "worker pension"
+  ],
+  "category": "pension",
+  "description": {
+    "en": "A voluntary contributory pension scheme for eligible unorganised workers, including agricultural, construction, domestic, home-based, and other casual workers."
+  },
+  "benefit_summary": {
+    "en": "The scheme provides a minimum assured pension of Rs 3,000 per month after age 60. The worker makes an age-based monthly contribution and the Central Government contributes an equal amount under current scheme terms."
+  },
+  "eligibility_summary": {
+    "en": "An unorganised worker aged 18 through 40 with monthly income up to Rs 15,000 may join if not an income-tax payer and not covered by the specified EPFO, ESIC, or government-funded NPS social-security schemes."
+  },
+  "rule_set": {
+    "rule_set_id": "pm-sym-basic-eligibility",
+    "questions": [
+      {"id": "age", "prompt": {"en": "What is your age in completed years?"}, "type": "integer", "min": 0, "max": 120},
+      {"id": "monthly-income", "prompt": {"en": "What is your monthly income in rupees?"}, "type": "number", "unit": "INR", "min": 0},
+      {"id": "unorganised-worker", "prompt": {"en": "Do you work in the unorganised sector?"}, "type": "boolean"},
+      {"id": "income-tax-payer", "prompt": {"en": "Are you an income-tax payer?"}, "type": "boolean"},
+      {"id": "statutory-cover", "prompt": {"en": "Are you covered by EPFO, ESIC, or a government-funded NPS scheme?"}, "type": "boolean"}
+    ],
+    "conditions": [
+      {"id": "minimum-entry-age", "description": {"en": "The worker is at least 18 years old."}, "test": {"var": "age", "op": "gte", "value": 18}},
+      {"id": "maximum-entry-age", "description": {"en": "The worker is no more than 40 years old at entry."}, "test": {"var": "age", "op": "lte", "value": 40}},
+      {"id": "income-limit", "description": {"en": "Monthly income is no more than Rs 15,000."}, "test": {"var": "monthly-income", "op": "lte", "value": 15000}},
+      {"id": "worker-category", "description": {"en": "The applicant is an unorganised worker."}, "test": {"var": "unorganised-worker", "op": "eq", "value": true}},
+      {"id": "taxpayer-exclusion", "description": {"en": "The applicant pays income tax."}, "test": {"var": "income-tax-payer", "op": "eq", "value": true}},
+      {"id": "social-security-exclusion", "description": {"en": "The applicant has specified statutory social-security coverage."}, "test": {"var": "statutory-cover", "op": "eq", "value": true}}
+    ],
+    "decision": {
+      "all_of": ["minimum-entry-age", "maximum-entry-age", "income-limit", "worker-category"],
+      "none_of": ["taxpayer-exclusion", "social-security-exclusion"]
+    }
+  },
+  "documents": [
+    {"id": "aadhaar", "name": {"en": "Aadhaar card"}},
+    {"id": "account-proof", "name": {"en": "Savings-bank or Jan-Dhan account document"}},
+    {"id": "mobile", "name": {"en": "Mobile number for registration and updates"}}
+  ],
+  "steps": [
+    {"order": 1, "instruction": {"en": "Register through the official Maandhan portal or visit an authorised Common Service Centre."}},
+    {"order": 2, "instruction": {"en": "Provide the required identity and bank details and review the contribution for the entry age."}},
+    {"order": 3, "instruction": {"en": "Maintain enough balance for contribution auto-debits and retain the pension account details."}}
+  ],
+  "citation": {
+    "source_url": "https://labour.gov.in/FAQ-0",
+    "source_title": "Frequently Asked Questions on PM-SYM",
+    "publisher": "Ministry of Labour and Employment",
+    "verified_on": "2026-09-07",
+    "verification_state": "pending_review",
+    "verified_by": null,
+    "snapshot_id": null
+  }
+}

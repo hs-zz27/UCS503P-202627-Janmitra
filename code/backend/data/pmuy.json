@@ -1,0 +1,58 @@
+{
+  "slug": "pmuy",
+  "name": {"en": "Pradhan Mantri Ujjwala Yojana"},
+  "aliases": ["PMUY", "Ujjwala 2.0", "free LPG connection", "gas connection", "cooking gas scheme"],
+  "category": "grant",
+  "description": {
+    "en": "LPG connection support for an adult woman from an eligible poor household that does not already have an Oil Marketing Company LPG connection in the household."
+  },
+  "benefit_summary": {
+    "en": "An approved beneficiary receives a security-deposit-free LPG connection and the connection assistance specified by the current scheme. Refill prices, subsidies, and additional items must be checked against the current portal and distributor terms."
+  },
+  "eligibility_summary": {
+    "en": "The applicant must be a woman aged 18 or older, belong to a poor household under the prescribed deprivation declaration, and have no other Oil Marketing Company LPG connection in the same household."
+  },
+  "rule_set": {
+    "rule_set_id": "pmuy-basic-eligibility",
+    "questions": [
+      {"id": "age", "prompt": {"en": "What is the applicant's age in completed years?"}, "type": "integer", "min": 0, "max": 120},
+      {"id": "applicant-is-woman", "prompt": {"en": "Is the applicant a woman?"}, "type": "boolean"},
+      {"id": "poor-household", "prompt": {"en": "Can the applicant submit the prescribed poor-household deprivation declaration?"}, "type": "boolean"},
+      {"id": "existing-lpg", "prompt": {"en": "Does anyone in the household already have an LPG connection from an Oil Marketing Company?"}, "type": "boolean"},
+      {"id": "aadhaar-address-current", "prompt": {"en": "Does the applicant's Aadhaar show the current address?"}, "type": "boolean"}
+    ],
+    "conditions": [
+      {"id": "adult-applicant", "description": {"en": "The applicant is at least 18 years old."}, "test": {"var": "age", "op": "gte", "value": 18}},
+      {"id": "woman-applicant", "description": {"en": "The applicant is a woman."}, "test": {"var": "applicant-is-woman", "op": "eq", "value": true}},
+      {"id": "deprivation-declaration", "description": {"en": "The applicant can submit the prescribed poor-household declaration."}, "test": {"var": "poor-household", "op": "eq", "value": true}},
+      {"id": "existing-connection-exclusion", "description": {"en": "The household already has an Oil Marketing Company LPG connection."}, "test": {"var": "existing-lpg", "op": "eq", "value": true}}
+    ],
+    "decision": {
+      "all_of": ["adult-applicant", "woman-applicant", "deprivation-declaration"],
+      "none_of": ["existing-connection-exclusion"]
+    }
+  },
+  "documents": [
+    {"id": "kyc-form", "name": {"en": "Completed KYC application form"}},
+    {"id": "applicant-aadhaar", "name": {"en": "Applicant's Aadhaar copy"}},
+    {"id": "address-proof", "name": {"en": "Current address proof or migrant self-declaration"}, "notes": {"en": "Needed when the Aadhaar address differs from the current address."}, "required_when": {"var": "aadhaar-address-current", "op": "eq", "value": false}},
+    {"id": "family-composition", "name": {"en": "Ration card, state family-composition document, or permitted migrant self-declaration"}},
+    {"id": "adult-family-aadhaar", "name": {"en": "Aadhaar copies of adult family members listed in the family document"}},
+    {"id": "bank-details", "name": {"en": "Bank passbook copy or cancelled cheque"}},
+    {"id": "deprivation-declaration", "name": {"en": "Prescribed deprivation declaration"}}
+  ],
+  "steps": [
+    {"order": 1, "instruction": {"en": "Prepare the current KYC form, deprivation declaration, and supporting documents."}},
+    {"order": 2, "instruction": {"en": "Apply through an authorised LPG distributor or the official online application channel."}},
+    {"order": 3, "instruction": {"en": "Confirm approval and all charges directly with the distributor before receiving the connection."}}
+  ],
+  "citation": {
+    "source_url": "https://www.pmuy.gov.in/ujjwala2.html",
+    "source_title": "New Ujjwala Connection - Eligibility and Documents",
+    "publisher": "Ministry of Petroleum and Natural Gas",
+    "verified_on": "2026-09-07",
+    "verification_state": "pending_review",
+    "verified_by": null,
+    "snapshot_id": null
+  }
+}

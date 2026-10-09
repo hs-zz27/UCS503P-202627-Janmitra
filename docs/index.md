@@ -6,9 +6,11 @@
 # Janmitra
 
 Janmitra provides voice-first, source-grounded guidance for government and civic
-services. It is designed around three constraints: factual guidance comes only from a
-reviewed catalogue, eligibility decisions are deterministic and explainable, and a
-citizen can always be handed to a human operator with conversation context intact.
+services. Reviewed catalogue answers and deterministic eligibility results are
+verified; catalogue gaps use source-backed pending references passed directly to Gemini
+3.1 Live. Spoken answers lead with useful facts and qualify actual uncertainty; the
+records remain pending review. Human
+handoff requests enter an operator queue with conversation context.
 
 ## Current implementation
 
@@ -21,18 +23,10 @@ citizen can always be handed to a human operator with conversation context intac
 - Next.js browser harness for voice-session testing
 - Automated backend and frontend checks
 
-See [Architecture](architecture.md) for module boundaries, request flow, and the
-features selectively adopted from the parallel prototype.
+See [Architecture](architecture.md) for module boundaries and request flow, and
+[Voice architecture](voice-architecture.md) for behavior, evaluation and known limits.
 
 ## Run the system
 
-```powershell
-docker compose up --build -d
-cd code/frontend
-Copy-Item .env.local.example .env.local
-npm install
-npm run dev
-```
-
-The API is available at `http://127.0.0.1:8000`; the browser harness defaults to
-`http://127.0.0.1:3000`.
+Follow [Run and test](run-and-test.md) for the database, API, LiveKit worker, browser,
+and automated checks.

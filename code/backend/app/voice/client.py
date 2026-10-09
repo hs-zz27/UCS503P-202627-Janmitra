@@ -1,8 +1,12 @@
 from __future__ import annotations
 
+import logging
+from time import perf_counter
 from typing import Any
 
 import httpx
+
+logger = logging.getLogger("janmitra.voice.tools")
 
 
 class BackendToolError(RuntimeError):
@@ -25,7 +29,7 @@ class BackendToolClient:
         self._client = httpx.AsyncClient(
             base_url=base_url.rstrip("/"),
             headers={"X-API-Key": api_key},
-            timeout=httpx.Timeout(20.0),
+            timeout=httpx.Timeout(20.0, connect=3.0),
             transport=transport,
         )
 
@@ -35,10 +39,19 @@ class BackendToolClient:
     async def _request(
         self, method: str, path: str, *, payload: dict[str, Any] | None = None
     ) -> dict[str, Any]:
+        started = perf_counter()
         try:
             response = await self._client.request(method, path, json=payload)
         except httpx.HTTPError as exc:
             raise BackendToolError(503, "Janmitra guidance service is unavailable") from exc
+        finally:
+            # Paths contain conversation IDs, so log only the operation name.
+            operation = path.rsplit("/", 1)[-1]
+            logger.info(
+                "backend operation=%s duration_ms=%.0f",
+                operation,
+                (perf_counter() - started) * 1000,
+            )
         if response.is_error:
             try:
                 body = response.json()
@@ -102,6 +115,7 @@ class BackendToolClient:
                 "category": category,
                 "language": language,
                 "limit": limit,
+                "response_mode": "context",
             },
         )
 
@@ -143,9 +157,7 @@ class BackendToolClient:
             },
         )
 
-    async def request_handoff(
-        self, conversation_id: str, **signals: Any
-    ) -> dict[str, Any]:
+    async def request_handoff(self, conversation_id: str, **signals: Any) -> dict[str, Any]:
         return await self._request(
             "POST",
             "/v1/tools/request_handoff",

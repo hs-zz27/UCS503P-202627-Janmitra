@@ -1,0 +1,39 @@
+{
+  "slug": "day-nrlm",
+  "name": {"en": "Deendayal Antyodaya Yojana - National Rural Livelihoods Mission"},
+  "aliases": [
+    "DAY-NRLM",
+    "NRLM",
+    "Aajeevika",
+    "women self help group",
+    "rural SHG",
+    "Start-up Village Entrepreneurship Programme",
+    "SVEP"
+  ],
+  "category": "banking",
+  "description": {
+    "en": "A rural-livelihoods mission that organises poor rural women into Self Help Groups and connects community institutions with savings, affordable bank credit, skills, livelihood support, and public services. It also includes enterprise support such as SVEP in participating areas."
+  },
+  "benefit_summary": {
+    "en": "Support can include SHG formation and capacity building, bank linkage, revolving or community investment funds routed through eligible groups and federations, interest support, livelihood services, and local enterprise mentoring. Availability varies by State Rural Livelihoods Mission and block."
+  },
+  "eligibility_summary": {
+    "en": "The mission targets poor rural households, with women-led SHGs and special attention to vulnerable or marginalised households. Local participatory identification, Gram Sabha validation, and the State Rural Livelihoods Mission determine enrolment and programme availability."
+  },
+  "rule_set": null,
+  "documents": [],
+  "steps": [
+    {"order": 1, "instruction": {"en": "Contact the village organisation, cluster federation, Gram Panchayat, or State Rural Livelihoods Mission office serving the block."}},
+    {"order": 2, "instruction": {"en": "Ask about joining or forming a women's SHG and which bank-linkage or livelihood programmes operate locally."}},
+    {"order": 3, "instruction": {"en": "For a rural enterprise, ask specifically whether SVEP or another enterprise-support programme is active in the block."}}
+  ],
+  "citation": {
+    "source_url": "https://rural.gov.in/sites/default/files/State_Performance_Report_2023-2024_22102024.pdf",
+    "source_title": "State Performance Report 2023-2024 - DAY-NRLM",
+    "publisher": "Ministry of Rural Development",
+    "verified_on": "2026-09-07",
+    "verification_state": "pending_review",
+    "verified_by": null,
+    "snapshot_id": null
+  }
+}

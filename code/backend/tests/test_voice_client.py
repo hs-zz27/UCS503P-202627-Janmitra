@@ -12,7 +12,15 @@ async def test_voice_client_sends_api_key_and_typed_payload() -> None:
         payload = __import__("json").loads(request.content)
         assert payload["conversation_id"] == "conversation-1"
         assert payload["category"] == "loan"
-        return httpx.Response(200, json={"matches": []})
+        assert payload["response_mode"] == "context"
+        return httpx.Response(
+            200,
+            json={
+                "matches": [],
+                "knowledge_fallback_allowed": True,
+                "response_guidance": "Answer now from trained knowledge with a warning.",
+            },
+        )
 
     client = BackendToolClient(
         base_url="http://backend.test",
@@ -28,7 +36,9 @@ async def test_voice_client_sends_api_key_and_typed_payload() -> None:
         )
     finally:
         await client.close()
-    assert result == {"matches": []}
+    assert result["matches"] == []
+    assert result["knowledge_fallback_allowed"] is True
+    assert "trained knowledge" in result["response_guidance"]
 
 
 @pytest.mark.asyncio

@@ -36,7 +36,7 @@ def _view(published: catalogue.PublishedService) -> PublishedServiceView:
 @router.get("", response_model=list[PublishedServiceView])
 async def list_services(
     category: ServiceCategory | None = None,
-    session: AsyncSession = Depends(get_session),
+    session: AsyncSession = Depends(get_session, scope="function"),
     role: Role = Depends(current_role),
 ) -> list[PublishedServiceView]:
     return [_view(item) for item in await catalogue.list_published(session, category)]
@@ -45,7 +45,7 @@ async def list_services(
 @router.get("/{slug}", response_model=PublishedServiceView)
 async def get_service(
     slug: str,
-    session: AsyncSession = Depends(get_session),
+    session: AsyncSession = Depends(get_session, scope="function"),
     role: Role = Depends(current_role),
 ) -> PublishedServiceView:
     try:
@@ -59,7 +59,7 @@ async def get_service(
 @router.get("/{slug}/versions", response_model=list[ServiceVersionView])
 async def list_versions(
     slug: str,
-    session: AsyncSession = Depends(get_session),
+    session: AsyncSession = Depends(get_session, scope="function"),
     role: Role = Depends(require(Role.ADMIN)),
 ) -> list[ServiceVersionView]:
     try:
@@ -76,7 +76,7 @@ async def diff_versions(
     slug: str,
     left: int,
     right: int,
-    session: AsyncSession = Depends(get_session),
+    session: AsyncSession = Depends(get_session, scope="function"),
     role: Role = Depends(require(Role.ADMIN)),
 ) -> dict:
     """Field-level diff between two versions — what the reviewer approves against."""
@@ -103,7 +103,7 @@ async def diff_versions(
 @router.post("", response_model=PublishedServiceView, status_code=status.HTTP_201_CREATED)
 async def publish_service(
     payload: PublishServiceRequest,
-    session: AsyncSession = Depends(get_session),
+    session: AsyncSession = Depends(get_session, scope="function"),
     role: Role = Depends(require(Role.ADMIN)),
 ) -> PublishedServiceView:
     published = await catalogue.publish(

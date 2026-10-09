@@ -13,6 +13,7 @@ from __future__ import annotations
 
 from datetime import date
 from enum import StrEnum
+from math import isfinite
 from typing import Annotated, Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, HttpUrl, model_validator
@@ -77,6 +78,14 @@ class EligibilityQuestion(BaseModel):
             raise ValueError(f"question {self.id!r} is an enum but declares no options")
         if self.type is not AnswerType.ENUM and self.options:
             raise ValueError(f"question {self.id!r} declares options but is not an enum")
+        if any(bound is not None and not isfinite(bound) for bound in (self.min, self.max)):
+            raise ValueError("question bounds must be finite")
+        if self.min is not None and self.max is not None and self.min > self.max:
+            raise ValueError("question minimum exceeds maximum")
+        if self.type not in (AnswerType.INTEGER, AnswerType.NUMBER) and (
+            self.min is not None or self.max is not None
+        ):
+            raise ValueError("only numeric questions may have bounds")
         return self
 
 
@@ -101,6 +110,30 @@ class Comparison(BaseModel):
         ):
             raise ValueError(f"op 'between' on {self.var!r} needs a [low, high] value")
         return self
+
+
+def validate_comparison(comparison: Comparison, question: EligibilityQuestion) -> None:
+    numeric = question.type in (AnswerType.INTEGER, AnswerType.NUMBER)
+    if comparison.op in {"gt", "gte", "lt", "lte", "between"} and not numeric:
+        raise ValueError(f"ordering comparison on nonnumeric question {question.id!r}")
+    values = (
+        comparison.value
+        if comparison.op in {"in", "not_in", "between"}
+        else [comparison.value]
+    )
+    for value in values:
+        if numeric:
+            valid = type(value) in (int, float) and isfinite(value)
+        elif question.type is AnswerType.BOOLEAN:
+            valid = isinstance(value, bool)
+        elif question.type is AnswerType.ENUM:
+            valid = isinstance(value, str) and value in (question.options or [])
+        else:
+            valid = isinstance(value, str)
+        if not valid:
+            raise ValueError(f"comparison constant does not fit question {question.id!r}")
+    if comparison.op == "between" and values[0] > values[1]:
+        raise ValueError("comparison lower bound exceeds upper bound")
 
 
 class Condition(BaseModel):
@@ -152,6 +185,7 @@ class RuleSet(BaseModel):
         if len(question_id_list) != len(set(question_id_list)):
             raise ValueError("duplicate question ids in rule set")
         question_ids = set(question_id_list)
+        questions = {q.id: q for q in self.questions}
         condition_ids = [c.id for c in self.conditions]
         if len(condition_ids) != len(set(condition_ids)):
             raise ValueError("duplicate condition ids in rule set")
@@ -164,6 +198,7 @@ class RuleSet(BaseModel):
                         f"condition {condition.id!r} tests {comparison.var!r}, "
                         "which is not a declared question"
                     )
+                validate_comparison(comparison, questions[comparison.var])
 
         known = set(condition_ids)
         referenced = set(self.decision.all_of) | set(self.decision.any_of) | set(
@@ -223,6 +258,8 @@ class Citation(BaseModel):
 
     @model_validator(mode="after")
     def _verified_needs_a_name(self) -> Citation:
+        if self.verified_by is not None:
+            self.verified_by = self.verified_by.strip()
         if self.verification_state is VerificationState.VERIFIED and not self.verified_by:
             raise ValueError("a verified citation must record who verified it")
         return self
@@ -250,12 +287,15 @@ class ServiceRecord(BaseModel):
     def _documents_reference_questions(self) -> ServiceRecord:
         """A conditional document can only depend on a question the rule set actually asks."""
         question_ids = {q.id for q in self.rule_set.questions} if self.rule_set else set()
+        questions = {q.id: q for q in self.rule_set.questions} if self.rule_set else {}
         for document in self.documents:
             if document.required_when and document.required_when.var not in question_ids:
                 raise ValueError(
                     f"document {document.id!r} is conditional on {document.required_when.var!r}, "
                     "which no eligibility question asks"
                 )
+            if document.required_when:
+                validate_comparison(document.required_when, questions[document.required_when.var])
         return self
 
     @property

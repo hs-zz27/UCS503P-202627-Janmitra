@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import uuid
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db import get_session
@@ -37,7 +37,7 @@ def _view(conversation) -> ConversationView:
 @router.post("", response_model=ConversationView, status_code=status.HTTP_201_CREATED)
 async def create_conversation(
     payload: CreateConversationRequest,
-    session: AsyncSession = Depends(get_session),
+    session: AsyncSession = Depends(get_session, scope="function"),
     role: Role = Depends(require(Role.VOICE, Role.ADMIN)),
 ) -> ConversationView:
     conversation = await conversations.create(
@@ -64,7 +64,7 @@ async def create_conversation(
 @router.get("/{conversation_id}", response_model=ConversationView)
 async def get_conversation(
     conversation_id: uuid.UUID,
-    session: AsyncSession = Depends(get_session),
+    session: AsyncSession = Depends(get_session, scope="function"),
     role: Role = Depends(current_role),
 ) -> ConversationView:
     return _view(await conversations.get(session, conversation_id))
@@ -73,7 +73,7 @@ async def get_conversation(
 @router.get("/{conversation_id}/events", response_model=list[ConversationEventView])
 async def list_events(
     conversation_id: uuid.UUID,
-    session: AsyncSession = Depends(get_session),
+    session: AsyncSession = Depends(get_session, scope="function"),
     role: Role = Depends(current_role),
 ) -> list[ConversationEventView]:
     await conversations.get(session, conversation_id)
@@ -91,7 +91,7 @@ async def list_events(
 async def append_event(
     conversation_id: uuid.UUID,
     payload: AppendEventRequest,
-    session: AsyncSession = Depends(get_session),
+    session: AsyncSession = Depends(get_session, scope="function"),
     role: Role = Depends(require(Role.VOICE, Role.ADMIN)),
 ) -> ConversationEventView:
     conversation = await conversations.get_active(session, conversation_id)
@@ -105,14 +105,10 @@ async def append_event(
 async def end_conversation(
     conversation_id: uuid.UUID,
     payload: EndConversationRequest,
-    session: AsyncSession = Depends(get_session),
+    session: AsyncSession = Depends(get_session, scope="function"),
     role: Role = Depends(require(Role.VOICE, Role.ADMIN)),
 ) -> ConversationView:
-    conversation = await conversations.get(session, conversation_id)
-    if conversation.ended_at is not None:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT, detail="conversation has already ended"
-        )
+    conversation = await conversations.get_active(session, conversation_id)
     conversation = await conversations.end(session, conversation, status=payload.status.value)
     ttg = conversations.time_to_guidance(conversation)
     await audit.record(

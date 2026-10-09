@@ -1,0 +1,47 @@
+{
+  "slug": "pmsby",
+  "name": {"en": "Pradhan Mantri Suraksha Bima Yojana"},
+  "aliases": ["PMSBY", "accident insurance", "disability insurance", "low cost accident cover"],
+  "category": "insurance",
+  "description": {
+    "en": "A renewable one-year personal accident-insurance scheme for eligible individual bank or post-office account holders, covering accidental death and specified permanent disability."
+  },
+  "benefit_summary": {
+    "en": "The scheme pays Rs 2 lakh for accidental death or specified total permanent disability and Rs 1 lakh for specified partial permanent disability. The current annual premium shown by the official source is Rs 20 per member, paid by auto-debit."
+  },
+  "eligibility_summary": {
+    "en": "An individual account holder aged 18 through 70 may join through one participating bank or post-office account. Exact claim coverage depends on the accident and disability definitions in the policy."
+  },
+  "rule_set": {
+    "rule_set_id": "pmsby-basic-eligibility",
+    "questions": [
+      {"id": "age", "prompt": {"en": "What is your age in completed years?"}, "type": "integer", "min": 0, "max": 120},
+      {"id": "has-eligible-account", "prompt": {"en": "Do you have an individual account at a participating bank or post office?"}, "type": "boolean"}
+    ],
+    "conditions": [
+      {"id": "minimum-entry-age", "description": {"en": "The applicant is at least 18 years old."}, "test": {"var": "age", "op": "gte", "value": 18}},
+      {"id": "maximum-entry-age", "description": {"en": "The applicant is no more than 70 years old."}, "test": {"var": "age", "op": "lte", "value": 70}},
+      {"id": "eligible-account", "description": {"en": "The applicant has an eligible individual bank or post-office account."}, "test": {"var": "has-eligible-account", "op": "eq", "value": true}}
+    ],
+    "decision": {"all_of": ["minimum-entry-age", "maximum-entry-age", "eligible-account"]}
+  },
+  "documents": [
+    {"id": "enrolment-form", "name": {"en": "PMSBY enrolment and consent form"}},
+    {"id": "account-details", "name": {"en": "Participating bank or post-office account details"}},
+    {"id": "autodebit-consent", "name": {"en": "Auto-debit authorisation for the premium"}}
+  ],
+  "steps": [
+    {"order": 1, "instruction": {"en": "Ask the participating bank or post office for the current PMSBY terms and enrolment form."}},
+    {"order": 2, "instruction": {"en": "Submit the consent and auto-debit authorisation through only one eligible account."}},
+    {"order": 3, "instruction": {"en": "Keep nominee details current and retain the policy and claim instructions."}}
+  ],
+  "citation": {
+    "source_url": "https://www.financialservices.gov.in/pmsby",
+    "source_title": "Pradhan Mantri Suraksha Bima Yojana (PMSBY)",
+    "publisher": "Department of Financial Services, Ministry of Finance",
+    "verified_on": "2026-09-07",
+    "verification_state": "pending_review",
+    "verified_by": null,
+    "snapshot_id": null
+  }
+}

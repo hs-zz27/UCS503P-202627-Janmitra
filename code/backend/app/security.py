@@ -9,6 +9,7 @@ gate rather than a comment.
 from __future__ import annotations
 
 from enum import StrEnum
+from hmac import compare_digest
 
 from fastapi import Depends, Header, HTTPException, status
 
@@ -31,7 +32,7 @@ def _resolve(api_key: str | None, settings: Settings) -> Role | None:
         (Role.OPERATOR, settings.operator_api_key),
         (Role.VOICE, settings.voice_api_key),
     ):
-        if expected and api_key == expected:
+        if expected and compare_digest(api_key.encode(), expected.encode()):
             return role
     return None
 

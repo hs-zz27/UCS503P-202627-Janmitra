@@ -47,5 +47,6 @@ def get_model_adapter() -> ModelAdapter:
     """FastAPI dependency. Cached per settings so one adapter is shared per process."""
     settings = get_settings()
     return _cached_adapter(
-        (settings.model_adapter, settings.mock_latency_ms, settings.mock_failure_rate)
+        (settings.model_adapter, settings.mock_latency_ms, settings.mock_failure_rate,
+         settings.gemini_model, settings.gemini_api_key)
     )

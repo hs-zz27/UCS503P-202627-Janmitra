@@ -1,0 +1,42 @@
+{
+  "slug": "pm-jay",
+  "name": {"en": "Ayushman Bharat Pradhan Mantri Jan Arogya Yojana"},
+  "aliases": [
+    "AB PM-JAY",
+    "PMJAY",
+    "Ayushman Bharat",
+    "Ayushman card",
+    "health insurance",
+    "free hospital treatment"
+  ],
+  "category": "insurance",
+  "description": {
+    "en": "Public health assurance for entitled families, providing cashless secondary and tertiary hospital treatment at empanelled public and private hospitals across India."
+  },
+  "benefit_summary": {
+    "en": "PM-JAY provides cashless cover up to Rs 5 lakh per eligible family per year for covered secondary and tertiary hospital treatment at empanelled public or private hospitals. Covered pre-existing conditions are included from day one, with up to 3 days of pre-hospitalisation and 15 days of post-hospitalisation expenses. Benefits are portable across empanelled hospitals in India. For people aged 70 or above already in a PM-JAY family, an additional cover up to Rs 5 lakh per year is for the senior members without sharing it with under-70 members; other eligible senior families have up to Rs 5 lakh yearly family cover. This is treatment cover, not a cash payment; confirm the actual package and hospital."
+  },
+  "eligibility_summary": {
+    "en": "For regular PM-JAY, check entitlement in the PM-JAY or participating State beneficiary database; do not infer entitlement from income alone. Separately, the senior-citizen expansion covers people aged 70 years or above irrespective of income, with age determined from Aadhaar and mandatory Aadhaar-based eKYC. A distinct senior-citizen Ayushman card is issued. Ask whether the person is 70 or older and which State they live in, then use an authorised channel to check the applicable beneficiary route and hospital coverage."
+  },
+  "rule_set": null,
+  "documents": [
+    {"id": "beneficiary-identity", "name": {"en": "Government identity and family details accepted for beneficiary verification"}},
+    {"id": "existing-card", "name": {"en": "Existing Ayushman or state health-scheme card, if already issued"}},
+    {"id": "senior-aadhaar", "name": {"en": "For the age-70-plus senior-citizen route, Aadhaar for age verification and mandatory eKYC"}, "notes": {"en": "NHA lists Aadhaar as the only enrolment document for this senior-citizen route. Supply it only to the official portal or authorised enrolment centre, never to the voice agent. The general PM-JAY route has its own verification requirements. Senior members with CGHS, ECHS, or Ayushman CAPF must choose the applicable scheme; confirm with the enrolment desk."}}
+  ],
+  "steps": [
+    {"order": 1, "instruction": {"en": "Check beneficiary status on the official NHA beneficiary portal, at a Common Service Centre, or an empanelled hospital help desk. People aged 70 or above can use the senior-citizen route on the beneficiary portal or official Ayushman App regardless of income."}},
+    {"order": 2, "instruction": {"en": "Complete beneficiary verification and card creation through an authorised channel. Senior-citizen enrolment requires Aadhaar-based eKYC; another family member aged 70 or above can be added using Add Member after the first enrolment."}},
+    {"order": 3, "instruction": {"en": "Before planned treatment, confirm that the hospital is empanelled and the required treatment package is covered."}}
+  ],
+  "citation": {
+    "source_url": "https://nha.gov.in/img/resources/Adhikar-Patra.pdf",
+    "source_title": "PM-JAY Beneficiary Adhikar Patra",
+    "publisher": "National Health Authority",
+    "verified_on": "2026-09-07",
+    "verification_state": "pending_review",
+    "verified_by": null,
+    "snapshot_id": null
+  }
+}

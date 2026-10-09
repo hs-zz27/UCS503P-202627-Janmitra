@@ -39,6 +39,7 @@ class ServiceSummary(BaseModel):
     description: str
     benefit_summary: str | None = None
     eligibility_summary: str | None = None
+    first_action: str | None = None
     is_rule_backed: bool
     service_version: int
     citation: Citation
@@ -51,12 +52,35 @@ class FindServiceRequest(ToolRequest):
     #: Category-first discovery narrows the search before free-form matching (FR-02).
     category: ServiceCategory | None = None
     limit: int = Field(default=3, ge=1, le=10)
+    #: Realtime voice already has a language model: return retrieval context directly
+    #: rather than waiting for a second model to draft the same answer.
+    response_mode: Literal["prepared_answer", "context"] = "prepared_answer"
 
 
 class FindServiceResponse(BaseModel):
     matches: list[ServiceSummary]
-    #: Set when zero matches came back — the agent should ask a clarifying question or,
-    #: if it has already tried, call request_handoff (FR-03, context.md §18.3).
+    #: An empty verified catalogue is not a reason to stop helping. These fields make the
+    #: permitted trained-knowledge fallback explicit in the model-visible tool result.
+    knowledge_fallback_allowed: bool = False
+    response_guidance: str | None = None
+    answer_to_citizen: str | None = None
+    answer_basis: (
+        Literal[
+            "pending_catalogue_and_trained_knowledge",
+            "trained_knowledge",
+            "pending_catalogue",
+            "published_and_pending_catalogue",
+            "no_matching_reference",
+        ]
+        | None
+    ) = None
+    reference_slugs: list[str] = Field(default_factory=list)
+    reference_context: list[dict[str, Any]] = Field(default_factory=list)
+    context_order: list[str] = Field(default_factory=list)
+    verification_state: Literal["verified", "unverified", "mixed"] = "verified"
+    retrieval_elapsed_ms: float = Field(default=0, ge=0)
+    #: Set when zero matches came back. The agent answers from general knowledge first and
+    #: offers this handoff when the citizen wants current official verification.
     suggested_handoff_trigger: HandoffTrigger | None = None
     asked_category: ServiceCategory | None = None
 

@@ -1,0 +1,43 @@
+{
+  "slug": "pmegp",
+  "name": {"en": "Prime Minister's Employment Generation Programme"},
+  "aliases": [
+    "PMEGP",
+    "employment generation loan",
+    "margin money subsidy",
+    "village enterprise loan",
+    "new micro enterprise"
+  ],
+  "category": "loan",
+  "description": {
+    "en": "Credit-linked support for setting up a new micro enterprise in the non-farm sector, implemented through KVIC, State KVIBs, District Industries Centres, and banks."
+  },
+  "benefit_summary": {
+    "en": "A bank-financed project can receive margin-money subsidy under the programme. The applicable project ceiling, subsidy rate, own contribution, and bank terms depend on the activity, location, and applicant category."
+  },
+  "eligibility_summary": {
+    "en": "Applicants must be at least 18 years old and propose an eligible new unit. Education requirements apply above specified project-cost thresholds, and eligible institutions can include SHGs, societies, production co-operatives, and charitable trusts. Current continuation and local implementation must be confirmed on the portal."
+  },
+  "rule_set": null,
+  "documents": [
+    {"id": "project-report", "name": {"en": "Detailed project report"}},
+    {"id": "identity-documents", "name": {"en": "Identity and applicant details required by the portal and bank"}},
+    {"id": "education-proof", "name": {"en": "Education or skill certificate when required for the proposed project"}},
+    {"id": "category-certificate", "name": {"en": "Special-category certificate when claiming that category's benefit"}},
+    {"id": "rural-certificate", "name": {"en": "Rural-area certificate when claiming a rural-location benefit"}}
+  ],
+  "steps": [
+    {"order": 1, "instruction": {"en": "Check the current PMEGP notice and eligible activity list on the official portal."}},
+    {"order": 2, "instruction": {"en": "Prepare the project report and submit the online application with supporting documents."}},
+    {"order": 3, "instruction": {"en": "Complete scrutiny, bank appraisal, and required training or registration steps communicated by the implementing agency."}}
+  ],
+  "citation": {
+    "source_url": "https://www.kviconline.gov.in/pmegpeportal/dashboard/notification/Revised_PMEGP_Scheme_Guidelines_07122023_compressed.pdf",
+    "source_title": "Revised PMEGP Scheme Guidelines",
+    "publisher": "Ministry of Micro, Small and Medium Enterprises and KVIC",
+    "verified_on": "2026-09-07",
+    "verification_state": "pending_review",
+    "verified_by": null,
+    "snapshot_id": null
+  }
+}

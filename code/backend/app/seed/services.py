@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+from datetime import date
 from pathlib import Path
 
 from app.db import get_sessionmaker
@@ -20,15 +21,52 @@ def load_records(directory: Path) -> list[ServiceRecord]:
     ]
 
 
-async def seed(directory: Path, *, dry_run: bool, actor: str) -> int:
-    records = load_records(directory)
+def prepare_records(
+    records: list[ServiceRecord], *, actor: str, confirm_reviewed: bool
+) -> list[ServiceRecord]:
     unverified = [
         record.slug
         for record in records
         if record.citation.verification_state is not VerificationState.VERIFIED
     ]
-    if unverified:
-        raise ValueError(f"refusing to seed unverified services: {', '.join(unverified)}")
+    if not unverified:
+        return records
+    if not confirm_reviewed:
+        raise ValueError(
+            "refusing to seed unverified services: "
+            f"{', '.join(unverified)}; review their official sources, then pass "
+            "--confirm-reviewed with a named --actor"
+        )
+
+    reviewer = actor.strip()
+    if not reviewer or reviewer.casefold() == "seed":
+        raise ValueError("--confirm-reviewed requires a named human reviewer in --actor")
+
+    reviewed_on = date.today()
+    return [
+        record.model_copy(
+            update={
+                "citation": record.citation.model_copy(
+                    update={
+                        "verification_state": VerificationState.VERIFIED,
+                        "verified_by": reviewer,
+                        "verified_on": reviewed_on,
+                    }
+                )
+            }
+        )
+        if record.citation.verification_state is not VerificationState.VERIFIED
+        else record
+        for record in records
+    ]
+
+
+async def seed(
+    directory: Path, *, dry_run: bool, actor: str, confirm_reviewed: bool = False
+) -> int:
+    records = prepare_records(
+        load_records(directory), actor=actor, confirm_reviewed=confirm_reviewed
+    )
     if dry_run:
         return len(records)
 
@@ -38,7 +76,7 @@ async def seed(directory: Path, *, dry_run: bool, actor: str) -> int:
                 session,
                 record,
                 actor=actor,
-                review_notes="Seeded from reviewed JSON",
+                review_notes="Published from reviewed catalogue JSON",
             )
         await session.commit()
     return len(records)
@@ -49,9 +87,21 @@ def main() -> None:
     parser.add_argument("directory", type=Path)
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--actor", default="seed")
+    parser.add_argument(
+        "--confirm-reviewed",
+        action="store_true",
+        help="attest that --actor checked every pending record against its official source",
+    )
     args = parser.parse_args()
     try:
-        count = asyncio.run(seed(args.directory, dry_run=args.dry_run, actor=args.actor))
+        count = asyncio.run(
+            seed(
+                args.directory,
+                dry_run=args.dry_run,
+                actor=args.actor,
+                confirm_reviewed=args.confirm_reviewed,
+            )
+        )
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         parser.error(str(exc))
     verb = "Validated and published" if not args.dry_run else "Validated"

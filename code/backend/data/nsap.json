@@ -1,0 +1,42 @@
+{
+  "slug": "nsap",
+  "name": {"en": "National Social Assistance Programme"},
+  "aliases": [
+    "NSAP",
+    "old age pension",
+    "widow pension",
+    "disability pension",
+    "family benefit",
+    "IGNOAPS",
+    "IGNWPS",
+    "IGNDPS",
+    "NFBS",
+    "Annapurna"
+  ],
+  "category": "pension",
+  "description": {
+    "en": "An umbrella social-assistance programme for eligible below-poverty-line households, covering central old-age, widow, and disability pensions, a family benefit after the death of a primary breadwinner, and Annapurna food support."
+  },
+  "benefit_summary": {
+    "en": "The central component and eligibility differ by sub-scheme. States and Union Territories may add assistance or apply their implementation process, so the payable amount and application channel must be checked locally."
+  },
+  "eligibility_summary": {
+    "en": "The central guidelines apply the components to below-poverty-line persons or households and then use sub-scheme conditions such as age, widowhood, severe disability, or death of the primary breadwinner. State verification decides final inclusion."
+  },
+  "rule_set": null,
+  "documents": [],
+  "steps": [
+    {"order": 1, "instruction": {"en": "Identify whether the need is old-age pension, widow pension, disability pension, family benefit, or food support."}},
+    {"order": 2, "instruction": {"en": "Contact the Gram Panchayat, local body, block office, or state social-assistance portal for the current application and state top-up rules."}},
+    {"order": 3, "instruction": {"en": "Submit the sub-scheme documents requested by the state and keep the acknowledgement for status tracking."}}
+  ],
+  "citation": {
+    "source_url": "https://rural.gov.in/sites/default/files/NSAP_Guidelines_English.pdf",
+    "source_title": "National Social Assistance Programme Guidelines",
+    "publisher": "Ministry of Rural Development",
+    "verified_on": "2026-09-07",
+    "verification_state": "pending_review",
+    "verified_by": null,
+    "snapshot_id": null
+  }
+}

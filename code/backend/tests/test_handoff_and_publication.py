@@ -14,7 +14,7 @@ class FakeSession:
     def __init__(self, value) -> None:
         self.value = value
 
-    async def get(self, model, identifier):
+    async def get(self, model, identifier, **kwargs):
         return self.value
 
 

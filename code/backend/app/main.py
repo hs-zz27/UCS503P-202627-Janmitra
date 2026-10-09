@@ -1,6 +1,6 @@
 """Janmitra backend — a modular monolith, not microservices (context.md §9).
 
-Six modules in one FastAPI application: conversation, catalogue, eligibility, ingestion,
+Five modules in one FastAPI application: conversation, catalogue, eligibility,
 handoff and audit. It stays horizontally replicable because no required state lives in
 process memory — conversations, records and audit rows are all in Postgres.
 """

@@ -65,16 +65,21 @@ async def create(
     return conversation
 
 
-async def get(session: AsyncSession, conversation_id: uuid.UUID) -> Conversation:
-    conversation = await session.get(Conversation, conversation_id)
+async def get(
+    session: AsyncSession, conversation_id: uuid.UUID, *, for_update: bool = False
+) -> Conversation:
+    conversation = await session.get(
+        Conversation, conversation_id, with_for_update=for_update, populate_existing=for_update
+    )
     if conversation is None:
         raise ConversationNotFound(str(conversation_id))
     return conversation
 
 
 async def get_active(session: AsyncSession, conversation_id: uuid.UUID) -> Conversation:
-    conversation = await get(session, conversation_id)
-    if conversation.status != ConversationStatus.ACTIVE:
+    # Serialize the complete tool/state transition, not just event sequence allocation.
+    conversation = await get(session, conversation_id, for_update=True)
+    if conversation.status != ConversationStatus.ACTIVE or conversation.ended_at is not None:
         raise ConversationClosed(str(conversation_id))
     return conversation
 
@@ -88,9 +93,18 @@ async def append_event(
 ) -> ConversationEvent:
     """Append one turn-level event.
 
-    The sequence number is derived inside the transaction and protected by a unique
-    constraint, so two replicas writing to the same call cannot silently interleave.
+    Locking the parent conversation serializes sequence allocation for this call across
+    transcript callbacks, tool requests, and API replicas. The unique constraint remains
+    the final integrity guard, but normal concurrent writes no longer race on `MAX(seq)`.
     """
+    locked_status = (
+        await session.execute(_event_lock_statement(conversation.id))
+    ).scalar_one_or_none()
+    if locked_status is None:
+        raise ConversationNotFound(str(conversation.id))
+    if locked_status != ConversationStatus.ACTIVE:
+        raise ConversationClosed(str(conversation.id))
+
     highest = (
         await session.execute(
             select(func.max(ConversationEvent.seq)).where(
@@ -142,6 +156,9 @@ async def set_category(
 async def end(
     session: AsyncSession, conversation: Conversation, *, status: str = ConversationStatus.ENDED
 ) -> Conversation:
+    if status not in {ConversationStatus.ENDED, ConversationStatus.HANDED_OFF}:
+        raise ValueError("a conversation can only end in a terminal status")
+    conversation = await get_active(session, conversation.id)
     conversation.status = status
     conversation.ended_at = datetime.now(UTC)
     await session.flush()
@@ -152,6 +169,14 @@ def time_to_guidance(conversation: Conversation) -> TimeToGuidance:
     return TimeToGuidance(
         connected_at=conversation.connected_at,
         first_guidance_at=conversation.first_guidance_at,
+    )
+
+
+def _event_lock_statement(conversation_id: uuid.UUID):
+    return (
+        select(Conversation.status)
+        .where(Conversation.id == conversation_id)
+        .with_for_update()
     )
 
 

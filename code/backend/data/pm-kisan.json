@@ -1,0 +1,35 @@
+{
+  "slug": "pm-kisan",
+  "name": {"en": "Pradhan Mantri Kisan Samman Nidhi"},
+  "aliases": ["PM-KISAN", "Kisan Samman Nidhi", "farmer income support", "farmer cash benefit"],
+  "category": "grant",
+  "description": {
+    "en": "Central income support paid by direct bank transfer to eligible landholding farmer families identified by States and Union Territories."
+  },
+  "benefit_summary": {
+    "en": "An eligible landholding farmer family receives Rs 6,000 per year as three instalments of Rs 2,000, transferred directly to its Aadhaar-seeded bank account. This is income support, not a repayable loan. A family means husband, wife, and minor children; this is a family benefit, not Rs 6,000 separately for each member."
+  },
+  "eligibility_summary": {
+    "en": "Cultivable landholding farmer families are considered irrespective of holding size, subject to State or UT verification and exclusions. Excluded categories include institutional landholders; families with current/former constitutional or specified elected office holders; specified serving or retired government, public-sector, autonomous-body, or regular local-body employees; pensioners receiving Rs 10,000 or more monthly; last-assessment-year income-tax payers; and registered practising doctors, engineers, lawyers, chartered accountants, or architects. MTS/Class IV/Group D exceptions apply to the employee and pensioner exclusions. eKYC is mandatory. The portal flags post-1-February-2019 land acquisition and duplicate-family benefit cases for physical verification; a registration is not approval."
+  },
+  "rule_set": null,
+  "documents": [
+    {"id": "aadhaar-ekyc", "name": {"en": "Aadhaar details for mandatory eKYC through the official portal or authorised centre"}, "notes": {"en": "Do not share Aadhaar numbers or OTPs with the voice agent. Biometric eKYC is available through CSCs and authorised channels."}},
+    {"id": "bank-details", "name": {"en": "Bank account details for direct benefit transfer"}},
+    {"id": "land-records", "name": {"en": "Cultivable landholding records required for State verification"}, "notes": {"en": "The State or Union Territory checks the recorded holding and exclusions before approval."}}
+  ],
+  "steps": [
+    {"order": 1, "instruction": {"en": "Use New Farmer Registration on the official PM-KISAN portal or an authorised local channel."}},
+    {"order": 2, "instruction": {"en": "Complete mandatory eKYC through the portal or an authorised CSC; ensure Aadhaar, Aadhaar-seeded bank account, and cultivable land details agree. The bank or authorised centre can help correct seeding issues; never give an OTP to the voice agent."}},
+    {"order": 3, "instruction": {"en": "Use Know Your Status on the official PM-KISAN portal to inspect verification or payment status. For withheld or rejected cases, approach the designated State/UT nodal officer or revenue office with the stated issue; submitting an application does not guarantee payment."}}
+  ],
+  "citation": {
+    "source_url": "https://pmkisan.gov.in/",
+    "source_title": "PM-Kisan Samman Nidhi",
+    "publisher": "Department of Agriculture and Farmers Welfare",
+    "verified_on": "2026-09-07",
+    "verification_state": "pending_review",
+    "verified_by": null,
+    "snapshot_id": null
+  }
+}

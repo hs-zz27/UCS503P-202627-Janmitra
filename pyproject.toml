@@ -1,41 +1,28 @@
-﻿
 [build-system]
-requires = ["hatchling","hatch-vcs"]
-build-backend = "hatchling.build"
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
 
 [project]
-name = "tiet-ucs503.github.io/ucs503p-202627odd-template"
-version = "0.0.1"
-authors = [
-  { name="Raghav B. Venkataramaiyer", email="bv.raghav@thapar.edu" },
-]
-# maintainers = [
-#   { name="Raghav B. Venkataramaiyer",
-#     email="bvraghav@gmail.com" },
-# ]
-description = "UCS503 : Software Engineering : Project Sample"
+name = "janmitra-docs"
+version = "0.1.0"
+description = "Janmitra course documentation tooling; runtime packages live under code"
 readme = "README.md"
-requires-python = ">=3.8"
-classifiers = [
-    # See: https://pypi.org/classifiers/
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-    "Development Status :: 3 - Alpha",
-    "Environment :: Console",
-    "Intended Audience :: Developers",
-    "Operating System :: POSIX",
-    "Programming Language :: Unix Shell",
+requires-python = ">=3.12"
+
+[project.optional-dependencies]
+docs = [
+  "mkdocs>=1.6,<2", "mkdocs-material>=9.6", "mkdocstrings[python]>=0.28",
+  "mkdocs-literate-nav>=0.6", "mkdocs-section-index>=0.3",
+  "mkdocs-git-revision-date-localized-plugin>=1.3",
+  "pymdown-extensions>=10.14",
 ]
-dependencies = ["click"]
 
-[project.urls]
-Homepage = "https://github.com/tiet-ucs503/ucs503p-202627odd-template"
-Issues = "https://github.com/tiet-unc512/ucs503p-202627odd-template/issues"
+[tool.setuptools]
+py-modules = []
 
-# Adapted from https://stackoverflow.com/a/50156706
 [tool.pytest.ini_options]
-pythonpath = [
-  "code"
-]
-# THE END -------------------------------------------
+cache_dir = ".janmitra/pytest-cache"
+pythonpath = ["code/backend"]
+testpaths = ["code/backend/tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"

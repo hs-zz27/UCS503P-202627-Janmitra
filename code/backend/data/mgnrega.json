@@ -1,0 +1,36 @@
+{
+  "slug": "mgnrega",
+  "name": {"en": "Viksit Bharat - Guarantee for Rozgar and Ajeevika Mission (Gramin)"},
+  "aliases": ["VB-G RAM G", "VB-GRAMG", "Viksit Bharat G RAM G", "MGNREGA", "NREGA", "Mahatma Gandhi National Rural Employment Guarantee Scheme", "rural job card", "100 days work", "125 days work", "village wage work"],
+  "category": "other",
+  "description": {
+    "en": "Rural wage-employment support under the VB-G RAM G Act, which came into force on 1 July 2026 and replaced the MGNREGA Act. The legacy MGNREGA name and job-card search terms remain supported for people who know the earlier programme."
+  },
+  "benefit_summary": {
+    "en": "The current statutory guarantee is 125 days of wage employment per financial year for an eligible rural household whose adult members volunteer for unskilled manual work. This is household-based work on demand, not 125 days separately for every family member or an automatic cash grant. The earlier MGNREGA guarantee was 100 days; quote 125 days for the current programme. Wage rates and the local work schedule must be checked with the Gram Panchayat; do not invent one nationwide wage."
+  },
+  "eligibility_summary": {
+    "en": "Rural households whose adult members volunteer for unskilled manual work can register and demand employment through the Gram Panchayat. Existing eKYC-verified MGNREGA job cards remain valid until new Gramin Rozgar Guarantee Cards are issued. Households without a card may register at the Gram Panchayat, and workers must not be denied employment merely because eKYC is pending. Ask whether the person lives in a rural area and already has a job card; a registration does not itself assign work."
+  },
+  "rule_set": null,
+  "documents": [
+    {"id": "job-card-application", "name": {"en": "Household members' names, ages and address details for Gram Panchayat registration"}},
+    {"id": "job-card", "name": {"en": "Existing MGNREGA job card or new Gramin Rozgar Guarantee Card, if issued"}, "notes": {"en": "Existing eKYC-verified job cards remain valid during transition. Ask the Gram Panchayat for eKYC assistance if pending; pending eKYC alone must not exclude a worker."}},
+    {"id": "wage-account", "name": {"en": "Bank or post-office account details for official wage payment"}, "notes": {"en": "Provide account details only to the authorised enrolment channel, not the voice agent."}},
+    {"id": "work-demand-receipt", "name": {"en": "Dated receipt or acknowledgement for each demand for work"}}
+  ],
+  "steps": [
+    {"order": 1, "instruction": {"en": "Visit the Gram Panchayat with an existing job card, or register the household's names, ages and address to request a Gramin Rozgar Guarantee Card. Ask for help completing eKYC where needed; existing valid cards continue during transition."}},
+    {"order": 2, "instruction": {"en": "Demand work orally, in writing using the prescribed form, or through an authorised digital channel to the Gram Panchayat or Programme Officer. Keep a dated acknowledgement and ask about the current local wage and notified work calendar, including peak agricultural-season restrictions."}},
+    {"order": 3, "instruction": {"en": "The official FAQ states work must be provided within 15 days of application. If it is not, ask the Gram Panchayat or Programme Officer to record the issue and explain the applicable unemployment-allowance or grievance process; do not assume a payment has already been approved."}}
+  ],
+  "citation": {
+    "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2292527&lang=1&reg=6",
+    "source_title": "Employment Guarantee and Livelihood Support under VB-G RAM G, 31 July 2026",
+    "publisher": "Ministry of Rural Development",
+    "verified_on": "2026-09-07",
+    "verification_state": "pending_review",
+    "verified_by": null,
+    "snapshot_id": null
+  }
+}
