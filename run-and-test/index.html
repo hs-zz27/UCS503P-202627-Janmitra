@@ -1,0 +1,1344 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../criteria-for-project-selection/">
+      
+      
+        <link rel="next" href="../voice-architecture/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+  <title>UCS503: Software Engineering; Raghav
+    B. Venkataramaiyer @TIET</title>
+
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%2020c-4.41%200-8-3.59-8-8s3.59-8%208-8%208%203.59%208%208-3.59%208-8%208m0-18A10%2010%200%200%200%202%2012a10%2010%200%200%200%2010%2010%2010%2010%200%200%200%2010-10A10%2010%200%200%200%2012%202m1%205h-2v4H7v2h4v4h2v-4h4v-2h-4z%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="amber" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#run-and-test-janmitra" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Janmitra" class="md-header__button md-logo" aria-label="Janmitra" data-md-component="logo">
+      
+  <img src="../assets/tiet-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Janmitra
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Run and test Janmitra
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Janmitra" class="md-nav__button md-logo" aria-label="Janmitra" data-md-component="logo">
+      
+  <img src="../assets/tiet-logo.svg" alt="logo">
+
+    </a>
+    Janmitra
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../criteria-for-project-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Criteria for Project Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Run and test Janmitra
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Run and test Janmitra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configure-once" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configure once
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automated-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automated checks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-and-shutdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting and shutdown
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gemini-31-provider-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gemini 3.1 provider status
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../voice-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Browser voice architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Journals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Journals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../journals/1024170394-Dhruv/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1024170394 Dhruv
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1024170394 Dhruv
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../journals/1024170394-Dhruv/week1-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../journals/1024170394-Dhruv/week2-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra - Week 2 Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../journals/1024170394-Dhruv/week3-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../journals/1024170394-Dhruv/week4-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../journals/1024170395-paras/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1024170395 paras
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1024170395 paras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../journals/1024170395-paras/week1-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../journals/1024170395-paras/week2-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../journals/1024170395-paras/week3-jantmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../journals/1024170395-paras/week4-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../journals/1024170396-Harkamal/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1024170396 Harkamal
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1024170396 Harkamal
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../journals/1024170396-Harkamal/week1-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../journals/1024170396-Harkamal/week2-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../journals/1024170396-Harkamal/week3-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../journals/1024170396-Harkamal/week4-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../journals/1024170396-Harkamal/week5-janmitra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Janmitra — Weekly Engineering Journal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="run-and-test-janmitra">Run and test Janmitra<a class="headerlink" href="#run-and-test-janmitra" title="Permanent link">&para;</a></h1>
+<p>Use PowerShell from the repository root. Requirements: Docker Desktop (running),
+Python 3.12+, and Node.js 22.13+ with npm. The API can run without provider credentials;
+voice calls need matching LiveKit credentials and a Gemini API key.</p>
+<h2 id="configure-once">Configure once<a class="headerlink" href="#configure-once" title="Permanent link">&para;</a></h2>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">if</span> <span class="p">(!(</span><span class="nb">Test-Path</span> <span class="n">code</span><span class="p">/</span><span class="n">backend</span><span class="p">/.</span><span class="n">env</span><span class="p">))</span> <span class="p">{</span> <span class="nb">Copy-Item</span> <span class="n">code</span><span class="p">/</span><span class="n">backend</span><span class="p">/.</span><span class="n">env</span><span class="p">.</span><span class="n">example</span> <span class="n">code</span><span class="p">/</span><span class="n">backend</span><span class="p">/.</span><span class="n">env</span> <span class="p">}</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">if</span> <span class="p">(!(</span><span class="nb">Test-Path</span> <span class="n">code</span><span class="p">/</span><span class="n">frontend</span><span class="p">/.</span><span class="n">env</span><span class="p">.</span><span class="n">local</span><span class="p">))</span> <span class="p">{</span> <span class="nb">Copy-Item</span> <span class="n">code</span><span class="p">/</span><span class="n">frontend</span><span class="p">/.</span><span class="n">env</span><span class="p">.</span><span class="n">local</span><span class="p">.</span><span class="n">example</span> <span class="n">code</span><span class="p">/</span><span class="n">frontend</span><span class="p">/.</span><span class="n">env</span><span class="p">.</span><span class="n">local</span> <span class="p">}</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">py</span> <span class="p">-</span><span class="n">3</span><span class="p">.</span><span class="n">12</span> <span class="n">-m</span> <span class="n">venv</span> <span class="n">code</span><span class="p">/</span><span class="n">backend</span><span class="p">/.</span><span class="n">venv</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">code</span><span class="p">/</span><span class="n">backend</span><span class="p">/.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">-e</span> <span class="s1">'code/backend[dev,voice,gemini]'</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nb">cd </span><span class="n">code</span><span class="p">/</span><span class="n">frontend</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">npm</span> <span class="n">ci</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nb">cd </span><span class="p">../..</span>
+</span></code></pre></div>
+<p>Edit <code>code/backend/.env</code>: set <code>JANMITRA_GEMINI_API_KEY</code>, the three
+<code>JANMITRA_LIVEKIT_*</code> credentials. <code>JANMITRA_MODEL_ADAPTER=real</code> enables backend
+text tasks; use <code>mock</code> for offline API tests. Native voice retrieval returns compact
+context directly to Gemini Live and does not need a second text-model answer.
+Keep the default host database URL
+on port 5438. Set the same LiveKit URL/key/secret in <code>code/frontend/.env.local</code>.
+Set <code>JANMITRA_GEMINI_LIVE_MODEL=gemini-3.1-flash-live-preview</code>
+for native audio-to-audio voice. Voice uses Gemini 3.1 only; no alternate model fallback.
+<code>JANMITRA_GEMINI_LIVE_THINKING_LEVEL=low</code> is the default; supported levels are
+<code>minimal</code>, <code>low</code>, <code>medium</code>, and <code>high</code>. Tune this within the same native voice model
+to compare answer quality and latency, then restart the worker after changing it.
+Both agent names must be <code>janmitra-agent</code>. Keep API role keys consistent between
+Compose and the worker. Do not commit either environment file.</p>
+<p>For a hosted browser harness, set <code>JANMITRA_HARNESS_ACCESS_CODE</code> and enter it in
+the page. Production token issuance fails closed without a code. Set
+<code>JANMITRA_HARNESS_ORIGIN=https://your-host</code> behind a reverse proxy. The token route
+limits requests per process; a multi-instance deployment needs a shared limiter.</p>
+<h2 id="start">Start<a class="headerlink" href="#start" title="Permanent link">&para;</a></h2>
+<p>Terminal 1, repository root:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">docker</span> <span class="n">compose</span> <span class="p">-</span><span class="n">-env</span><span class="o">-file</span> <span class="n">code</span><span class="p">/</span><span class="n">backend</span><span class="p">/.</span><span class="n">env</span> <span class="n">up</span> <span class="p">-</span><span class="n">-build</span> <span class="n">-d</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">curl</span><span class="p">.</span><span class="n">exe</span> <span class="n">http</span><span class="p">://</span><span class="n">127</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">1</span><span class="p">:</span><span class="n">8000</span><span class="p">/</span><span class="n">readyz</span>
+</span></code></pre></div>
+<p>Readiness must return <code>{"status":"ready","database":"ok"}</code>. API docs are at
+<a href="http://127.0.0.1:8000/docs">http://127.0.0.1:8000/docs</a>. Migrations run automatically on container startup.</p>
+<p>Terminal 2:</p>
+<p>After updating code or bundled records, rebuild the API with the Terminal 1 command
+and stop/restart the voice worker to load the changes. Existing processes and images
+do not automatically pick up source or data edits.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">cd </span><span class="n">code</span><span class="p">/</span><span class="n">backend</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="p">.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">janmitra-voice</span><span class="p">.</span><span class="n">exe</span> <span class="nb">start</span>
+</span></code></pre></div>
+<p>Terminal 3:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cd </span><span class="n">code</span><span class="p">/</span><span class="n">frontend</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">npm</span> <span class="n">run</span> <span class="n">dev</span>
+</span></code></pre></div>
+<p>Open <a href="http://127.0.0.1:3000">http://127.0.0.1:3000</a>, allow microphone access, and start a call. Ask about
+crop insurance. The worker searches the published catalogue first; pending reference
+chunks go directly to Gemini Live. Answers lead with useful source-backed facts and
+qualify actual uncertainty; pending-review metadata remains intact without repeated
+spoken boilerplate. A handoff queues a
+request for an operator; it does not connect a telephone call. The current product uses
+browser audio only. See <a href="../voice-architecture/">Voice architecture</a> for the retrieval
+contract, reference-agent comparison, and latency evaluation method.</p>
+<p>Bundled service files remain pending review. Check their official sources in
+<code>code/backend/data/REVIEW.md</code> before using <code>janmitra-seed data --confirm-reviewed
+--actor "Your Name"</code>. Never attest review just to populate a demo.</p>
+<h2 id="automated-checks">Automated checks<a class="headerlink" href="#automated-checks" title="Permanent link">&para;</a></h2>
+<p>Backend (from <code>code/backend</code>):</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">ruff</span><span class="p">.</span><span class="n">exe</span> <span class="n">check</span> <span class="p">.</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="p">.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">-m</span> <span class="n">pytest</span> <span class="n">-q</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="p">.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">check</span>
+</span></code></pre></div>
+<p>The default suite skips PostgreSQL concurrency tests when no test URL is set.
+Run the full suite against the local Compose database:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nv">$env:JANMITRA_TEST_DATABASE_URL</span><span class="p">=</span><span class="s1">'postgresql+asyncpg://janmitra:janmitra@127.0.0.1:5438/janmitra'</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="p">.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">-m</span> <span class="n">pytest</span> <span class="n">-q</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nb">Remove-Item</span> <span class="n">Env</span><span class="p">:</span><span class="n">JANMITRA_TEST_DATABASE_URL</span>
+</span></code></pre></div>
+<p>These tests use temporary, uniquely named schemas, then remove only those schemas.
+They exercise migrations, simultaneous publications/events, conversation closure,
+and handoff transitions. Use a dedicated test database in shared environments.</p>
+<p>Frontend (from <code>code/frontend</code>):</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">npm</span> <span class="n">test</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">npm</span> <span class="n">run</span> <span class="n">lint</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">npm</span> <span class="n">run</span> <span class="n">build</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">npm</span> <span class="n">audit</span>
+</span></code></pre></div>
+<p>Migration checks (repository root, with API running):</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">docker</span> <span class="n">compose</span> <span class="n">exec</span> <span class="n">-T</span> <span class="n">api</span> <span class="n">alembic</span> <span class="n">current</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">docker</span> <span class="n">compose</span> <span class="n">exec</span> <span class="n">-T</span> <span class="n">api</span> <span class="n">alembic</span> <span class="n">check</span>
+</span></code></pre></div>
+<p>Documentation (repository root):</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">code</span><span class="p">/</span><span class="n">backend</span><span class="p">/.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">-e</span> <span class="s1">'.[docs]'</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">code</span><span class="p">/</span><span class="n">backend</span><span class="p">/.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">-m</span> <span class="n">mkdocs</span> <span class="n">build</span> <span class="p">-</span><span class="n">-strict</span>
+</span></code></pre></div>
+<p>Optional live voice smoke test, with all three components running (backend directory):</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">scripts</span><span class="p">/</span><span class="n">smoke_voice</span><span class="p">.</span><span class="n">py</span> <span class="n">path</span><span class="p">/</span><span class="n">to</span><span class="p">/</span><span class="n">question</span><span class="p">.</span><span class="n">wav</span>
+</span></code></pre></div>
+<p>Supply a mono, 16-bit PCM WAV asking about a scheme. This uses real provider quota
+and retains a synthetic conversation in the local database. Success requires agent
+dispatch, received audio, a persisted scheme lookup, a completed guidance response, and conversation closure.</p>
+<p>For prompt and retrieval quality without LiveKit or the HTTP API, use the opt-in
+native-audio evaluator from <code>code/backend</code>:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">scripts</span><span class="p">/</span><span class="n">evaluate_voice_answer</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-list</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="p">.</span><span class="n">venv</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">scripts</span><span class="p">/</span><span class="n">evaluate_voice_answer</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-scenario</span> <span class="n">low-literacy-documents</span> <span class="p">-</span><span class="n">-audio</span> <span class="n">path</span><span class="p">/</span><span class="n">to</span><span class="p">/</span><span class="n">first-turn</span><span class="p">.</span><span class="n">wav</span> <span class="n">path</span><span class="p">/</span><span class="n">to</span><span class="p">/</span><span class="n">follow-up</span><span class="p">.</span><span class="n">wav</span> <span class="p">-</span><span class="n">-report</span> <span class="p">../../.</span><span class="n">janmitra</span><span class="p">/</span><span class="n">voice-evaluation</span><span class="p">.</span><span class="n">json</span>
+</span></code></pre></div>
+<p>Supply one mono, 16-bit PCM, <strong>16 kHz</strong> WAV per conversation turn. This uses real Gemini
+quota, the current system prompt and local pending-reference retrieval, and saves a
+report with transcripts, tool results and audio counts. It does not start application
+servers or test browser transport, interruption, or the HTTP handoff lifecycle. Review
+the report against the scenario's expected behavior and forbidden claims yourself;
+received audio or script completion is not an automatic answer-quality pass.</p>
+<h2 id="troubleshooting-and-shutdown">Troubleshooting and shutdown<a class="headerlink" href="#troubleshooting-and-shutdown" title="Permanent link">&para;</a></h2>
+<ul>
+<li>API not ready: <code>docker compose logs --tail 80 api postgres</code>.</li>
+<li>Token rejected: check same-origin browser access, configured access code, and
+  restart Next.js after editing environment files.</li>
+<li>No dispatched agent: check that the worker is running and both agent names match.</li>
+<li>Provider failure: check credentials, model access, quota, and the worker log.</li>
+<li>Interrupted audio: follow the request to repeat. Quota failures close immediately;
+  three recoverable failures without resumed agent speech also close the session.
+  A listening indicator alone does not establish successful recovery.</li>
+<li>Slow answers: compare worker tool durations and <code>retrieval_elapsed_ms</code>; voice calls
+  should request context and avoid the legacy prepared-answer generation path.</li>
+<li>No verified schemes: review and publish records, or answer from source-backed pending
+  references while retaining their pending-review status and qualifying actual uncertainty.</li>
+<li>Stop worker/frontend with Ctrl+C; stop containers with <code>docker compose down</code>.
+  Database data survives. <code>down -v</code> deletes it.</li>
+</ul>
+<h2 id="gemini-31-provider-status">Gemini 3.1 provider status<a class="headerlink" href="#gemini-31-provider-status" title="Permanent link">&para;</a></h2>
+<p>Voice uses <code>gemini-3.1-flash-live-preview</code> for native audio input and output, with no
+separate speech-to-text/text-to-speech pipeline and no alternate voice-model fallback.
+The settings reject other live models. LiveKit Agents/Google 1.8.5 and Google GenAI
+2.29.0 are the minimum verified client versions in this workspace.</p>
+<p>Earlier live checks encountered Google 1011 errors, with the prior key explicitly
+reporting <code>Resource has been exhausted (e.g. check quota)</code>. A replacement key from a
+different account completed one synthetic English call: audio received, scheme lookup,
+guidance response, and conversation closure all passed. Agent readiness took 2,431ms;
+end of speech to first returned audio took 3,064ms. This is one successful test, not a
+production reliability or latency guarantee. A repeat call with that key encountered
+<code>1011 Internal error</code> without a quota message. It received some audio but failed to
+invoke scheme retrieval or complete guidance after retry; conversation cleanup succeeded. Changing
+keys did not eliminate intermittent integrated-flow failures. A minimal direct SDK test
+with the replacement key subsequently completed a short answer with 79 audio chunks,
+without LiveKit or tools, so a solely provider-side cause is not established. No
+key-rotation pool is implemented or demonstrated as a remedy. Use the live smoke test to verify behavior and check
+Gemini project usage/quota when a resource-exhausted error appears. A working key does
+not require rotation solely because of a 1011 response. Rotate it if exposed or explicitly
+blocked by the provider. Local API/unit tests do not establish speech reliability.</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 9, 2026 18:10:07 UTC">October 9, 2026</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../criteria-for-project-selection/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Criteria for Project Selection">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Criteria for Project Selection
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../voice-architecture/" class="md-footer__link md-footer__link--next" aria-label="Next: Browser voice architecture">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Browser voice architecture
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Janmitra project team, TIET
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.footer", "header.autohide", "content.tabs.link", "navigation.tracking", "navigation.top", "toc.integrate", "content.tooltips"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="../javascript/arithmatex.js"></script>
+      
+    
+  </body>
+</html>
