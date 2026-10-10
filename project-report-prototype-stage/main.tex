@@ -1,0 +1,837 @@
+% Janmitra prototype-stage report. This is the only required source file.
+% Compile twice with pdfLaTeX, or once with Tectonic (which performs reruns).
+% The chapter structure follows the supplied TODO template. Standard report is
+% used because tietreport.cls is not included in the repository. Bibliographic
+% entries and the architecture figure are embedded; no external assets are needed.
+\documentclass[11pt,a4paper,oneside]{report}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=1in,headheight=15pt]{geometry}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{array,booktabs,tabularx,longtable}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+
+\hypersetup{
+  pdftitle={Janmitra: Prototype-Stage Project Report},
+  pdfauthor={Dhruv Srivastava; Harkamal Singh Lubana; Paras},
+  pdfsubject={UCS503P prototype implementation and evaluation}
+}
+\urlstyle{tt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.18}
+\setlist[itemize]{leftmargin=1.5em,itemsep=0.2em,topsep=0.3em}
+\setlist[enumerate]{leftmargin=1.8em,itemsep=0.25em,topsep=0.3em}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
+\newcommand{\ReportDate}{10 October 2026}
+\newcommand{\Revision}{e34544d}
+\newcommand{\Advisor}{Dr Paramveer Kaur}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Janmitra}
+\fancyhead[R]{\small Prototype-Stage Report}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{%
+  \fancyhf{}\fancyfoot[C]{\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+\begin{document}
+
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+  \centering
+  {\large\bfseries Thapar Institute of Engineering and Technology\par}
+  \vspace{0.2cm}
+  {\large Patiala\par}
+  \vspace{0.9cm}
+  {\large UCS503P --- Course Project\par}
+  \vspace{1.1cm}
+  {\Huge\bfseries Janmitra\par}
+  \vspace{0.4cm}
+  {\LARGE A Voice-First Civic Scheme Guidance\par
+    Platform for Rural India\par}
+  \vspace{0.8cm}
+  {\Large\bfseries Prototype-Stage Project Report\par}
+  \vspace{0.2cm}
+  {\large Mid-Semester Evaluation\par}
+  \vspace{1.2cm}
+  {\large Submitted to\par}
+  \vspace{0.15cm}
+  {\Large\bfseries \Advisor\par}
+  \vspace{1.0cm}
+  {\large Submitted by\par}
+  \vspace{0.3cm}
+  \begin{tabular}{@{}ll@{}}
+    \textbf{Student} & \textbf{Roll number} \\
+    \midrule
+    Dhruv Srivastava & \texttt{1024170394} \\
+    Harkamal Singh Lubana & \texttt{1024170396} \\
+    Paras & \texttt{1024170395}
+  \end{tabular}
+  \vspace{0.4cm}
+  \par{\small
+    \texttt{dsrivastava\_be24@thapar.edu}\par
+    \texttt{hlubana\_be24@thapar.edu}\par
+    \texttt{pparas\_be24@thapar.edu}\par}
+  \vfill
+  {\large\bfseries Computer Science and Engineering Department\par}
+  \vspace{0.4cm}
+  {\large \ReportDate\par}
+\end{titlepage}
+
+\pagenumbering{roman}
+\hypersetup{pageanchor=true}
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+Janmitra is a voice-first civic-guidance project intended to help rural citizens
+discover government support, understand eligibility conditions, prepare documents,
+and request human assistance. This report describes the implemented prototype at
+repository revision \texttt{\Revision}. The current interaction channel is browser
+audio over LiveKit, with Gemini Live handling native speech input and output.
+A FastAPI backend provides structured scheme retrieval, deterministic eligibility
+evaluation, document checklists, versioned publication, an operator handoff queue,
+and conversation and audit records.
+
+The prototype includes 18 structured scheme drafts across six categories. All
+remain pending human review; five contain draft rule sets. Retrieval can supply
+these references with their review status preserved, while verified eligibility
+and checklist tools require published records. A local backend verification run
+completed with 310 passing tests and five skipped PostgreSQL tests; two test
+modules requiring optional voice-runtime dependencies were excluded. Lint checks
+passed. Repository documentation also records one successful synthetic English
+voice call, alongside intermittent failures and unresolved answer-quality gaps.
+
+The work establishes a testable application foundation and a browser voice
+prototype. Phone/SIP access from the original proposal, complete source ingestion,
+human verification of the catalogue, representative multilingual evaluation,
+measured load scaling, and staging deployment remain outstanding. This report
+distinguishes implemented mechanisms, observed results, and future objectives.
+
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+% ================================================================
+\chapter{Introduction}
+
+\section{Background and Context}
+Government welfare information is distributed across departmental websites,
+guidelines, notices, and application portals. A citizen may describe a practical
+need---such as support for farming, employment, housing, insurance, or a small
+business---without knowing the relevant scheme name or department. Formal
+language, unfamiliar terminology, and multi-page navigation can make the
+information difficult to use even when it is publicly available.
+
+The higher-order goal of Janmitra is to improve access to this information through
+conversation. The original proposal envisaged a service reachable by an ordinary
+phone call, allowing citizens to speak in a familiar language or dialect without
+installing an application \cite{proposal}. The prototype develops the speech and
+backend workflow through a browser voice channel. This provides a practical
+environment for integration and demonstration, while retaining phone accessibility
+as an unmet objective of the original proposal.
+
+\subsection{Problem Statement}
+The project addresses five connected difficulties:
+\begin{enumerate}
+  \item \textbf{Fragmented information:} relevant facts may be spread across
+    multiple official sources and versions.
+  \item \textbf{Language and literacy barriers:} a citizen may be more comfortable
+    describing a need aloud than reading formal scheme descriptions.
+  \item \textbf{Discovery difficulty:} a person may know their circumstances but
+    not the category or name of a suitable programme.
+  \item \textbf{Eligibility and document uncertainty:} general descriptions do not
+    always explain which conditions apply to a particular person or what they
+    should prepare before visiting an office.
+  \item \textbf{Incomplete assistance:} a self-service interaction needs an
+    explicit route to human help when the issue cannot be resolved.
+\end{enumerate}
+
+The engineering problem is to combine a natural spoken interaction with
+traceable information and predictable backend decisions. Language generation
+alone cannot establish personal eligibility, official approval, or completion
+of an application. These distinctions guide the prototype's tool boundaries.
+
+\section{Project Objectives}
+The prototype checkpoint is organised around the following observable objectives.
+Their implementation and validation status are examined in Chapter~3.
+\begin{enumerate}
+  \item \textbf{Demonstrate the voice-to-tool path:} connect browser audio to
+    LiveKit and Gemini Live, retrieve scheme context through the API, and return
+    a spoken response during a controlled demonstration.
+  \item \textbf{Define a reusable catalogue:} represent scheme descriptions,
+    citations, review state, documents, application steps, and optional rules
+    using one validated schema. Include an initial, extensible reference set.
+  \item \textbf{Implement deterministic guidance:} evaluate rule conditions and
+    conditional document requirements with explicit outcomes and boundary tests.
+  \item \textbf{Preserve accountable publication:} require verified records for
+    publication, retain previous versions, and associate verification with a
+    named reviewer and date.
+  \item \textbf{Support human assistance:} create a queued handoff through a
+    validated backend operation and expose operator status updates and context.
+  \item \textbf{Establish repeatable verification:} provide unit and API tests,
+    linting, database migrations, container definitions, and voice-evaluation
+    tools before expanding pilot and performance testing.
+\end{enumerate}
+
+\subsection{Time-to-Value and Development Approach}
+The proposal prioritised an early working voice loop, followed by catalogue
+expansion, ingestion, and load testing. The prototype follows an incremental
+approach: establish data contracts and domain services, integrate voice through
+HTTP tools, add representative source records, then strengthen retrieval,
+concurrency controls, and evaluation support. Each increment provides a concrete
+artefact that can be inspected or tested rather than relying on a final integrated
+demonstration alone.
+
+\subsection{Prototype Scope and Changes from the Proposal}
+The report covers the current repository implementation \cite{implementation},
+associated technical documentation, and the local checks described in Chapter~3. It does not assume
+that an externally hosted deployment or a populated production database exists.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabularx}{\textwidth}{@{}P{0.23\textwidth}YY@{}}
+\toprule
+\textbf{Area} & \textbf{Original proposal} & \textbf{Current prototype} \\
+\midrule
+Citizen access & Ordinary telephone call through a SIP bridge.
+  & Browser microphone and speaker through LiveKit; no telephone integration. \\
+Scheme guidance & Facts obtained from a verified, published catalogue.
+  & Published facts and pending references are distinguished; qualified general
+    guidance is allowed when context is incomplete. \\
+Eligibility & Deterministic pre-checks over reviewed rules.
+  & Engine and tests implemented; bundled rule sets still await human review. \\
+Source ingestion & Import, AI extraction, human review, and versioned publish.
+  & Structured JSON preparation, review attestation, and versioned publication;
+    complete ingestion workflow remains future work. \\
+Delivery and scale & Staging pipeline and measured replica comparisons.
+  & CI checks, containers, migrations, and concurrency tests; staging CD and
+    load measurements remain outstanding. \\
+\bottomrule
+\end{tabularx}
+\caption{Relationship between the proposal and the prototype checkpoint.}
+\label{tab:scope}
+\end{table}
+
+The browser channel currently requires a compatible device and data connection.
+It therefore does not yet deliver the proposal's access from an ordinary phone.
+Similarly, reference-based guidance must not be described as a fully
+human-verified knowledge base. These scope differences are material to evaluating
+the prototype fairly \cite{architecture,voice-design}.
+
+% ================================================================
+\chapter{Methodology and Design}
+
+\section{System Architecture}
+
+\subsection{High-Level Design}
+Janmitra uses a modular backend application with a separate voice worker. The
+backend contains conversation, catalogue, eligibility, handoff, and audit modules.
+The voice worker calls the backend through typed HTTP endpoints and does not
+duplicate eligibility rules or write directly to the database.
+
+\begin{figure}[htbp]
+\centering
+\setlength{\fboxsep}{8pt}
+\fbox{\parbox{0.83\textwidth}{\centering
+  \textbf{Browser voice channel}\\
+  Citizen microphone, speaker, and call controls}}
+\par\smallskip $\updownarrow$\quad WebRTC audio\par\smallskip
+\fbox{\parbox{0.83\textwidth}{\centering
+  \textbf{LiveKit room and Python voice worker}\\
+  Gemini Live native audio session; tool invocation; transcript and timing events}}
+\par\smallskip $\updownarrow$\quad Authenticated HTTP tools\par\smallskip
+\fbox{\parbox{0.83\textwidth}{\centering
+  \textbf{FastAPI backend}\\
+  Conversation state; catalogue retrieval; deterministic eligibility;\\
+  document checklists; handoff queue; publication; audit}}
+\par\smallskip $\updownarrow$\quad Structured data access\par\smallskip
+\fbox{\parbox{0.83\textwidth}{\centering
+  \textbf{PostgreSQL and local reference catalogue}\\
+  Published versions and durable records in PostgreSQL;\\
+  pending scheme JSON files available as labelled reference context}}
+\caption{Implemented prototype architecture. Admin and operator API clients
+access the backend separately. A phone/SIP bridge is not part of this implementation.}
+\label{fig:architecture}
+\end{figure}
+
+The database preserves application records across API requests. The active
+real-time audio session remains the responsibility of its voice worker. This
+separation supports independent growth in API and voice-worker capacity, but a
+measured scaling claim requires the load experiments described later.
+
+\subsection{Technical Stack}
+\begin{itemize}
+  \item \textbf{Backend language and framework:} Python 3.12 or later, FastAPI,
+    and Uvicorn for asynchronous HTTP services.
+  \item \textbf{Validation and persistence:} Pydantic request and record models,
+    SQLAlchemy asynchronous sessions, PostgreSQL, the asyncpg driver, and Alembic
+    migrations. SQLite supports isolated local tests.
+  \item \textbf{Voice integration:} LiveKit Agents and its Google plugin are
+    pinned to version 1.8.5. The configured speech model is
+    \code{gemini-3.1-flash-live-preview}.
+  \item \textbf{Model separation:} Gemini Live handles the spoken exchange;
+    a separate text adapter supports backend text tasks. Mock and failure adapters
+    support controlled tests without real-provider calls.
+  \item \textbf{Integration and delivery tools:} HTTPX, pytest, pytest-asyncio,
+    Ruff, Docker Compose, and GitHub Actions.
+\end{itemize}
+
+These are the technologies declared by the checked revision. Dependency
+configuration is evidence of the intended runtime, not evidence that every
+component has been deployed or benchmarked.
+
+\section{Implementation Details}
+
+\subsection{Voice Conversation and Session Lifecycle}
+The worker connects to a LiveKit room, creates a backend conversation, and starts
+an \code{AgentSession} with Gemini Live. Native audio input and output are handled
+within the same model session; the implementation does not introduce a separate
+speech-to-text service followed by a separate text-to-speech service.
+
+The current flow is citizen-initiated: the citizen speaks first, and the prompt
+requests a short AI disclosure in the initial spoken reply. The agent is instructed
+to use the citizen's latest language, keep spoken steps understandable, and ask one
+question at a time. These are behavioural instructions whose quality must still be
+checked in real conversations.
+
+The worker configures voice activity detection with 100~ms prefix padding and
+500~ms silence endpointing. The default thinking level is \code{low}, configurable
+within the same live model. These configuration values are not measured response
+latencies. Transcripts and timing events are written asynchronously, and cleanup
+drains pending writes and closes the backend conversation through a single cleanup
+task. Safe status messages communicate readiness and recovery state to the client.
+
+\subsection{Typed Backend Tools and Request Flow}
+The agent exposes four primary operations:
+\begin{description}[leftmargin=1.7em,style=nextline]
+  \item[\code{find_service}] Retrieves relevant scheme context for the citizen's
+    stated need, optionally narrowed by category.
+  \item[\code{check_eligibility}] Evaluates submitted answers against the selected
+    published record's deterministic rule set.
+  \item[\code{get_documents}] Produces the published record's checklist, including
+    conditional requirements.
+  \item[\code{request_handoff}] Requests human assistance using contact details,
+    an issue summary, and reported escalation signals.
+\end{description}
+
+Each tool request identifies the conversation and requested language. The backend
+validates the payload, checks the caller's role, retrieves the conversation, and
+performs the appropriate domain operation. Scheme facts, eligibility results,
+and handoff records are returned as structured responses. The model explains
+those results in speech; it cannot directly write a database publication or
+substitute its own verdict for the eligibility engine's result.
+
+\subsection{Canonical Scheme Records and the Reference Catalogue}
+A \code{ServiceRecord} contains a stable slug, localised name and description,
+aliases, category, benefit and eligibility summaries, optional rule set,
+documents, application steps, and citation metadata. The citation identifies the
+source, publisher, review state, verification date, and reviewer when verified.
+
+The current reference directory contains 18 JSON records. Their category
+distribution is shown in Table~\ref{tab:catalogue}. All 18 have
+\code{pending_review} status. Five records---APY, PM-SYM, PMJJBY, PMSBY, and
+PMUY---contain draft rule sets; 15 records contain nonempty document lists.
+The remaining three do not yet supply document lists. These counts describe the
+repository data and do not establish that any scheme has been human-verified or
+published in a deployment.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabularx}{\textwidth}{@{}lrY@{}}
+\toprule
+\textbf{Category} & \textbf{Records} & \textbf{Record identifiers} \\
+\midrule
+Loan & 4 & KCC, PMMY, PMEGP, PM-Vishwakarma \\
+Banking & 2 & PMJDY, DAY-NRLM \\
+Grant & 4 & PM-KISAN, PMAY-G, PMGKAY, PMUY \\
+Insurance & 4 & PM-JAY, PMFBY, PMJJBY, PMSBY \\
+Pension & 3 & APY, PM-SYM, NSAP \\
+Other & 1 & Rural-employment reference with stable slug \code{mgnrega} \\
+\midrule
+\textbf{Total} & \textbf{18} & All pending human review \\
+\bottomrule
+\end{tabularx}
+\caption{Inventory of bundled scheme drafts at revision \texttt{\Revision}.
+Identifiers are catalogue labels, not a certification of current programme details.}
+\label{tab:catalogue}
+\end{table}
+
+The catalogue review checklist requires comparison of amounts, ages, exclusions,
+documents, and application steps against official sources. Automated source-check
+notes assist that work but explicitly do not constitute human approval
+\cite{catalogue-review,source-check}. This report consequently does not reproduce
+the drafts' financial benefits or legal eligibility conditions as verified facts.
+
+\subsection{Retrieval and Grounding}
+The recent retrieval implementation combines Unicode-aware normalisation,
+multilingual phrase expansion, named-scheme matching, and a curated mapping from
+expressed needs to candidate schemes. It attempts to preserve distinct needs in
+a compound request rather than returning several variants of the same topic.
+This is lightweight retrieval over structured records; it does not use an
+embedding service or a vector database.
+
+The voice client requests \code{response_mode="context"}. The API combines
+published records with local pending references, replaces a pending record when
+a published version of the same slug exists, and returns at most three selected
+records in total. The \code{context_order} field preserves ordering across
+published \code{matches} and \code{reference_context}. Citations, service versions
+where available, and verification status accompany the context.
+
+Gemini Live then generates the spoken answer directly from this result, avoiding
+an additional text-model answer-generation round trip in the voice path. A
+\code{prepared_answer} mode remains for compatible HTTP clients. The current
+prompt permits qualified general orientation from trained knowledge when
+retrieved context is incomplete, while forbidding invented current amounts,
+deadlines, confirmed eligibility, and completed actions. This broadens the original
+proposal's verified-record-only guidance policy and requires explicit quality
+evaluation \cite{voice-design}.
+
+\subsection{Deterministic Eligibility and Document Checklists}
+Eligibility rules are stored as data within a versioned scheme record. Questions
+declare answer types and optional limits. Named conditions contain comparisons,
+and optional \code{applies_when} guards determine when a condition is relevant.
+The decision combines conditions through \code{all_of}, \code{any_of}, and
+\code{none_of} groups.
+
+The engine validates answers before evaluation and returns one of three states:
+\code{eligible}, \code{not_eligible}, or \code{needs_more_info}. A missing answer
+remains unknown, allowing the backend to supply the next relevant question.
+Condition traces identify the tests involved in the result and may include
+supporting source text. Numeric validation rejects inappropriate types,
+non-finite values, and values outside declared bounds.
+
+For illustration only, a synthetic rule might require an applicant to be at
+least 18 years old. An answer below that boundary fails the condition; an omitted
+age requests more information. This example explains engine behaviour and is not
+a claim about a real scheme.
+
+Document checklists use the same structured answers. An unconditional document
+is included directly. A document whose condition is false is omitted; when the
+condition is unknown, it remains visible as conditional. The verified endpoints
+require a published record, and eligibility also requires an associated rule set.
+Pending draft rules are not sufficient for a verified eligibility decision.
+
+\subsection{Versioned Publication and Review Workflow}
+The \code{Service} table holds scheme identity and a pointer to its current
+version. \code{ServiceVersion} holds the payload, version number, publication
+state, author, notes, and timestamp. Publishing appends a new version and updates
+the pointer while retaining earlier versions. History and field-level diffs are
+available through admin routes.
+
+The seed command validates local JSON records. To publish pending records, the
+reviewer supplies a name using \code{--actor} and explicitly attests to review
+using \code{--confirm-reviewed}. The command then marks the records verified for
+publication. The reviewer must actually check the sources before giving this
+attestation; the flag itself cannot prove factual correctness. PostgreSQL advisory
+and row locks serialize publication for a scheme, including its first publication.
+
+The current workflow is local record preparation, human review, and CLI/API
+publication. A complete official-source importer, extraction-to-draft workflow,
+and integrated review dashboard are not established by this backend. A source
+snapshot model and model-adapter drafting method provide foundations, but the full
+ingestion process remains future work.
+
+\subsection{Human Handoff and Operator Queue}
+The handoff service evaluates reported signals such as a citizen request for a
+person, an out-of-scope request, no matching scheme, low confidence, or repeated
+tool problems. A successful request stores an issue summary, optional contact
+name and phone number, category, language, and conversation reference. The
+conversation is marked \code{handed_off}.
+
+Operators can list queued requests, inspect the related conversation events,
+add notes, and move a request through allowed states. The principal progression
+is \code{new} to \code{contacted} to \code{resolved}; direct resolution from
+\code{new} is also allowed. A queued handoff is a record for subsequent operator
+attention. The implementation does not transfer a live telephone call or
+guarantee that a callback has occurred.
+
+\subsection{Persistence, Audit, and Access Control}
+The principal database entities are services, service versions, source snapshots,
+conversations, conversation events, handoff requests, and audit events. Alembic
+provides an initial schema and a subsequent migration aligning structured payload
+columns with PostgreSQL JSONB. Category and identity lookups have relational
+indexes; current retrieval still ranks candidate records in application code,
+so JSONB storage alone does not establish indexed full-catalogue search capacity.
+
+Conversation events retain ordered transcript and tool context. Audit events
+record critical actions with request identifiers, actors, and entity references.
+Conversation row locks serialize related state transitions and event allocation
+in PostgreSQL. Admin, operator, and voice API keys restrict access by role.
+This is a prototype access-control mechanism rather than a complete user-account
+and organisational permissions system.
+
+The prompt prohibits requesting Aadhaar numbers, full bank details, OTPs, PINs,
+and passwords. Contact capture is optional and associated with handoff. However,
+transcripts are persisted, and prompt instructions alone cannot guarantee that
+unsolicited sensitive information is never stored. Redaction, consent, retention,
+and operator-access procedures require further work before a citizen pilot.
+
+\subsection{Development, CI, and Deployment Foundations}
+The backend GitHub Actions workflow installs development, voice, and Gemini
+dependencies, runs Ruff and pytest, and provisions PostgreSQL 16 for integration
+tests. These tests cover migrations and concurrency behaviour beyond what SQLite
+can establish. Workflow configuration documents the intended checks; the local
+results reported here do not substitute for a retrieved CI run result.
+
+Docker Compose defines PostgreSQL and the API, with health checks and a persistent
+database volume. The API container applies migrations before starting Uvicorn.
+The voice worker is started separately. The repository provides deployment
+foundations, but no completed staging CD pipeline or measured multi-replica
+deployment is claimed in this report.
+
+% ================================================================
+\chapter{Results and Evaluation}
+
+\section{Testing Methodology}
+
+\subsection{Unit Testing}
+The tests exercise rule comparisons and decision combinations, missing answers,
+numeric validation, conditional documents, catalogue ranking, schema constraints,
+review attestation, and handoff trigger selection. Mock adapters make expected
+outputs reproducible and avoid provider cost. Synthetic test records are clearly
+separate from the pending government-scheme catalogue; their conditions are test
+fixtures and must not be reused as verified public guidance.
+
+\subsection{Integration Testing}
+HTTP tests run the FastAPI application against isolated SQLite databases. They
+exercise role restrictions, published-record retrieval, reference context,
+eligibility and document responses, handoff creation and updates, conversation
+events, and audit data. PostgreSQL-specific tests additionally cover migration
+round trips, model/schema agreement, concurrent publications, event numbering,
+write-once guidance timestamps, and competing terminal state transitions.
+
+The prototype also contains voice-client, agent, and worker tests. Worker tests
+use controlled runtime substitutes to exercise cleanup, notifications, and
+session behaviour. These tests help validate orchestration but cannot demonstrate
+real speech quality or provider reliability.
+
+\subsection{Local Verification for This Report}
+A local Python 3.12 run on \ReportDate\ checked the current revision with model
+calls mocked and configuration-file loading disabled. It produced
+\textbf{310 passing tests and five skipped tests}, with no failed tests in that
+selected run. The five skipped tests require an explicitly configured PostgreSQL
+test database.
+
+The two modules \path{tests/test_voice_agent.py} and
+\path{tests/test_voice_worker.py} were excluded because the temporary verification
+environment did not contain the optional LiveKit/Google runtime dependencies.
+Other voice-related checks, including prompt, client, and model-setting tests,
+were included. Thus, 310 passing tests describes the executed selection, not a
+claim that every repository test or a live voice deployment passed.
+
+Ruff passed over \code{app}, \code{tests}, \code{scripts}, and \code{alembic}.
+Two non-failing warnings were emitted by the test run: a cache-setting warning
+caused by disabling pytest's cache plugin, and a dependency deprecation warning
+for an HTTP status constant. No credentials, real-provider calls, or deployed
+database contents were needed for these checks.
+
+\subsection{Voice, Performance, and User Testing}
+Two scripts support separate evaluation needs:
+\begin{itemize}
+  \item \path{scripts/smoke_voice.py} exercises the LiveKit voice flow and checks
+    audio, retrieval, response, and conversation lifecycle behaviour.
+  \item \path{scripts/evaluate_voice_answer.py} supports isolated native-audio
+    answer evaluation using supplied WAV files and local retrieval. It uses real
+    Gemini quota but does not exercise LiveKit or the HTTP transport path.
+\end{itemize}
+
+The evaluation fixture defines 16 scenarios covering mixed needs, urgent
+situations, food, health, employment, pension, education, fraud, family distress,
+low literacy, multilingual speech, and follow-up context. The rubric considers
+usefulness, grounding, understandable speech, one-question behaviour, handling
+of multiple needs, and privacy. Unsupported material claims and invented completed
+actions are hard failures. The existence of these fixtures does not mean all
+scenarios have passed \cite{evaluation-fixtures}.
+
+The proposed pilot remains a future evaluation: recruit 8--12 participants across
+languages and dialects and compare two or three journeys with equivalent portal
+tasks. Completion, time, errors, and 1--5 clarity/trust feedback should be recorded.
+No completed participant study is claimed at this checkpoint.
+
+\section{Performance Metrics}
+
+\subsection{Definition and Interpretation of Timing}
+The proposal defines Time-to-Guidance as:
+\[
+  \mathrm{TTG} = t_{\text{grounded answer received}}
+                 - t_{\text{call connected}}.
+\]
+The current backend stores \code{connected_at} and \code{first_guidance_at}.
+The latter is set when a qualifying backend tool result is produced. This is a
+useful internal proxy, but it does not establish when a citizen actually heard
+the answer. In the browser prototype, conversation creation also need not coincide
+exactly with media connection. A proposal-level TTG measurement therefore needs
+aligned connection, grounding, and audio-delivery events.
+
+Additional instrumentation separates:
+\begin{itemize}
+  \item \textbf{Worker startup:} conversation creation and session startup,
+    excluding initial room connection and HTTP client creation.
+  \item \textbf{Retrieval time:} backend catalogue lookup and ranking duration.
+  \item \textbf{Voice turn timing:} available SDK timing values, including
+    time to first token, end-to-end turn latency, and playback latency.
+  \item \textbf{Speech-end to speaking-state delay:} elapsed time between the
+    detected end of citizen speech and the agent entering the speaking state;
+    this excludes browser playout.
+\end{itemize}
+
+These clocks describe different intervals and must not be combined or relabelled
+as a single end-to-end latency result. Future measurements should distinguish
+cold startup from warm turns and report sample counts, medians, and slow-tail
+latencies.
+
+\subsection{Observed and Available Results}
+Table~\ref{tab:results} combines locally checked implementation evidence with
+clearly attributed prior observations. The voice timings come from the repository
+runbook's account of one synthetic English call; they were not newly measured for
+this report \cite{runbook}.
+
+\begin{longtable}{@{}P{0.26\textwidth}P{0.21\textwidth}P{0.45\textwidth}@{}}
+\caption{Prototype results and the limits of the available evidence.}
+\label{tab:results}\\
+\toprule
+\textbf{Measure} & \textbf{Observed value/status} & \textbf{Interpretation} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Measure} & \textbf{Observed value/status} & \textbf{Interpretation} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Local automated tests & 310 passed; 5 skipped & Selected local suite, with two
+voice-runtime modules excluded and PostgreSQL-specific tests skipped. \\
+Lint & Passed & Ruff checked backend application, tests, scripts, and migrations. \\
+Reference catalogue & 18 records & Six categories; all 18 pending human review. \\
+Draft rule coverage & 5 records & Rule sets exist; official factual correctness
+and deployment publication are not established by this count. \\
+Document-list coverage & 15 of 18 records & Nonempty lists in repository drafts;
+these are not yet verified checklists. \\
+Voice scenarios & 16 defined & Evaluation inputs and rubric exist; no complete
+scenario pass rate has been established. \\
+Agent readiness & 2,431 ms & Prior runbook observation from one successful
+synthetic English call; not a distribution or reliability target. \\
+Speech-end to first returned audio & 3,064 ms & Same prior call; not equivalent
+to call-connect-to-grounded-answer TTG or browser playout timing. \\
+Median end-to-end TTG & Not established & Requires repeated real-model sessions
+with aligned connection and delivered-answer timestamps. \\
+Citation correctness & Not established & Citation metadata exists; semantic
+claim-to-source support still requires labelled review. \\
+Handoff precision/recall & Not established & Trigger logic is tested; no completed
+labelled conversational evaluation is reported. \\
+Throughput and replica scaling & Not established & No measured 1-, 2-, and
+4-replica comparison or before/after bottleneck experiment is available. \\
+User clarity and availability & Not established & Pilot feedback and repeated
+availability windows remain future work. \\
+\end{longtable}
+
+\section{Analysis}
+
+\subsection{Achievement of Prototype Objectives}
+The backend now supports a complete sequence of typed operations: conversation
+creation, scheme discovery, deterministic guidance over published records,
+handoff creation, operator updates, and audit inspection. The selected local test
+run provides evidence for these application contracts. The reference catalogue
+and ranking logic also enable useful retrieval during development before the
+human-publication process is completed.
+
+The voice worker and supporting scripts establish an integration path, and the
+runbook records a successful synthetic voice exchange. However, this remains
+partial evidence for the voice objective. The same documentation reports a
+subsequent integrated call that failed to complete guidance, and the voice-design
+notes record inconsistent behaviour in complex requests. Full phone accessibility,
+verified catalogue deployment, and representative speech reliability are therefore
+not completed objectives.
+
+\subsection{Recent Development Progress}
+The report incorporates the latest repository history rather than carrying
+forward the earlier proposal's future-tense claims as completed work:
+\begin{itemize}
+  \item \textbf{Commit \texttt{595fc75}:} introduced the voice integration,
+    browser harness, and deployment foundations.
+  \item \textbf{Commit \texttt{992d638}:} added the Week~5 backend test suite and
+    accompanying verification journal.
+  \item \textbf{Commit \texttt{def3630}:} expanded the catalogue and retrieval,
+    refined Gemini voice behaviour and timing, strengthened concurrency and
+    numeric validation, added PostgreSQL and voice tests, and updated documentation.
+  \item \textbf{Commit \texttt{\Revision}:} merged the test work and resolved the
+    reported test merge conflict; this is the revision used for the report.
+\end{itemize}
+
+\subsection{Challenges and Design Responses}
+\textbf{Balancing helpfulness and verification.}
+The initial verified-only path requires reviewed data before it can answer useful
+questions. The prototype now exposes pending references with explicit review
+metadata while preserving the publication gate for verified tools. This improves
+development-time usefulness but increases the need to test whether spoken answers
+preserve uncertainty and material conditions.
+
+\textbf{Understanding ordinary and mixed needs.}
+Users may describe several problems without naming a scheme. Multilingual phrase
+expansion, curated need concepts, and combined ranking improve retrieval for such
+inputs. These mappings remain finite and require extension and evaluation for
+unseen phrasing, regional languages, and state-specific support.
+
+\textbf{Managing voice latency and lifecycle.}
+The context response mode removes an intermediate text-answer generation step
+from the voice path. Timing events distinguish retrieval, startup, and turn delays.
+Asynchronous transcript writes and single-task cleanup improve lifecycle handling.
+These are implemented mechanisms; a statistically supported latency improvement
+still requires comparable before-and-after runs.
+
+\textbf{Preserving consistency under concurrency.}
+Application state is persisted and critical transitions use database locks.
+PostgreSQL migration and concurrency tests now exist and are configured in CI.
+The local SQLite run cannot validate those PostgreSQL behaviours, so the report
+does not infer concurrency capacity from its pass count.
+
+\subsection{Limitations at the Prototype Checkpoint}
+\begin{enumerate}
+  \item The browser channel does not satisfy the ordinary-phone accessibility
+    objective, and there is no live telephone transfer.
+  \item All bundled records still require named human review. Document and rule
+    coverage are incomplete, and the full source-import workflow is unfinished.
+  \item Real-model answer quality and multilingual behaviour remain uneven.
+    Documentation reports wrong-language responses, missed retrieval, multiple
+    questions, or omitted material conditions in some trials.
+  \item Integrated live sessions have shown intermittent 1011 errors. A successful
+    direct SDK call does not establish the cause of an integrated failure or prove
+    that the browser voice path is reliable.
+  \item End-to-end TTG, citation correctness, handoff precision/recall, pilot
+    feedback, and measured scalability have not yet been established.
+  \item Transcript privacy requires enforced controls beyond prompt instructions,
+    and staging deployment and operational monitoring remain incomplete.
+\end{enumerate}
+
+These limitations define the next engineering stage. They do not invalidate the
+tested backend mechanisms, but they constrain the claims that can be made about
+citizen readiness.
+
+% ================================================================
+\chapter{Conclusion}
+
+\section{Summary of Work}
+Janmitra has progressed from a proposed phone-accessible guidance system to an
+implemented browser voice prototype supported by a modular backend. The work
+includes typed guidance tools, a structured reference catalogue, deterministic
+eligibility and document logic, preserved publication history, operator handoff
+records, audit trails, migrations, containers, CI checks, and voice-evaluation
+support. The latest changes substantially expand retrieval and improve the
+separation between verified records and pending reference material.
+
+The selected local verification run passed 310 tests and lint checks. The report
+also identifies the unexecuted test scope and the limited nature of prior live
+voice observations. This makes the checkpoint a documented implementation result
+without treating future pilot or scalability targets as measured achievements.
+
+\section{Key Findings}
+\begin{itemize}
+  \item \textbf{Explicit tool boundaries make guidance testable.} Eligibility,
+    publication, and queued handoff creation can be checked independently of
+    speech generation and provider availability.
+  \item \textbf{Data review is an operational dependency.} Schema-valid JSON and
+    official-source links are useful foundations, but they do not replace a
+    human check of the actual scheme conditions.
+  \item \textbf{Retrieval must preserve the citizen's situation.} Combined
+    ranking and need-based matching help retain multiple concerns, while
+    uncertainty and record provenance must survive into the spoken response.
+  \item \textbf{Different evidence answers different questions.} Unit tests
+    establish application behaviour; live audio trials, semantic review, pilot
+    feedback, and load testing establish separate aspects of usability and capacity.
+\end{itemize}
+
+\section{Future Work and Recommendations}
+\begin{enumerate}
+  \item \textbf{Complete catalogue review and publication.} Review all initial
+    records against official sources, complete missing checklists, verify every
+    rule branch, and publish an initial trusted set with reviewer attribution.
+  \item \textbf{Complete the ingestion workflow.} Add official-source import,
+    retained snapshots, AI-assisted extraction into drafts, reviewer comparison,
+    and controlled publication with visible history.
+  \item \textbf{Validate voice quality and reliability.} Run the full 16-scenario
+    set, assess transcripts and audio semantically, exercise follow-up context
+    and interruptions, and investigate intermittent integrated-call failures.
+  \item \textbf{Resolve the channel scope.} Implement and validate phone/SIP
+    access if the original ordinary-phone objective is retained. If browser access
+    becomes the final scope, explicitly revise the accessibility claims and pilot
+    assumptions rather than describing it as an equivalent phone service.
+  \item \textbf{Measure the proposed metrics.} Align connection and
+    response-delivery events; establish TTG distributions, citation correctness,
+    handoff precision/recall, clarity ratings, and availability over test windows.
+  \item \textbf{Demonstrate scalability.} Build the mocked-model load harness,
+    compare 1, 2, and 4 API replicas under equivalent conditions, identify the
+    first bottleneck, apply a justified fix, and report before-and-after results.
+    Measure voice-worker capacity separately from HTTP capacity.
+  \item \textbf{Prepare a controlled pilot deployment.} Add staging CD,
+    operational checks, transcript redaction and retention controls, and a
+    documented operator process before recruiting the proposed 8--12 users.
+\end{enumerate}
+
+\section{Final Remarks}
+The prototype demonstrates how conversational AI can be connected to structured
+public-service information and deterministic backend operations. Its main
+engineering contribution at this stage is the separation of speech interaction,
+retrieval, trusted decisions, and persistent records into components that can be
+examined and tested. Completing human data review and evaluating real citizen
+journeys are the next steps toward the proposal's wider goal of accessible,
+dependable civic guidance.
+
+% All references are embedded so this deliverable remains a single .tex file.
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+\begin{thebibliography}{9}
+
+\bibitem{proposal}
+Dhruv Srivastava, Harkamal Singh Lubana, and Paras.
+\emph{Janmitra: A Voice-First Civic Scheme Guidance Platform for Rural India}.
+UCS503P project proposal. Repository source: \path{project-proposal/main.tex}.
+
+\bibitem{implementation}
+Janmitra project team. \emph{Prototype implementation and commit history}.
+Repository revision \texttt{\Revision}, with major updates in \texttt{def3630}.
+Application, tests, scripts, migrations, and data under \path{code/backend/};
+CI configuration in \path{.github/workflows/backend.yml}.
+
+\bibitem{architecture}
+Janmitra project team. \emph{Architecture}.
+\path{docs/architecture.md}, revision \texttt{\Revision}.
+
+\bibitem{voice-design}
+Janmitra project team. \emph{Browser Voice Architecture}.
+\path{docs/voice-architecture.md}, revision \texttt{\Revision}.
+
+\bibitem{runbook}
+Janmitra project team. \emph{Run and Test Janmitra}.
+\path{docs/run-and-test.md}, including the documented Gemini 3.1 provider-status
+observations, revision \texttt{\Revision}.
+
+\bibitem{catalogue-review}
+Janmitra project team. \emph{Catalogue Review Checklist}.
+\path{code/backend/data/REVIEW.md} and accompanying scheme JSON records,
+revision \texttt{\Revision}.
+
+\bibitem{source-check}
+Janmitra repository. \emph{Automated Source Check: 9 October 2026}.
+\path{code/backend/data/SOURCE-CHECK-2026-10-09.md}.
+Automated research notes supplied for subsequent human review.
+
+\bibitem{evaluation-fixtures}
+Janmitra project team. \emph{Voice Evaluation Scenarios and Rubric}.
+\path{code/backend/scripts/fixtures/voice-evaluation.json}, with
+\path{code/backend/scripts/evaluate_voice_answer.py} and
+\path{code/backend/scripts/smoke_voice.py}, revision \texttt{\Revision}.
+
+\end{thebibliography}
+\end{document}
