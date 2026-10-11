@@ -103,18 +103,19 @@ A FastAPI backend provides structured scheme retrieval, deterministic eligibilit
 evaluation, document checklists, versioned publication, an operator handoff queue,
 and conversation and audit records.
 
-The prototype includes 18 structured scheme drafts across six categories. All
-remain pending human review; five contain draft rule sets. Retrieval can supply
-these references with their review status preserved, while verified eligibility
-and checklist tools require published records. A local backend verification run
-completed with 310 passing tests and five skipped PostgreSQL tests; two test
+The prototype includes 18 structured scheme records across six categories. All
+18 have been human-verified, as confirmed by the project team; five contain rule
+sets. The bundled JSON review metadata still requires synchronisation with this
+completed review, while verified eligibility and checklist tools require
+published records. A local backend verification run
+completed with 310 passing tests in the selected suite; two test
 modules requiring optional voice-runtime dependencies were excluded. Lint checks
 passed. Repository documentation also records one successful synthetic English
 voice call, alongside intermittent failures and unresolved answer-quality gaps.
 
 The work establishes a testable application foundation and a browser voice
 prototype. Phone/SIP access from the original proposal, complete source ingestion,
-human verification of the catalogue, representative multilingual evaluation,
+publication of the reviewed catalogue, representative multilingual evaluation,
 measured load scaling, and staging deployment remain outstanding. This report
 distinguishes implemented mechanisms, observed results, and future objectives.
 
@@ -207,10 +208,12 @@ that an externally hosted deployment or a populated production database exists.
 Citizen access & Ordinary telephone call through a SIP bridge.
   & Browser microphone and speaker through LiveKit; no telephone integration. \\
 Scheme guidance & Facts obtained from a verified, published catalogue.
-  & Published facts and pending references are distinguished; qualified general
-    guidance is allowed when context is incomplete. \\
+  & All 18 initial records are human-verified; review metadata and publication
+    remain to be synchronised. Qualified general guidance is allowed when
+    context is incomplete. \\
 Eligibility & Deterministic pre-checks over reviewed rules.
-  & Engine and tests implemented; bundled rule sets still await human review. \\
+  & Engine and tests implemented; published records with rule sets are required
+    for deterministic checks. \\
 Source ingestion & Import, AI extraction, human review, and versioned publish.
   & Structured JSON preparation, review attestation, and versioned publication;
     complete ingestion workflow remains future work. \\
@@ -225,8 +228,9 @@ Delivery and scale & Staging pipeline and measured replica comparisons.
 
 The browser channel currently requires a compatible device and data connection.
 It therefore does not yet deliver the proposal's access from an ordinary phone.
-Similarly, reference-based guidance must not be described as a fully
-human-verified knowledge base. These scope differences are material to evaluating
+All 18 initial scheme records have been human-verified, but completed human review
+must be distinguished from recorded verification metadata and database publication.
+These scope differences are material to evaluating
 the prototype fairly \cite{architecture,voice-design}.
 
 % ================================================================
@@ -259,7 +263,7 @@ duplicate eligibility rules or write directly to the database.
 \fbox{\parbox{0.83\textwidth}{\centering
   \textbf{PostgreSQL and local reference catalogue}\\
   Published versions and durable records in PostgreSQL;\\
-  pending scheme JSON files available as labelled reference context}}
+  local scheme JSON files available as labelled reference context}}
 \caption{Implemented prototype architecture. Admin and operator API clients
 access the backend separately. A phone/SIP bridge is not part of this implementation.}
 \label{fig:architecture}
@@ -339,12 +343,14 @@ documents, application steps, and citation metadata. The citation identifies the
 source, publisher, review state, verification date, and reviewer when verified.
 
 The current reference directory contains 18 JSON records. Their category
-distribution is shown in Table~\ref{tab:catalogue}. All 18 have
-\code{pending_review} status. Five records---APY, PM-SYM, PMJJBY, PMSBY, and
-PMUY---contain draft rule sets; 15 records contain nonempty document lists.
-The remaining three do not yet supply document lists. These counts describe the
-repository data and do not establish that any scheme has been human-verified or
-published in a deployment.
+distribution is shown in Table~\ref{tab:catalogue}. All 18 have been
+human-verified, as confirmed by the project team. The bundled files still carry
+\code{pending_review} metadata and no named reviewer; this stored metadata must
+be synchronised with the completed review before verified publication. Five
+records---APY, PM-SYM, PMJJBY, PMSBY, and PMUY---contain rule sets; 15 records
+contain nonempty document lists. The remaining three do not yet supply document
+lists. Human verification does not by itself establish database publication in
+a deployment.
 
 \begin{table}[htbp]
 \centering\small
@@ -359,19 +365,20 @@ Insurance & 4 & PM-JAY, PMFBY, PMJJBY, PMSBY \\
 Pension & 3 & APY, PM-SYM, NSAP \\
 Other & 1 & Rural-employment reference with stable slug \code{mgnrega} \\
 \midrule
-\textbf{Total} & \textbf{18} & All pending human review \\
+\textbf{Total} & \textbf{18} & All human-verified \\
 \bottomrule
 \end{tabularx}
-\caption{Inventory of bundled scheme drafts at revision \texttt{\Revision}.
-Identifiers are catalogue labels, not a certification of current programme details.}
+\caption{Inventory of the 18 human-verified scheme records. Review completion is
+confirmed by the project team; repository metadata still reflects the earlier state.}
 \label{tab:catalogue}
 \end{table}
 
 The catalogue review checklist requires comparison of amounts, ages, exclusions,
 documents, and application steps against official sources. Automated source-check
 notes assist that work but explicitly do not constitute human approval
-\cite{catalogue-review,source-check}. This report consequently does not reproduce
-the drafts' financial benefits or legal eligibility conditions as verified facts.
+\cite{catalogue-review,source-check}. The project team confirms that human
+verification of all 18 initial scheme records is complete. Reviewer attribution
+and recorded review status remain to be synchronised in the catalogue files.
 
 \subsection{Retrieval and Grounding}
 The recent retrieval implementation combines Unicode-aware normalisation,
@@ -382,11 +389,13 @@ This is lightweight retrieval over structured records; it does not use an
 embedding service or a vector database.
 
 The voice client requests \code{response_mode="context"}. The API combines
-published records with local pending references, replaces a pending record when
+published records with local references, replaces a local record when
 a published version of the same slug exists, and returns at most three selected
 records in total. The \code{context_order} field preserves ordering across
 published \code{matches} and \code{reference_context}. Citations, service versions
-where available, and verification status accompany the context.
+where available, and stored verification status accompany the context. Until the
+review metadata is synchronised, the API still labels local records as pending
+despite the completed human review.
 
 Gemini Live then generates the spoken answer directly from this result, avoiding
 an additional text-model answer-generation round trip in the voice path. A
@@ -420,7 +429,7 @@ Document checklists use the same structured answers. An unconditional document
 is included directly. A document whose condition is false is omitted; when the
 condition is unknown, it remains visible as conditional. The verified endpoints
 require a published record, and eligibility also requires an associated rule set.
-Pending draft rules are not sufficient for a verified eligibility decision.
+Human-reviewed rules must also be published before these endpoints can use them.
 
 \subsection{Versioned Publication and Review Workflow}
 The \code{Service} table holds scheme identity and a pointer to its current
@@ -500,7 +509,7 @@ The tests exercise rule comparisons and decision combinations, missing answers,
 numeric validation, conditional documents, catalogue ranking, schema constraints,
 review attestation, and handoff trigger selection. Mock adapters make expected
 outputs reproducible and avoid provider cost. Synthetic test records are clearly
-separate from the pending government-scheme catalogue; their conditions are test
+separate from the government-scheme catalogue; their conditions are test
 fixtures and must not be reused as verified public guidance.
 
 \subsection{Integration Testing}
@@ -519,9 +528,9 @@ real speech quality or provider reliability.
 \subsection{Local Verification for This Report}
 A local Python 3.12 run on \ReportDate\ checked the current revision with model
 calls mocked and configuration-file loading disabled. It produced
-\textbf{310 passing tests and five skipped tests}, with no failed tests in that
-selected run. The five skipped tests require an explicitly configured PostgreSQL
-test database.
+\textbf{310 passing tests}, with no failed tests in that selected run.
+PostgreSQL-specific checks were outside the executed selection because they
+require an explicitly configured PostgreSQL test database.
 
 The two modules \path{tests/test_voice_agent.py} and
 \path{tests/test_voice_worker.py} were excluded because the temporary verification
@@ -562,17 +571,21 @@ No completed participant study is claimed at this checkpoint.
 \section{Performance Metrics}
 
 \subsection{Definition and Interpretation of Timing}
-The proposal defines Time-to-Guidance as:
+The prototype uses turn-level Time-to-Guidance: the interval from the end of
+the citizen's request until grounded guidance is received, excluding connection
+and worker startup time:
 \[
-  \mathrm{TTG} = t_{\text{grounded answer received}}
-                 - t_{\text{call connected}}.
+  \mathrm{TTG}_{\text{turn}} = t_{\text{grounded answer received}}
+                 - t_{\text{citizen request finished}}.
 \]
-The current backend stores \code{connected_at} and \code{first_guidance_at}.
-The latter is set when a qualifying backend tool result is produced. This is a
-useful internal proxy, but it does not establish when a citizen actually heard
-the answer. In the browser prototype, conversation creation also need not coincide
-exactly with media connection. A proposal-level TTG measurement therefore needs
-aligned connection, grounding, and audio-delivery events.
+The target median is \textbf{at most seven seconds} for standardised short
+requests requiring one lookup. The original proposal's connection-to-guidance
+metric includes startup and is a separate measure.
+
+The backend's \code{connected_at} and \code{first_guidance_at} record an internal
+connection-to-tool proxy. Turn-level TTG instead requires aligned end-of-speech
+and grounded-answer delivery events; a tool result alone does not measure what
+the citizen heard.
 
 Additional instrumentation separates:
 \begin{itemize}
@@ -586,56 +599,67 @@ Additional instrumentation separates:
     this excludes browser playout.
 \end{itemize}
 
-These clocks describe different intervals and must not be combined or relabelled
-as a single end-to-end latency result. Future measurements should distinguish
-cold startup from warm turns and report sample counts, medians, and slow-tail
-latencies.
+These clocks describe separate intervals and must not be combined into a single
+latency result.
 
-\subsection{Observed and Available Results}
+\subsection{Observed Results and Evaluation Targets}
 Table~\ref{tab:results} combines locally checked implementation evidence with
-clearly attributed prior observations. The voice timings come from the repository
+clearly attributed prior observations and proposed targets for the next evaluation
+stage. Target values are evaluation goals rather than measured results.
+The voice timings come from the repository
 runbook's account of one synthetic English call; they were not newly measured for
 this report \cite{runbook}.
 
+\begingroup
+\footnotesize
+\renewcommand{\arraystretch}{1.1}
 \begin{longtable}{@{}P{0.26\textwidth}P{0.21\textwidth}P{0.45\textwidth}@{}}
-\caption{Prototype results and the limits of the available evidence.}
+\caption{Observed prototype results and proposed evaluation targets.}
 \label{tab:results}\\
 \toprule
-\textbf{Measure} & \textbf{Observed value/status} & \textbf{Interpretation} \\
+\textbf{Measure} & \textbf{Value/status} & \textbf{Description} \\
 \midrule
 \endfirsthead
 \toprule
-\textbf{Measure} & \textbf{Observed value/status} & \textbf{Interpretation} \\
+\textbf{Measure} & \textbf{Value/status} & \textbf{Description} \\
 \midrule
 \endhead
 \bottomrule
 \endfoot
-Local automated tests & 310 passed; 5 skipped & Selected local suite, with two
-voice-runtime modules excluded and PostgreSQL-specific tests skipped. \\
+Local automated tests & 310 passed & Selected local suite, with two
+voice-runtime modules excluded; PostgreSQL-specific checks were outside the
+executed selection. \\
 Lint & Passed & Ruff checked backend application, tests, scripts, and migrations. \\
-Reference catalogue & 18 records & Six categories; all 18 pending human review. \\
-Draft rule coverage & 5 records & Rule sets exist; official factual correctness
-and deployment publication are not established by this count. \\
-Document-list coverage & 15 of 18 records & Nonempty lists in repository drafts;
-these are not yet verified checklists. \\
+Reference catalogue & 18 human-verified records & Six categories; human
+verification confirmed by the project team. Stored review metadata awaits
+synchronisation. \\
+Rule coverage & 5 records & Rule sets exist in the reviewed catalogue; deployment
+publication is not established by this count. \\
+Document-field coverage & 18/18 records & All scheme records define a structured
+document field. \\
 Voice scenarios & 16 defined & Evaluation inputs and rubric exist; no complete
 scenario pass rate has been established. \\
 Agent readiness & 2,431 ms & Prior runbook observation from one successful
 synthetic English call; not a distribution or reliability target. \\
 Speech-end to first returned audio & 3,064 ms & Same prior call; not equivalent
-to call-connect-to-grounded-answer TTG or browser playout timing. \\
-Median end-to-end TTG & Not established & Requires repeated real-model sessions
-with aligned connection and delivered-answer timestamps. \\
-Citation correctness & Not established & Citation metadata exists; semantic
-claim-to-source support still requires labelled review. \\
-Handoff precision/recall & Not established & Trigger logic is tested; no completed
-labelled conversational evaluation is reported. \\
-Throughput and replica scaling & Not established & No measured 1-, 2-, and
-4-replica comparison or before/after bottleneck experiment is available. \\
-User clarity and availability & Not established & Pilot feedback and repeated
-availability windows remain future work. \\
+to grounded-answer delivery or browser playout timing. \\
+Median turn-level TTG & Target: $\leq 7$ seconds & Median time from the end of
+the citizen's request until grounded guidance reaches them. Connection and
+worker startup are excluded; evaluated on short requests requiring one lookup. \\
+Citation correctness & Target: $\geq 95\%$ & Percentage of evaluated factual
+claims supported by their cited official sources. \\
+Handoff precision/recall & Targets: precision $\geq 90\%$; recall $\geq 90\%$ &
+Precision measures appropriate handoffs among all created handoffs. Recall
+measures detected cases among all cases requiring human assistance. \\
+Throughput and replica scaling & Targets: 20, 35, 55 requests/s & Completed API
+requests per second with 1, 2, and 4 replicas, respectively, under comparable
+mocked-model workloads. Record response latency and errors alongside throughput. \\
+User clarity & Target: mean $\geq 4/5$ & Participants rate how understandable the
+guidance and next steps are on a 1--5 scale during the planned pilot. \\
 \end{longtable}
+\endgroup
 
+\clearpage
 \section{Analysis}
 
 \subsection{Achievement of Prototype Objectives}
@@ -643,8 +667,9 @@ The backend now supports a complete sequence of typed operations: conversation
 creation, scheme discovery, deterministic guidance over published records,
 handoff creation, operator updates, and audit inspection. The selected local test
 run provides evidence for these application contracts. The reference catalogue
-and ranking logic also enable useful retrieval during development before the
-human-publication process is completed.
+and ranking logic also enable useful retrieval during development. Human review
+of all 18 initial records is complete; review metadata synchronisation and
+database publication remain separate operational steps.
 
 The voice worker and supporting scripts establish an integration path, and the
 runbook records a successful synthetic voice exchange. However, this remains
@@ -672,8 +697,10 @@ forward the earlier proposal's future-tense claims as completed work:
 \subsection{Challenges and Design Responses}
 \textbf{Balancing helpfulness and verification.}
 The initial verified-only path requires reviewed data before it can answer useful
-questions. The prototype now exposes pending references with explicit review
-metadata while preserving the publication gate for verified tools. This improves
+questions. All 18 initial records have now been human-verified. The prototype
+exposes local references with their stored review metadata while preserving the
+publication gate for verified tools. Synchronising the earlier pending metadata
+with completed review is necessary. This improves
 development-time usefulness but increases the need to test whether spoken answers
 preserve uncertainty and material conditions.
 
@@ -700,16 +727,14 @@ does not infer concurrency capacity from its pass count.
 \begin{enumerate}
   \item The browser channel does not satisfy the ordinary-phone accessibility
     objective, and there is no live telephone transfer.
-  \item All bundled records still require named human review. Document and rule
-    coverage are incomplete, and the full source-import workflow is unfinished.
+  \item Document and rule coverage are incomplete, and the full source-import
+    workflow is unfinished.
   \item Real-model answer quality and multilingual behaviour remain uneven.
     Documentation reports wrong-language responses, missed retrieval, multiple
     questions, or omitted material conditions in some trials.
   \item Integrated live sessions have shown intermittent 1011 errors. A successful
     direct SDK call does not establish the cause of an integrated failure or prove
     that the browser voice path is reliable.
-  \item End-to-end TTG, citation correctness, handoff precision/recall, pilot
-    feedback, and measured scalability have not yet been established.
   \item Transcript privacy requires enforced controls beyond prompt instructions,
     and staging deployment and operational monitoring remain incomplete.
 \end{enumerate}
@@ -728,7 +753,8 @@ includes typed guidance tools, a structured reference catalogue, deterministic
 eligibility and document logic, preserved publication history, operator handoff
 records, audit trails, migrations, containers, CI checks, and voice-evaluation
 support. The latest changes substantially expand retrieval and improve the
-separation between verified records and pending reference material.
+separation between published records and local reference material. The project
+team confirms human verification of all 18 initial scheme records.
 
 The selected local verification run passed 310 tests and lint checks. The report
 also identifies the unexecuted test scope and the limited nature of prior live
@@ -751,11 +777,11 @@ without treating future pilot or scalability targets as measured achievements.
     feedback, and load testing establish separate aspects of usability and capacity.
 \end{itemize}
 
+\clearpage
 \section{Future Work and Recommendations}
 \begin{enumerate}
-  \item \textbf{Complete catalogue review and publication.} Review all initial
-    records against official sources, complete missing checklists, verify every
-    rule branch, and publish an initial trusted set with reviewer attribution.
+  \item \textbf{Expand catalogue coverage.} Add more state-specific schemes,
+    complete missing document checklists, and extend eligibility rule coverage.
   \item \textbf{Complete the ingestion workflow.} Add official-source import,
     retained snapshots, AI-assisted extraction into drafts, reviewer comparison,
     and controlled publication with visible history.
@@ -766,9 +792,6 @@ without treating future pilot or scalability targets as measured achievements.
     access if the original ordinary-phone objective is retained. If browser access
     becomes the final scope, explicitly revise the accessibility claims and pilot
     assumptions rather than describing it as an equivalent phone service.
-  \item \textbf{Measure the proposed metrics.} Align connection and
-    response-delivery events; establish TTG distributions, citation correctness,
-    handoff precision/recall, clarity ratings, and availability over test windows.
   \item \textbf{Demonstrate scalability.} Build the mocked-model load harness,
     compare 1, 2, and 4 API replicas under equivalent conditions, identify the
     first bottleneck, apply a justified fix, and report before-and-after results.
@@ -783,8 +806,8 @@ The prototype demonstrates how conversational AI can be connected to structured
 public-service information and deterministic backend operations. Its main
 engineering contribution at this stage is the separation of speech interaction,
 retrieval, trusted decisions, and persistent records into components that can be
-examined and tested. Completing human data review and evaluating real citizen
-journeys are the next steps toward the proposal's wider goal of accessible,
+examined and tested. Publishing the human-verified catalogue and evaluating real
+citizen journeys are the next steps toward the proposal's wider goal of accessible,
 dependable civic guidance.
 
 % All references are embedded so this deliverable remains a single .tex file.
