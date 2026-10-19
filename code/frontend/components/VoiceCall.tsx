@@ -8,11 +8,30 @@ import {
   useSessionMessages,
 } from '@livekit/components-react';
 import { ParticipantKind, RoomEvent, TokenSource, type RemoteParticipant } from 'livekit-client';
-import { CircleAlert, Mic, MicOff, Phone, PhoneOff, Radio, ShieldCheck } from 'lucide-react';
+import {
+  Captions,
+  CircleAlert,
+  Mic,
+  MicOff,
+  Phone,
+  PhoneOff,
+  ShieldCheck,
+  Volume1,
+  Volume2,
+  VolumeX,
+} from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { parseVoiceEvent } from '../lib/voice-events';
 
 const AGENT_NAME = process.env.NEXT_PUBLIC_LIVEKIT_AGENT_NAME || 'janmitra-agent';
+const TOPICS = ['Crop insurance', 'Old-age pensions', 'Housing schemes', 'Small-business support'];
+const MAX_VOLUME = 10;
+
+type Screen = 'idle' | 'connecting' | 'active' | 'ended';
+
+function formatTime(seconds: number) {
+  return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+}
 
 export default function VoiceCall() {
   const [accessCode, setAccessCode] = useState('');
@@ -26,12 +45,17 @@ export default function VoiceCall() {
   });
   const agent = useAgent(session);
   const { messages } = useSessionMessages(session);
+
   const [muted, setMuted] = useState(false);
+  const [speaker, setSpeaker] = useState(true);
+  const [captions, setCaptions] = useState(true);
+  const [volume, setVolume] = useState(7);
   const [seconds, setSeconds] = useState(0);
+  const [ended, setEnded] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [callStartedAt, setCallStartedAt] = useState(0);
-  const [notice, setNotice] = useState('Start a call, then speak when Janmitra is listening.');
   const active = session.isConnected;
+  const connecting = !active && session.connectionState === 'connecting';
 
   useEffect(() => {
     const onData = (payload: Uint8Array, participant?: RemoteParticipant,
@@ -40,10 +64,7 @@ export default function VoiceCall() {
       const event = parseVoiceEvent(payload);
       if (!event) return;
       if (event.type === 'error') setError(event.message || 'The voice service is unavailable. End the call and try again.');
-      else if (event.type === 'ready') {
-        setError(null);
-        setNotice('Speak naturally. You can interrupt Janmitra while it is speaking.');
-      }
+      else if (event.type === 'ready') setError(null);
     };
     session.room.on(RoomEvent.DataReceived, onData);
     return () => { session.room.off(RoomEvent.DataReceived, onData); };
@@ -57,10 +78,10 @@ export default function VoiceCall() {
 
   async function start() {
     setError(null);
+    setEnded(false);
     setSeconds(0);
     setMuted(false);
     setCallStartedAt(Date.now());
-    setNotice('Connecting to Janmitra. Please wait for Listening.');
     try {
       await session.start({ tracks: { microphone: { enabled: true } } });
     } catch (cause) {
@@ -72,11 +93,10 @@ export default function VoiceCall() {
     setError(null);
     try {
       await session.end();
-      setNotice('Call ended. Start a new call whenever you are ready.');
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : 'Could not end the call.');
     } finally {
-      setSeconds(0);
+      setEnded(true);
       setMuted(false);
     }
   }
@@ -91,10 +111,9 @@ export default function VoiceCall() {
     }
   }
 
-  const status = !active
-    ? session.connectionState === 'connecting'
-      ? 'Connecting'
-      : 'Ready'
+  const screen: Screen = active ? 'active' : connecting ? 'connecting' : ended ? 'ended' : 'idle';
+  const status = muted
+    ? 'Muted'
     : agent.state === 'speaking'
       ? 'Speaking'
       : agent.state === 'thinking'
@@ -108,92 +127,167 @@ export default function VoiceCall() {
     ? 'Janmitra could not connect. End the call and try again.' : null);
   const transcript = messages.filter((message) => message.timestamp >= callStartedAt
     && (message.type === 'userTranscript' || message.type === 'agentTranscript')).slice(-8);
-  const elapsed = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+  const speaking = active && agent.state === 'speaking';
+
+  const transcriptList = transcript.length === 0
+    ? <p className="transcript-empty">Your words and Janmitra’s replies appear here during the call.</p>
+    : (
+      <ol className="transcript-list">
+        {transcript.map((message) => (
+          <li key={message.id} className={message.type === 'userTranscript' ? 'from-user' : 'from-agent'}>
+            <strong>{message.type === 'userTranscript' ? 'You' : 'Janmitra'}</strong>
+            <p>{message.message}</p>
+          </li>
+        ))}
+      </ol>
+    );
 
   return (
     <SessionProvider session={session}>
-      <RoomAudioRenderer />
-      <main className="workspace">
-        <header className="topbar">
-          <div className="brand">
-            <span className="brand-mark">J</span>
-            <span>Janmitra</span>
-          </div>
-          <span className="environment"><Radio size={15} /> Browser voice</span>
+      <RoomAudioRenderer volume={speaker ? volume / MAX_VOLUME : 0} />
+      <main className="call-app">
+        <header className="call-topbar">
+          <span className="brand"><span className="brand-mark">J</span>Janmitra</span>
+          <span className="secure"><ShieldCheck size={16} aria-hidden="true" />Secure browser call</span>
         </header>
 
-        <section className="call-layout">
-          <aside className="context-panel">
-            <p className="eyebrow">Current session</p>
-            <h1>Find support for your next step</h1>
-            <dl>
-              <div><dt>Channel</dt><dd>Browser microphone</dd></div>
-              <div><dt>Language</dt><dd>Detected during call</dd></div>
-              <div><dt>Privacy</dt><dd>Calls are transcribed for support</dd></div>
-            </dl>
-            <p className="trust-note"><ShieldCheck size={18} /> Reviewed guidance comes first. General answers are labelled unverified.</p>
-            <label className="access-code">
-              Access code (if required)
-              <input type="password" value={accessCode} autoComplete="off"
-                disabled={active || session.connectionState === 'connecting'}
-                onChange={(event) => setAccessCode(event.target.value)} />
-            </label>
+        <div className="call-body">
+          <aside className="side-panel side-help" aria-label="What you can ask">
+            <p className="eyebrow">You can ask about</p>
+            <ul className="topic-list">
+              {TOPICS.map((topic) => <li key={topic}>{topic}</li>)}
+            </ul>
+            <p className="side-note">
+              Speak in your own language; Janmitra detects it during the call. Reviewed guidance
+              comes first; general answers are labelled unverified.
+            </p>
           </aside>
 
-          <section className="call-stage" aria-live="polite">
-            <div className={`voice-signal ${active ? 'is-active' : ''}`} aria-hidden="true">
-              <span /><span /><span /><span /><span />
+          <section className="phone" aria-live="polite" aria-label="Janmitra call">
+            <div className="phone-top">
+              <span className="brand small"><span className="brand-mark">J</span>Janmitra</span>
+              <span className="secure"><ShieldCheck size={15} aria-hidden="true" />Secure call</span>
             </div>
-            <p className="status">{status}</p>
-            <p className="timer">{active ? elapsed : '00:00'}</p>
-            <h2>Janmitra AI</h2>
-            <p className="subtitle">Public information assistant</p>
 
-            <p className="call-notice">{notice}</p>
-            {displayError && <p className="error" role="alert"><CircleAlert size={18} />{displayError}</p>}
+            <div className={`avatar-rings ${screen === 'active' || screen === 'connecting' ? 'is-live' : ''} ${speaking ? 'is-speaking' : ''}`} aria-hidden="true">
+              <div className="ring"><div className="avatar">J</div></div>
+            </div>
+            <h1 className="caller-name">Janmitra AI</h1>
 
-            <div className="controls">
-              {active && (
-                <button
-                  className={`icon-button ${muted ? 'is-muted' : ''}`}
-                  onClick={toggleMute}
-                  aria-label={muted ? 'Unmute microphone' : 'Mute microphone'}
-                  title={muted ? 'Unmute microphone' : 'Mute microphone'}
-                >
-                  {muted ? <MicOff /> : <Mic />}
+            {screen === 'idle' && (
+              <>
+                <p className="caller-sub">Public information helpline</p>
+                <div className="phone-fill" />
+                <p className="phone-hint">
+                  Ask about crop insurance, pensions, housing, or support for a small business.
+                </p>
+                {displayError && <p className="call-error" role="alert"><CircleAlert size={16} aria-hidden="true" />{displayError}</p>}
+                <button type="button" className="round-call start" onClick={start} aria-label="Call Janmitra">
+                  <Phone size={30} aria-hidden="true" />
                 </button>
-              )}
-              <button
-                className={`call-button ${active ? 'end' : 'start'}`}
-                onClick={active ? stop : start}
-                disabled={!active && session.connectionState === 'connecting'}
-                aria-label={active ? 'End call' : 'Start call'}
-              >
-                {active ? <PhoneOff /> : <Phone />}
-                <span>{active ? 'End call' : 'Start call'}</span>
-              </button>
-            </div>
-            <section className="transcript" aria-label="Live conversation">
-              <h3>Conversation</h3>
-              {transcript.length === 0
-                ? <p className="transcript-empty">Your words and Janmitra’s replies appear here during the call.</p>
-                : <ol>{transcript.map((message) => (
-                  <li key={message.id} className={message.type === 'userTranscript' ? 'from-user' : 'from-agent'}>
-                    <strong>{message.type === 'userTranscript' ? 'You' : 'Janmitra'}</strong>
-                    <p>{message.message}</p>
-                  </li>
-                ))}</ol>}
-            </section>
+                <p className="round-label">Call</p>
+                <label className="access-code">
+                  Access code (if required)
+                  <input type="password" value={accessCode} autoComplete="off"
+                    onChange={(event) => setAccessCode(event.target.value)} />
+                </label>
+              </>
+            )}
+
+            {screen === 'connecting' && (
+              <>
+                <p className="caller-sub">Calling…</p>
+                <p className="caller-sub small">Allow microphone access when asked</p>
+                <div className="phone-fill" />
+                <button type="button" className="round-call end" disabled aria-label="Connecting">
+                  <PhoneOff size={30} aria-hidden="true" />
+                </button>
+                <p className="round-label">Connecting</p>
+              </>
+            )}
+
+            {screen === 'active' && (
+              <>
+                <p className="caller-sub status-line">
+                  <span className={`status-dot ${muted ? 'is-muted' : ''}`} />
+                  {status} · {formatTime(seconds)}
+                </p>
+
+                <div className="phone-fill middle">
+                  {displayError && <p className="call-error" role="alert"><CircleAlert size={16} aria-hidden="true" />{displayError}</p>}
+                  {captions && <div className="captions-card">{transcriptList}</div>}
+                </div>
+
+                <div className="control-grid">
+                  <div className="control">
+                    <button type="button" className={`round ${muted ? 'is-on' : ''}`} onClick={toggleMute}
+                      aria-pressed={muted} aria-label={muted ? 'Unmute microphone' : 'Mute microphone'}>
+                      {muted ? <MicOff size={24} aria-hidden="true" /> : <Mic size={24} aria-hidden="true" />}
+                    </button>
+                    <span>{muted ? 'Unmute' : 'Mute'}</span>
+                  </div>
+                  <div className="control">
+                    <button type="button" className={`round ${speaker ? 'is-on' : ''}`} onClick={() => setSpeaker(!speaker)}
+                      aria-pressed={speaker} aria-label="Speaker">
+                      {speaker ? <Volume2 size={24} aria-hidden="true" /> : <VolumeX size={24} aria-hidden="true" />}
+                    </button>
+                    <span>Speaker</span>
+                  </div>
+                  <div className="control">
+                    <button type="button" className={`round ${captions ? 'is-on' : ''}`} onClick={() => setCaptions(!captions)}
+                      aria-pressed={captions} aria-label="Captions">
+                      <Captions size={24} aria-hidden="true" />
+                    </button>
+                    <span>Captions</span>
+                  </div>
+                  <div className="control">
+                    <button type="button" className="round" onClick={() => setVolume(Math.max(0, volume - 1))}
+                      disabled={volume === 0} aria-label="Volume down">
+                      <Volume1 size={24} aria-hidden="true" />
+                    </button>
+                    <span>Vol −</span>
+                  </div>
+                  <div className="control volume-meter">
+                    <div className="volume-bar" role="meter" aria-label="Volume" aria-valuemin={0}
+                      aria-valuemax={MAX_VOLUME} aria-valuenow={volume}>
+                      <div style={{ width: `${(volume / MAX_VOLUME) * 100}%` }} />
+                    </div>
+                    <span>Volume {volume}</span>
+                  </div>
+                  <div className="control">
+                    <button type="button" className="round" onClick={() => setVolume(Math.min(MAX_VOLUME, volume + 1))}
+                      disabled={volume === MAX_VOLUME} aria-label="Volume up">
+                      <Volume2 size={24} aria-hidden="true" />
+                    </button>
+                    <span>Vol +</span>
+                  </div>
+                </div>
+
+                <button type="button" className="round-call end" onClick={stop} aria-label="End call">
+                  <PhoneOff size={30} aria-hidden="true" />
+                </button>
+              </>
+            )}
+
+            {screen === 'ended' && (
+              <>
+                <p className="caller-sub">Call ended · {formatTime(seconds)}</p>
+                <p className="phone-hint">Official decisions remain with the responsible department.</p>
+                <div className="phone-fill" />
+                {displayError && <p className="call-error" role="alert"><CircleAlert size={16} aria-hidden="true" />{displayError}</p>}
+                <button type="button" className="round-call start" onClick={start} aria-label="Call again">
+                  <Phone size={30} aria-hidden="true" />
+                </button>
+                <p className="round-label">Call again</p>
+              </>
+            )}
           </section>
 
-          <aside className="status-panel">
-            <p className="eyebrow">Connection</p>
-            <div className="connection-row"><span className={active ? 'dot online' : 'dot'} />{status}</div>
-            <div className="divider" />
-            <p className="small-copy">Official decisions remain with the responsible department.</p>
-            <p className="small-copy">Ask about crop insurance, pensions, housing, or support for a small business.</p>
+          <aside className={`side-panel side-captions ${captions ? '' : 'is-hidden'}`} aria-label="Live captions">
+            <p className="eyebrow">Live captions <span>Last 8 lines</span></p>
+            {transcriptList}
           </aside>
-        </section>
+        </div>
       </main>
     </SessionProvider>
   );
