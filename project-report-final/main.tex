@@ -1,0 +1,697 @@
+% Janmitra final project report. This is the only required source file.
+% Compile once with Tectonic (which performs reruns), or twice with pdfLaTeX.
+% Structure follows the prototype-stage report. References and the architecture
+% figure are embedded; no external assets are needed.
+\documentclass[11pt,a4paper,oneside]{report}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=1in,headheight=15pt]{geometry}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{array,booktabs,tabularx,longtable}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+
+\hypersetup{
+  pdftitle={Janmitra: Final Project Report},
+  pdfauthor={Dhruv Srivastava; Harkamal Singh Lubana; Paras},
+  pdfsubject={UCS503P final implementation and evaluation}
+}
+\urlstyle{tt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.18}
+\setlist[itemize]{leftmargin=1.5em,itemsep=0.2em,topsep=0.3em}
+\setlist[enumerate]{leftmargin=1.8em,itemsep=0.25em,topsep=0.3em}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
+\newcommand{\ReportDate}{27 November 2026}
+\newcommand{\Revision}{227c4a9}
+\newcommand{\Advisor}{Ms Paramveer Kaur}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Janmitra}
+\fancyhead[R]{\small Final Project Report}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{%
+  \fancyhf{}\fancyfoot[C]{\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+\begin{document}
+
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+  \centering
+  {\large\bfseries Thapar Institute of Engineering and Technology\par}
+  \vspace{0.2cm}
+  {\large Patiala\par}
+  \vspace{0.9cm}
+  {\large UCS503P --- Course Project\par}
+  \vspace{1.1cm}
+  {\Huge\bfseries Janmitra\par}
+  \vspace{0.4cm}
+  {\LARGE A Voice-First Civic Scheme Guidance\par
+    Platform for Rural India\par}
+  \vspace{0.8cm}
+  {\Large\bfseries Final Project Report\par}
+  \vspace{0.2cm}
+  {\large End-Semester Evaluation\par}
+  \vspace{1.2cm}
+  {\large Submitted to\par}
+  \vspace{0.15cm}
+  {\Large\bfseries \Advisor\par}
+  \vspace{1.0cm}
+  {\large Submitted by\par}
+  \vspace{0.3cm}
+  \begin{tabular}{@{}ll@{}}
+    \textbf{Student} & \textbf{Roll number} \\
+    \midrule
+    Dhruv Srivastava & \texttt{1024170394} \\
+    Harkamal Singh Lubana & \texttt{1024170396} \\
+    Paras & \texttt{1024170395}
+  \end{tabular}
+  \vspace{0.4cm}
+  \par{\small
+    \texttt{dsrivastava\_be24@thapar.edu}\par
+    \texttt{hlubana\_be24@thapar.edu}\par
+    \texttt{pparas\_be24@thapar.edu}\par}
+  \vfill
+  {\large\bfseries Computer Science and Engineering Department\par}
+  \vspace{0.4cm}
+  {\large \ReportDate\par}
+\end{titlepage}
+
+\pagenumbering{roman}
+\hypersetup{pageanchor=true}
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+Janmitra is a voice-first civic-guidance system that helps rural citizens discover
+government support, understand eligibility conditions, prepare documents, and
+request human assistance. This report describes the final implementation at
+repository revision \texttt{\Revision}. Citizens speak through a browser call
+screen connected over LiveKit, and Gemini Live handles native speech input and
+output. A FastAPI backend provides scheme retrieval, deterministic eligibility
+evaluation, document checklists, versioned publication, an operator handoff queue,
+and conversation and audit records.
+
+The final evaluation covered automated testing, end-to-end API verification,
+catalogue coverage, retrieval accuracy, load and replica scaling, and live voice
+trials. All backend tests passed (100\%), including PostgreSQL integration and
+voice-runtime modules, as did all frontend tests (100\%). End-to-end API checks
+passed at 96.9\%. All 18 catalogue records were published with a named reviewer
+attestation, and every official source link resolved (100\%). Retrieval reached
+97.1\% recall at three results, including 100\% on Hindi, Punjabi, and
+transliterated queries. Throughput exceeded each replica-scaling target by more
+than tenfold with a 0\% error rate.
+
+In live voice trials, backend retrieval succeeded in every call (100\%), and
+50\% of integrated calls completed; the remainder were closed by the speech
+provider's free-tier capacity limit. A Punjabi call demonstrated correct language
+matching and cross-language retrieval. Telephone access, a median turn-level
+latency measurement, and a participant pilot remain future work.
+
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+% ================================================================
+\chapter{Introduction}
+
+\section{Background and Context}
+Government welfare information is distributed across departmental websites,
+guidelines, notices, and application portals. A citizen may describe a practical
+need---support for farming, employment, housing, insurance, or a small
+business---without knowing the relevant scheme or department. Formal language,
+unfamiliar terminology, and multi-page navigation can make public information
+difficult to use even when it is available.
+
+Janmitra aims to improve access to this information through conversation. The
+original proposal envisaged a service reachable by an ordinary phone call, so that
+citizens could speak in a familiar language without installing an application
+\cite{proposal}. The project developed the speech and backend workflow through a
+browser voice channel presented as a phone-call screen, which provides a practical
+environment for integration, measurement, and demonstration. This report extends
+the prototype-stage report \cite{prototype} with the final implementation and its
+measured evaluation.
+
+\subsection{Problem Statement}
+The project addresses five connected difficulties:
+\begin{enumerate}
+  \item \textbf{Fragmented information:} relevant facts are spread across
+    multiple official sources and versions.
+  \item \textbf{Language and literacy barriers:} a citizen may find it easier to
+    describe a need aloud than to read formal scheme text.
+  \item \textbf{Discovery difficulty:} a person may know their circumstances but
+    not the name of a suitable programme.
+  \item \textbf{Eligibility and document uncertainty:} general descriptions do not
+    explain which conditions apply to a particular person or what to prepare.
+  \item \textbf{Incomplete assistance:} self-service needs an explicit route to
+    human help when an issue cannot be resolved.
+\end{enumerate}
+
+The engineering problem is to combine natural spoken interaction with traceable
+information and predictable backend decisions. Language generation alone cannot
+establish personal eligibility or official approval, and these distinctions guide
+the system's tool boundaries.
+
+\section{Project Objectives}
+\begin{enumerate}
+  \item \textbf{Deliver the voice-to-tool path:} connect browser audio to LiveKit
+    and Gemini Live, retrieve scheme context through the API, and return a spoken
+    answer.
+  \item \textbf{Publish a reusable catalogue:} represent scheme descriptions,
+    citations, documents, application steps, and optional rules in one validated
+    schema, and publish an initial reference set.
+  \item \textbf{Implement deterministic guidance:} evaluate rule conditions and
+    conditional document requirements with explicit outcomes.
+  \item \textbf{Preserve accountable publication:} retain every version and
+    associate publication with a named reviewer and date.
+  \item \textbf{Support human assistance:} create queued handoffs and expose
+    operator status updates and context.
+  \item \textbf{Verify and measure:} provide automated tests, linting, migrations
+    and containers, and measure retrieval accuracy, throughput, and live voice
+    behaviour.
+\end{enumerate}
+
+\subsection{Final Scope and Changes from the Proposal}
+Table~\ref{tab:scope} compares the proposal with the delivered system.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabularx}{\textwidth}{@{}P{0.21\textwidth}YY@{}}
+\toprule
+\textbf{Area} & \textbf{Original proposal} & \textbf{Final system} \\
+\midrule
+Citizen access & Ordinary telephone call through a SIP bridge.
+  & Browser phone-call screen with live captions over LiveKit; no telephony. \\
+Scheme guidance & Facts from a verified, published catalogue.
+  & 18 records published with a named reviewer attestation; qualified general
+    guidance is permitted when retrieved context is incomplete. \\
+Eligibility & Deterministic pre-checks over reviewed rules.
+  & Engine implemented and tested; 27.8\% of published records carry rule sets. \\
+Source ingestion & Import, AI extraction, human review, versioned publish.
+  & Structured JSON preparation, reviewer attestation, and versioned
+    publication; a full source importer remains future work. \\
+Delivery and scale & Staging pipeline and measured replica comparison.
+  & CI checks, containers, and migrations; 1-, 2- and 4-replica throughput
+    measured locally; staging CD remains future work. \\
+\bottomrule
+\end{tabularx}
+\caption{Relationship between the proposal and the final system.}
+\label{tab:scope}
+\end{table}
+
+% ================================================================
+\chapter{Methodology and Design}
+
+\section{System Architecture}
+Janmitra uses a modular backend with a separate voice worker. The backend contains
+conversation, catalogue, eligibility, handoff, and audit modules. The voice worker
+calls the backend through typed HTTP tools and never writes to the database
+directly or duplicates eligibility logic \cite{architecture}.
+
+\begin{figure}[htbp]
+\centering
+\setlength{\fboxsep}{8pt}
+\fbox{\parbox{0.83\textwidth}{\centering
+  \textbf{Browser phone-call screen}\\
+  Microphone, speaker, call controls, and live captions}}
+\par\smallskip $\updownarrow$\quad WebRTC audio\par\smallskip
+\fbox{\parbox{0.83\textwidth}{\centering
+  \textbf{LiveKit room and Python voice worker}\\
+  Gemini Live native-audio session; tool invocation; transcript and timing events}}
+\par\smallskip $\updownarrow$\quad Authenticated HTTP tools\par\smallskip
+\fbox{\parbox{0.83\textwidth}{\centering
+  \textbf{FastAPI backend}\\
+  Conversation state; catalogue retrieval; deterministic eligibility;\\
+  document checklists; handoff queue; publication; audit}}
+\par\smallskip $\updownarrow$\quad Structured data access\par\smallskip
+\fbox{\parbox{0.83\textwidth}{\centering
+  \textbf{PostgreSQL}\\
+  Published scheme versions, conversations, events, handoffs, and audit records}}
+\caption{Final system architecture. Admin and operator clients access the backend
+separately.}
+\label{fig:architecture}
+\end{figure}
+
+\section{Technical Stack}
+\begin{itemize}
+  \item \textbf{Backend:} Python 3.12 or later, FastAPI, and Uvicorn.
+  \item \textbf{Validation and persistence:} Pydantic, asynchronous SQLAlchemy,
+    PostgreSQL 16 with asyncpg, and Alembic migrations. SQLite isolates unit tests.
+  \item \textbf{Voice:} LiveKit Agents and its Google plugin at version 1.8.5.
+    The native-audio model is \code{gemini-3.1-flash-live-preview}.
+  \item \textbf{Frontend:} Next.js 16, React 19, TypeScript, and the LiveKit
+    client components.
+  \item \textbf{Tooling:} pytest, Vitest, Ruff, ESLint, Docker Compose, and
+    GitHub Actions.
+\end{itemize}
+
+\section{Implementation Details}
+
+\subsection{Voice Conversation and Session Lifecycle}
+The worker joins a LiveKit room, creates a backend conversation, and starts an
+\code{AgentSession} with Gemini Live. Speech input and output are handled within a
+single model session, without a separate speech-to-text or text-to-speech stage.
+The citizen speaks first, and the first reply briefly discloses that Janmitra is
+an AI. The prompt asks the agent to match the citizen's language, use short spoken
+steps, and ask one question at a time.
+
+Voice activity detection uses 100~ms prefix padding and 500~ms silence
+endpointing. Transcript and timing events are written asynchronously, and a single
+cleanup task drains pending writes and closes the conversation. Status messages
+over a data channel report readiness and recoverable errors to the browser.
+
+\subsection{Typed Backend Tools}
+The agent uses four operations:
+\begin{description}[leftmargin=1.7em,style=nextline]
+  \item[\code{find_service}] Retrieves scheme context for the citizen's stated need.
+  \item[\code{check_eligibility}] Evaluates answers against a published rule set.
+  \item[\code{get_documents}] Returns the published document checklist, including
+    conditional items.
+  \item[\code{request_handoff}] Queues a request for human assistance.
+\end{description}
+The backend validates each payload, checks the caller's role, and returns a
+structured result. The model explains that result in speech; it cannot publish
+data or override the eligibility engine.
+
+\subsection{Scheme Catalogue}
+Each \code{ServiceRecord} holds a slug, localised name and description, aliases,
+category, benefit and eligibility summaries, an optional rule set, documents,
+application steps, and citation metadata. The catalogue contains 18 central
+schemes, summarised in Table~\ref{tab:catalogue}.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabularx}{\textwidth}{@{}lrY@{}}
+\toprule
+\textbf{Category} & \textbf{Records} & \textbf{Schemes} \\
+\midrule
+Loan & 4 & KCC, PMMY, PMEGP, PM-Vishwakarma \\
+Insurance & 4 & PM-JAY, PMFBY, PMJJBY, PMSBY \\
+Grant & 4 & PM-KISAN, PMAY-G, PMGKAY, PMUY \\
+Pension & 3 & APY, PM-SYM, NSAP \\
+Banking & 2 & PMJDY, DAY-NRLM \\
+Other & 1 & Rural employment guarantee (slug \code{mgnrega}) \\
+\midrule
+\textbf{Total} & \textbf{18} & All published \\
+\bottomrule
+\end{tabularx}
+\caption{Published scheme catalogue by category.}
+\label{tab:catalogue}
+\end{table}
+
+\subsection{Retrieval and Grounding}
+Retrieval combines Unicode-aware normalisation, Hindi and Punjabi phrase
+expansion, transliteration, named-scheme matching, and a curated mapping from
+expressed needs to candidate schemes. Compound requests keep each distinct need
+rather than returning variants of one topic. When no need is recognised, a
+complete alias or scheme name must appear in the query; this deliberately prevents
+incidental word overlap in a personal story from being treated as a scheme match.
+
+The voice path requests \code{response_mode="context"}, and the API returns at most
+three records with citations and version identifiers. Gemini Live then answers
+directly from this context, avoiding an intermediate text-generation round trip.
+
+\subsection{Deterministic Eligibility and Documents}
+Rules are stored as data within a versioned record. Named conditions combine
+through \code{all_of}, \code{any_of}, and \code{none_of} groups, and optional
+\code{applies_when} guards control relevance. The engine validates answers and
+returns \code{eligible}, \code{not_eligible}, or \code{needs_more_info}, with a
+trace of the conditions involved. Document checklists use the same answers: a
+document whose condition is unknown remains visible as conditional.
+
+\subsection{Versioned Publication and Review}
+Publishing appends a new \code{ServiceVersion} and moves the service's current
+pointer, retaining every earlier version with field-level diffs. The seed command
+validates each record and publishes only when a reviewer supplies a name with
+\code{--actor} and attests to review with \code{--confirm-reviewed}. PostgreSQL
+advisory and row locks serialise concurrent publication. The 18 records were
+published through this path, with the reviewer recorded in the version history
+\cite{catalogue-review}.
+
+\subsection{Human Handoff and Operator Queue}
+A handoff stores an issue summary, optional contact details, language, and the
+conversation reference, then marks the conversation \code{handed_off}. Operators
+list queued requests, inspect conversation events, add notes, and move requests
+from \code{new} to \code{contacted} to \code{resolved}. A handoff queues operator
+attention; it does not transfer a live call.
+
+\subsection{Persistence, Audit, and Access Control}
+The database holds services, versions, source snapshots, conversations,
+conversation events, handoff requests, and audit events. Audit events record
+critical actions with request identifiers and actors. Separate admin, operator,
+and voice API keys restrict access by role. The prompt forbids requesting Aadhaar
+numbers, full bank details, OTPs, PINs, and passwords.
+
+\subsection{Frontend Call Screen}
+The browser interface is presented as a phone call: a caller header, call timer and
+live status (listening, thinking, speaking), mute, speaker, volume and caption
+controls, and start and end buttons. Live captions show the most recent turns of
+both speakers during the call. Readiness and error messages from the worker are
+displayed through an accessible alert region.
+
+\subsection{Development and Deployment}
+GitHub Actions run Ruff and pytest with a PostgreSQL 16 service, and separately run
+frontend linting, tests, and a production build. Docker Compose defines PostgreSQL
+and the API with health checks; the API container applies migrations before
+starting.
+
+% ================================================================
+\chapter{Results and Evaluation}
+
+\section{Testing Methodology}
+All results were reproduced locally on \ReportDate\ at revision \texttt{\Revision},
+with dependencies installed at the versions the project declares
+\cite{implementation}. Table~\ref{tab:tests} lists the tests performed.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabularx}{\textwidth}{@{}P{0.27\textwidth}YP{0.17\textwidth}@{}}
+\toprule
+\textbf{Test} & \textbf{What it verifies} & \textbf{Tool} \\
+\midrule
+Backend unit tests & Rule logic, numeric validation, conditional documents,
+  ranking, schema constraints, review attestation, handoff triggers & pytest \\
+API integration tests & Role restrictions, retrieval, eligibility, documents,
+  handoffs, conversation events, audit & pytest, SQLite \\
+PostgreSQL integration & Migration round trip, schema agreement, concurrent
+  publication, event numbering, competing state transitions & pytest, PostgreSQL 16 \\
+Voice-runtime tests & Worker cleanup, notifications, session behaviour, prompt
+  and client contracts & pytest \\
+Frontend tests & Token route security and voice-event handling & Vitest \\
+Static analysis & Code style and correctness rules & Ruff, ESLint \\
+Production build & Type checking and compilation & Next.js \\
+End-to-end API checks & Health, authentication, catalogue, conversation
+  lifecycle, all four tools, handoff queue, audit trail & Scripted HTTP client \\
+Catalogue coverage & Structural completeness of published records & Script \\
+Source link check & Reachability of every cited official source & HTTP client \\
+Retrieval accuracy & Recall at three results over labelled citizen queries in
+  English, Hindi, Punjabi, and transliteration & Scripted benchmark \\
+Load and scaling & Throughput, latency, and errors at 1, 2, and 4 replicas &
+  Threaded load generator \\
+Live voice trials & Complete browser calls in English and Punjabi & Browser,
+  LiveKit, Gemini Live \\
+Direct model probes & Gemini Live with the worker's configuration, streamed
+  audio, and a tool call, without LiveKit & google-genai SDK \\
+\bottomrule
+\end{tabularx}
+\caption{Tests performed for the final evaluation.}
+\label{tab:tests}
+\end{table}
+
+\section{Summary of Results}
+Table~\ref{tab:results} summarises the outcome of each test.
+
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.12}
+\begin{longtable}{@{}P{0.36\textwidth}P{0.18\textwidth}P{0.38\textwidth}@{}}
+\caption{Final evaluation results.}
+\label{tab:results}\\
+\toprule
+\textbf{Measure} & \textbf{Result} & \textbf{Note} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Measure} & \textbf{Result} & \textbf{Note} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Backend test pass rate & 100\% & Includes PostgreSQL and voice-runtime modules;
+  none excluded \\
+Frontend test pass rate & 100\% & \\
+Static analysis & Passed & Ruff and ESLint report no issues \\
+Production build & Passed & \\
+End-to-end API checks & 96.9\% & The one unmet check is a housing phrasing
+  discussed in Section~\ref{sec:retrieval} \\
+Records published & 100\% & With a named reviewer attestation \\
+Records with citations & 100\% & \\
+Cited source links reachable & 100\% & \\
+Records with application steps & 100\% & \\
+Records with document checklists & 83.3\% & \\
+Records with eligibility rule sets & 27.8\% & APY, PM-SYM, PMJJBY, PMSBY, PMUY \\
+Retrieval recall at three results & 97.1\% & Median lookup 4.95~ms \\
+Throughput targets met & 100\% & More than tenfold margin at every replica count \\
+Load-test error rate & 0\% & \\
+Live voice calls completed & 50\% & Remainder closed by provider capacity limit \\
+Retrieval success within live calls & 100\% & Every lookup under 50~ms \\
+Direct model probes completed & 100\% & \\
+\end{longtable}
+\endgroup
+
+\section{Retrieval Accuracy}
+\label{sec:retrieval}
+Retrieval was measured against labelled queries phrased as a citizen would speak
+them, with the acceptable schemes fixed in advance. A query passes when a correct
+scheme appears among the first three results. Table~\ref{tab:retrieval} gives the
+results by query group.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabularx}{\textwidth}{@{}lrY@{}}
+\toprule
+\textbf{Query group} & \textbf{Recall@3} & \textbf{Example} \\
+\midrule
+English, natural phrasing & 100\% & ``My crop was destroyed by heavy rain'' $\rightarrow$ PMFBY \\
+Hindi (Devanagari) & 100\% & A ration request in Devanagari script $\rightarrow$ PMGKAY \\
+Punjabi (Gurmukhi) & 100\% & A request for housing $\rightarrow$ PMAY-G \\
+Transliterated Hinglish & 100\% & ``mujhe ghar chahiye'' $\rightarrow$ PMAY-G \\
+Scheme named directly & 83.3\% & ``What is MUDRA loan'' $\rightarrow$ PMMY \\
+\midrule
+\textbf{Overall} & \textbf{97.1\%} & Median latency 4.95~ms \\
+\bottomrule
+\end{tabularx}
+\caption{Retrieval recall at three results by query group.}
+\label{tab:retrieval}
+\end{table}
+
+Every multilingual group reached 100\%, which provides measured evidence for
+retrieval across Hindi, Punjabi, and transliterated input. The unmatched queries
+follow from the strict alias rule described in Chapter~2: ``Tell me about Ujjwala''
+does not match the stored alias ``Ujjwala 2.0'', and a housing need phrased as
+storm damage to a roof is not yet in the housing vocabulary, while ``I need a pucca
+house'' is matched correctly. The system therefore prefers returning nothing to
+returning an unrelated scheme. Extending aliases and need phrases addresses these
+cases without weakening that guard.
+
+\section{Performance and Scalability}
+Four API replicas were run against a shared PostgreSQL instance with the mock model
+adapter, so no provider calls were involved. A load generator issued retrieval
+requests in round robin across the active replicas, with a discarded warm-up before
+each phase. Table~\ref{tab:throughput} compares the results with the targets set in
+the proposal.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{@{}rrrrrr@{}}
+\toprule
+\textbf{Replicas} & \textbf{Target (req/s)} & \textbf{Measured (req/s)} &
+  \textbf{\% of target} & \textbf{p50 (ms)} & \textbf{p95 (ms)} \\
+\midrule
+1 & 20 & 244.7 & 1,224\% & 130.5 & 153.0 \\
+2 & 35 & 387.6 & 1,107\% & 83.5 & 162.3 \\
+4 & 55 & 559.8 & 1,018\% & 29.8 & 175.4 \\
+\bottomrule
+\end{tabular}
+\caption{Throughput and latency by replica count. Error rate was 0\% in every phase.}
+\label{tab:throughput}
+\end{table}
+
+Every target was exceeded by more than tenfold with no failed requests. Scaling
+efficiency was 79\% at two replicas and 57\% at four. Median latency fell sharply
+as replicas were added while aggregate throughput rose less, which indicates that
+the single-machine load generator, rather than the API, became the limit. The
+measured values are therefore lower bounds on the system's capacity.
+
+\section{Live Voice Evaluation}
+Live trials used complete browser calls through LiveKit and the real Gemini Live
+model, in English and Punjabi. Backend retrieval succeeded in every call (100\%),
+with each lookup completing in under 50~ms, and worker startup had a median of
+63.5~ms \cite{voice-design}. Half of the integrated calls (50\%) completed; in the others, the provider
+closed the connection with WebSocket code 1011 and the message ``Resource has been
+exhausted''.
+
+These failures were traced to the provider's free-tier capacity rather than to the
+application. The worker's exact configuration---model, thinking level,
+temperature, voice, and voice activity settings---was replayed outside LiveKit with
+streamed 16~kHz speech and the real retrieval payload injected mid-session, and
+every probe with properly endpointed speech completed (100\%). A text request on
+the same key also succeeded. One failure began 24 seconds after a two-minute call
+ended, which is consistent with a rate limit that recovers over time. Google does not publish fixed
+Live API free-tier limits, so the final demonstration should use a billed project.
+
+In the isolated probe, the first spoken audio arrived about 3.1~s after the end of
+the citizen's speech, including a retrieval tool call. This single measurement
+falls within the proposal's seven-second time-to-guidance target, but it is not a
+median over integrated calls.
+
+The Punjabi call provided the strongest qualitative result. The system transcribed
+Gurmukhi speech correctly, translated the need into English for retrieval, matched
+PM-KISAN, KCC, and the rural employment scheme, and replied in Punjabi with an
+appropriate greeting. In one English call, voice activity detection split the
+opening sentence at a short pause, and the reply was generated in Hindi.
+
+\section{Analysis}
+
+\subsection{Achievement of Objectives}
+\begin{table}[htbp]
+\centering\small
+\begin{tabularx}{\textwidth}{@{}P{0.32\textwidth}P{0.15\textwidth}Y@{}}
+\toprule
+\textbf{Objective} & \textbf{Status} & \textbf{Evidence} \\
+\midrule
+Voice-to-tool path & Achieved & Retrieval succeeded in 100\% of live calls;
+  completed calls returned spoken guidance \\
+Reusable, published catalogue & Achieved & 100\% of records published with
+  citations and steps \\
+Deterministic guidance & Achieved & Engine and checklist tests pass; 27.8\% of
+  records carry rule sets \\
+Accountable publication & Achieved & Reviewer and date recorded; versions
+  retained \\
+Human assistance & Achieved & Handoff creation and operator listing verified
+  end to end \\
+Verification and measurement & Achieved & 100\% test pass rate; retrieval,
+  load, and voice measured \\
+Ordinary-phone access & Not achieved & Browser channel only \\
+\bottomrule
+\end{tabularx}
+\caption{Status of project objectives.}
+\label{tab:objectives}
+\end{table}
+
+\subsection{Challenges and Design Responses}
+\textbf{Balancing helpfulness and verification.} A verified-only path cannot answer
+until data is reviewed. Publishing the catalogue under a reviewer attestation
+enables verified tools, while qualified general guidance covers gaps without
+inventing amounts, deadlines, or approvals.
+
+\textbf{Understanding ordinary and mixed needs.} Citizens describe situations rather
+than scheme names. Need concepts, multilingual expansion, and combined ranking gave
+97.1\% recall, and the strict alias rule keeps unrelated matches out.
+
+\textbf{Voice latency.} Answering directly from retrieved context removes a
+text-generation round trip, and retrieval stayed under 50~ms in every live call.
+
+\textbf{Consistency under concurrency.} Database locks protect publication,
+event numbering, and terminal state transitions, and the PostgreSQL integration
+tests verifying them pass at 100\%.
+
+\subsection{Limitations}
+\begin{enumerate}
+  \item The browser channel does not provide ordinary-phone access, and handoff
+    does not transfer a live call.
+  \item Free-tier provider capacity limited live call completion to 50\%.
+  \item Turn-level timing fields used by the worker are not emitted by the SDK for
+    native-audio models, so a median turn-level time-to-guidance could not be
+    computed from integrated calls.
+  \item Language matching is not yet reliable when voice activity detection splits
+    an utterance; the English-language rule is present in the prompt but placed late.
+  \item Document checklists cover 83.3\% of records and rule sets 27.8\%.
+  \item Handoff precision and recall, claim-level citation accuracy, and user
+    clarity require labelled data, source review, and a participant pilot, and were
+    not evaluated.
+\end{enumerate}
+
+% ================================================================
+\chapter{Conclusion}
+
+\section{Summary of Work}
+Janmitra has progressed from a proposed phone-accessible guidance system to a
+working browser voice service on a tested, modular backend. The delivered system
+includes typed guidance tools, a published 18-scheme catalogue, deterministic
+eligibility and document logic, versioned publication with reviewer attestation,
+an operator handoff queue, audit trails, migrations, containers, CI, and a
+phone-style call screen with live captions.
+
+The final evaluation found a 100\% pass rate across backend and frontend tests,
+96.9\% of end-to-end API checks passing, 97.1\% retrieval recall with 100\% on
+every multilingual group, and throughput above every scaling target by more than
+tenfold at a 0\% error rate. Live voice calls retrieved correctly in every case and
+completed in 50\% of trials under free-tier provider limits.
+
+\section{Key Findings}
+\begin{itemize}
+  \item \textbf{Explicit tool boundaries make guidance testable.} Eligibility,
+    publication, and handoff can be verified independently of speech generation.
+  \item \textbf{Strict matching trades recall for trust.} Requiring a recognised
+    need or a full alias kept unrelated schemes out, at a small cost in recall.
+  \item \textbf{The backend is not the bottleneck.} A single replica sustained more
+    than twelve times its target, and live lookups completed in under 50~ms.
+  \item \textbf{Provider capacity dominates live reliability.} Every integrated
+    failure came from the speech provider's limit, while the application path
+    completed whenever capacity was available.
+\end{itemize}
+
+\section{Future Work and Recommendations}
+\begin{enumerate}
+  \item \textbf{Telephone access:} add a SIP bridge to meet the original
+    ordinary-phone objective.
+  \item \textbf{Reliable live capacity:} use a billed Gemini project and lengthen
+    the reconnection backoff so retries do not compound capacity limits.
+  \item \textbf{Latency instrumentation:} measure time to first audio directly in
+    the worker to report a median turn-level time-to-guidance.
+  \item \textbf{Language and turn handling:} move the language-matching rule
+    earlier in the prompt and tune voice activity endpointing for natural pauses.
+  \item \textbf{Catalogue growth:} add state-specific schemes, complete document
+    checklists, extend rule coverage, and widen aliases and need phrases.
+  \item \textbf{Pilot evaluation:} run the 16 evaluation scenarios with human
+    review \cite{evaluation-fixtures}, then a pilot with 8--12 participants
+    measuring completion, time, and clarity.
+\end{enumerate}
+
+\section{Final Remarks}
+Janmitra shows how conversational AI can be connected to structured public-service
+information and deterministic backend decisions. Its central engineering
+contribution is the separation of speech, retrieval, trusted decisions, and
+persistent records into components that can each be tested and measured. With
+telephone access and a citizen pilot, the same foundation can move toward the
+proposal's goal of accessible and dependable civic guidance.
+
+% All references are embedded so this deliverable remains a single .tex file.
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+\begin{thebibliography}{9}
+
+\bibitem{proposal}
+Dhruv Srivastava, Harkamal Singh Lubana, and Paras.
+\emph{Janmitra: A Voice-First Civic Scheme Guidance Platform for Rural India}.
+UCS503P project proposal. Repository source: \path{project-proposal/main.tex}.
+
+\bibitem{prototype}
+Dhruv Srivastava, Harkamal Singh Lubana, and Paras.
+\emph{Janmitra: Prototype-Stage Project Report}. Mid-semester evaluation,
+10 October 2026. \path{project-report-prototype-stage/main.tex}.
+
+\bibitem{implementation}
+Janmitra project team. \emph{Implementation and commit history}.
+Repository revision \texttt{\Revision}. Backend under \path{code/backend/},
+frontend under \path{code/frontend/}, CI in \path{.github/workflows/}.
+
+\bibitem{architecture}
+Janmitra project team. \emph{Architecture}. \path{docs/architecture.md}.
+
+\bibitem{voice-design}
+Janmitra project team. \emph{Browser Voice Architecture}.
+\path{docs/voice-architecture.md}.
+
+\bibitem{catalogue-review}
+Janmitra project team. \emph{Catalogue Review Checklist}.
+\path{code/backend/data/REVIEW.md} and the scheme JSON records.
+
+\bibitem{evaluation-fixtures}
+Janmitra project team. \emph{Voice Evaluation Scenarios and Rubric}.
+\path{code/backend/scripts/fixtures/voice-evaluation.json}.
+
+\end{thebibliography}
+\end{document}
