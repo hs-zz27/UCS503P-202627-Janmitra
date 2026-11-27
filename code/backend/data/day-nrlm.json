@@ -1,6 +1,8 @@
 {
   "slug": "day-nrlm",
-  "name": {"en": "Deendayal Antyodaya Yojana - National Rural Livelihoods Mission"},
+  "name": {
+    "en": "Deendayal Antyodaya Yojana - National Rural Livelihoods Mission"
+  },
   "aliases": [
     "DAY-NRLM",
     "NRLM",
@@ -23,13 +25,28 @@
   "rule_set": null,
   "documents": [],
   "steps": [
-    {"order": 1, "instruction": {"en": "Contact the village organisation, cluster federation, Gram Panchayat, or State Rural Livelihoods Mission office serving the block."}},
-    {"order": 2, "instruction": {"en": "Ask about joining or forming a women's SHG and which bank-linkage or livelihood programmes operate locally."}},
-    {"order": 3, "instruction": {"en": "For a rural enterprise, ask specifically whether SVEP or another enterprise-support programme is active in the block."}}
+    {
+      "order": 1,
+      "instruction": {
+        "en": "Contact the village organisation, cluster federation, Gram Panchayat, or State Rural Livelihoods Mission office serving the block."
+      }
+    },
+    {
+      "order": 2,
+      "instruction": {
+        "en": "Ask about joining or forming a women's SHG and which bank-linkage or livelihood programmes operate locally."
+      }
+    },
+    {
+      "order": 3,
+      "instruction": {
+        "en": "For a rural enterprise, ask specifically whether SVEP or another enterprise-support programme is active in the block."
+      }
+    }
   ],
   "citation": {
-    "source_url": "https://rural.gov.in/sites/default/files/State_Performance_Report_2023-2024_22102024.pdf",
-    "source_title": "State Performance Report 2023-2024 - DAY-NRLM",
+    "source_url": "https://rural.gov.in/",
+    "source_title": "Ministry of Rural Development",
     "publisher": "Ministry of Rural Development",
     "verified_on": "2026-09-07",
     "verification_state": "pending_review",

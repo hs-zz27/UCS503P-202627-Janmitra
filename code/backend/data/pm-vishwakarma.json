@@ -1,6 +1,8 @@
 {
   "slug": "pm-vishwakarma",
-  "name": {"en": "PM Vishwakarma"},
+  "name": {
+    "en": "PM Vishwakarma"
+  },
   "aliases": [
     "Vishwakarma scheme",
     "artisan loan",
@@ -20,19 +22,54 @@
   },
   "rule_set": null,
   "documents": [
-    {"id": "aadhaar", "name": {"en": "Aadhaar for identity verification"}},
-    {"id": "mobile", "name": {"en": "Mobile number used for registration"}},
-    {"id": "bank-details", "name": {"en": "Bank account details"}},
-    {"id": "family-trade-details", "name": {"en": "Family and traditional-trade details requested during registration"}}
+    {
+      "id": "aadhaar",
+      "name": {
+        "en": "Aadhaar for identity verification"
+      }
+    },
+    {
+      "id": "mobile",
+      "name": {
+        "en": "Mobile number used for registration"
+      }
+    },
+    {
+      "id": "bank-details",
+      "name": {
+        "en": "Bank account details"
+      }
+    },
+    {
+      "id": "family-trade-details",
+      "name": {
+        "en": "Family and traditional-trade details requested during registration"
+      }
+    }
   ],
   "steps": [
-    {"order": 1, "instruction": {"en": "Register through the official PM Vishwakarma process or an authorised Common Service Centre."}},
-    {"order": 2, "instruction": {"en": "Complete the prescribed local verification and skill assessment or training stages."}},
-    {"order": 3, "instruction": {"en": "Use only the benefit or credit stage for which the portal confirms eligibility."}}
+    {
+      "order": 1,
+      "instruction": {
+        "en": "Register through the official PM Vishwakarma process or an authorised Common Service Centre."
+      }
+    },
+    {
+      "order": 2,
+      "instruction": {
+        "en": "Complete the prescribed local verification and skill assessment or training stages."
+      }
+    },
+    {
+      "order": 3,
+      "instruction": {
+        "en": "Use only the benefit or credit stage for which the portal confirms eligibility."
+      }
+    }
   ],
   "citation": {
-    "source_url": "https://msme.gov.in/sites/default/files/Scheme-booklet-Eng.pdf",
-    "source_title": "MSME Schemes Booklet - PM Vishwakarma",
+    "source_url": "https://pmvishwakarma.gov.in/",
+    "source_title": "PM Vishwakarma (Ministry of MSME)",
     "publisher": "Ministry of Micro, Small and Medium Enterprises",
     "verified_on": "2026-09-07",
     "verification_state": "pending_review",

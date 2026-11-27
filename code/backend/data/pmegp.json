@@ -1,6 +1,8 @@
 {
   "slug": "pmegp",
-  "name": {"en": "Prime Minister's Employment Generation Programme"},
+  "name": {
+    "en": "Prime Minister's Employment Generation Programme"
+  },
   "aliases": [
     "PMEGP",
     "employment generation loan",
@@ -20,20 +22,60 @@
   },
   "rule_set": null,
   "documents": [
-    {"id": "project-report", "name": {"en": "Detailed project report"}},
-    {"id": "identity-documents", "name": {"en": "Identity and applicant details required by the portal and bank"}},
-    {"id": "education-proof", "name": {"en": "Education or skill certificate when required for the proposed project"}},
-    {"id": "category-certificate", "name": {"en": "Special-category certificate when claiming that category's benefit"}},
-    {"id": "rural-certificate", "name": {"en": "Rural-area certificate when claiming a rural-location benefit"}}
+    {
+      "id": "project-report",
+      "name": {
+        "en": "Detailed project report"
+      }
+    },
+    {
+      "id": "identity-documents",
+      "name": {
+        "en": "Identity and applicant details required by the portal and bank"
+      }
+    },
+    {
+      "id": "education-proof",
+      "name": {
+        "en": "Education or skill certificate when required for the proposed project"
+      }
+    },
+    {
+      "id": "category-certificate",
+      "name": {
+        "en": "Special-category certificate when claiming that category's benefit"
+      }
+    },
+    {
+      "id": "rural-certificate",
+      "name": {
+        "en": "Rural-area certificate when claiming a rural-location benefit"
+      }
+    }
   ],
   "steps": [
-    {"order": 1, "instruction": {"en": "Check the current PMEGP notice and eligible activity list on the official portal."}},
-    {"order": 2, "instruction": {"en": "Prepare the project report and submit the online application with supporting documents."}},
-    {"order": 3, "instruction": {"en": "Complete scrutiny, bank appraisal, and required training or registration steps communicated by the implementing agency."}}
+    {
+      "order": 1,
+      "instruction": {
+        "en": "Check the current PMEGP notice and eligible activity list on the official portal."
+      }
+    },
+    {
+      "order": 2,
+      "instruction": {
+        "en": "Prepare the project report and submit the online application with supporting documents."
+      }
+    },
+    {
+      "order": 3,
+      "instruction": {
+        "en": "Complete scrutiny, bank appraisal, and required training or registration steps communicated by the implementing agency."
+      }
+    }
   ],
   "citation": {
-    "source_url": "https://www.kviconline.gov.in/pmegpeportal/dashboard/notification/Revised_PMEGP_Scheme_Guidelines_07122023_compressed.pdf",
-    "source_title": "Revised PMEGP Scheme Guidelines",
+    "source_url": "https://www.kvic.gov.in/",
+    "source_title": "Khadi and Village Industries Commission (PMEGP implementing agency)",
     "publisher": "Ministry of Micro, Small and Medium Enterprises and KVIC",
     "verified_on": "2026-09-07",
     "verification_state": "pending_review",

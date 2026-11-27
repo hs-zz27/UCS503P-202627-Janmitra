@@ -477,3 +477,11 @@ node_modules/
 # Keep application source visible despite the generic Python lib/ rule.
 !code/frontend/lib/
 !code/frontend/lib/**
+
+# Local tooling installed during development, not part of the project
+.claude/
+.github/agents/
+.github/hooks/
+.github/skills/
+.DS_Store
+code/frontend/tsconfig.tsbuildinfo

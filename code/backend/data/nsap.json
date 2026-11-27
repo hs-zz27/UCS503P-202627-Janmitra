@@ -1,6 +1,8 @@
 {
   "slug": "nsap",
-  "name": {"en": "National Social Assistance Programme"},
+  "name": {
+    "en": "National Social Assistance Programme"
+  },
   "aliases": [
     "NSAP",
     "old age pension",
@@ -26,13 +28,28 @@
   "rule_set": null,
   "documents": [],
   "steps": [
-    {"order": 1, "instruction": {"en": "Identify whether the need is old-age pension, widow pension, disability pension, family benefit, or food support."}},
-    {"order": 2, "instruction": {"en": "Contact the Gram Panchayat, local body, block office, or state social-assistance portal for the current application and state top-up rules."}},
-    {"order": 3, "instruction": {"en": "Submit the sub-scheme documents requested by the state and keep the acknowledgement for status tracking."}}
+    {
+      "order": 1,
+      "instruction": {
+        "en": "Identify whether the need is old-age pension, widow pension, disability pension, family benefit, or food support."
+      }
+    },
+    {
+      "order": 2,
+      "instruction": {
+        "en": "Contact the Gram Panchayat, local body, block office, or state social-assistance portal for the current application and state top-up rules."
+      }
+    },
+    {
+      "order": 3,
+      "instruction": {
+        "en": "Submit the sub-scheme documents requested by the state and keep the acknowledgement for status tracking."
+      }
+    }
   ],
   "citation": {
-    "source_url": "https://rural.gov.in/sites/default/files/NSAP_Guidelines_English.pdf",
-    "source_title": "National Social Assistance Programme Guidelines",
+    "source_url": "https://rural.gov.in/",
+    "source_title": "Ministry of Rural Development",
     "publisher": "Ministry of Rural Development",
     "verified_on": "2026-09-07",
     "verification_state": "pending_review",
