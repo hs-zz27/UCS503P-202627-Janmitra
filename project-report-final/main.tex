@@ -33,7 +33,7 @@
 \newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
 \newcommand{\code}[1]{\texttt{\detokenize{#1}}}
 \newcommand{\ReportDate}{27 November 2026}
-\newcommand{\Revision}{227c4a9}
+\newcommand{\Revision}{ac5c166}
 \newcommand{\Advisor}{Ms Paramveer Kaur}
 
 \pagestyle{fancy}
@@ -96,17 +96,19 @@
 Janmitra is a voice-first civic-guidance system that helps rural citizens discover
 government support, understand eligibility conditions, prepare documents, and
 request human assistance. This report describes the final implementation at
-repository revision \texttt{\Revision}. Citizens speak through a browser call
-screen connected over LiveKit, and Gemini Live handles native speech input and
-output. A FastAPI backend provides scheme retrieval, deterministic eligibility
+repository revision \texttt{\Revision}. Citizens arrive on a scroll-driven
+landing page that maps the 18 published schemes onto concentric rings, then speak
+through a phone-call screen connected over LiveKit, where Gemini Live handles
+native speech input and output. A FastAPI backend provides scheme retrieval, deterministic eligibility
 evaluation, document checklists, versioned publication, an operator handoff queue,
 and conversation and audit records.
 
 The final evaluation covered automated testing, end-to-end API verification,
 catalogue coverage, retrieval accuracy, load and replica scaling, and live voice
 trials. All backend tests passed (100\%), including PostgreSQL integration and
-voice-runtime modules, as did all frontend tests (100\%). End-to-end API checks
-passed at 96.9\%. All 18 catalogue records were published with a named reviewer
+voice-runtime modules, as did all frontend tests (100\%), including new tests of
+the landing page, and every continuous-integration workflow (100\%). End-to-end
+API checks passed at 96.9\%. All 18 catalogue records were published with a named reviewer
 attestation, and every official source link resolved (100\%). Retrieval reached
 97.1\% recall at three results, including 100\% on Hindi, Punjabi, and
 transliterated queries. Throughput exceeded each replica-scaling target by more
@@ -191,7 +193,8 @@ Table~\ref{tab:scope} compares the proposal with the delivered system.
 \textbf{Area} & \textbf{Original proposal} & \textbf{Final system} \\
 \midrule
 Citizen access & Ordinary telephone call through a SIP bridge.
-  & Browser phone-call screen with live captions over LiveKit; no telephony. \\
+  & Scroll-driven landing page leading to a browser phone-call screen with
+    live captions over LiveKit; no telephony. \\
 Scheme guidance & Facts from a verified, published catalogue.
   & 18 records published with a named reviewer attestation; qualified general
     guidance is permitted when retrieved context is incomplete. \\
@@ -222,8 +225,8 @@ directly or duplicates eligibility logic \cite{architecture}.
 \centering
 \setlength{\fboxsep}{8pt}
 \fbox{\parbox{0.83\textwidth}{\centering
-  \textbf{Browser phone-call screen}\\
-  Microphone, speaker, call controls, and live captions}}
+  \textbf{Browser landing page and phone-call screen}\\
+  Scheme rings, microphone, speaker, call controls, and live captions}}
 \par\smallskip $\updownarrow$\quad WebRTC audio\par\smallskip
 \fbox{\parbox{0.83\textwidth}{\centering
   \textbf{LiveKit room and Python voice worker}\\
@@ -352,16 +355,31 @@ critical actions with request identifiers and actors. Separate admin, operator,
 and voice API keys restrict access by role. The prompt forbids requesting Aadhaar
 numbers, full bank details, OTPs, PINs, and passwords.
 
-\subsection{Frontend Call Screen}
-The browser interface is presented as a phone call: a caller header, call timer and
-live status (listening, thinking, speaking), mute, speaker, volume and caption
-controls, and start and end buttons. Live captions show the most recent turns of
-both speakers during the call. Readiness and error messages from the worker are
-displayed through an accessible alert region.
+\subsection{Frontend: Landing Page and Call Screen}
+The landing page opens on five concentric rings, one per scheme category, each
+carrying the names of its published schemes around the Janmitra wordmark. Scrolling
+flies the viewer into the rings, with outer rings opening faster as in a tunnel,
+until the innermost ring frames three statements in turn: the hardship people
+face, why existing help fails to reach them, and how Janmitra answers in the
+citizen's own language. The page then ends on the
+call screen. Without JavaScript, or when the visitor prefers reduced motion, the
+same content appears as ordinary stacked sections.
+
+Scheme names are placed at angles solved against their measured sizes, so that each
+stays inside the screen and clear of the wordmark, the call action, and every other
+name. A runtime rule hides any name that would still be cut off on an unusual screen
+size. The page's catalogue data, scroll timeline, and placement rule live in a pure
+module, which makes them testable without a browser.
+
+The call screen reproduces an iPhone in-call screen: a notch and status bar, the
+caller name and a live status (listening, thinking, speaking), a grid of mute,
+speaker, caption and volume controls, and a single call button. Live captions show
+the most recent turns of both speakers. Readiness and error messages from the
+worker appear in an accessible alert region.
 
 \subsection{Development and Deployment}
 GitHub Actions run Ruff and pytest with a PostgreSQL 16 service, and separately run
-frontend linting, tests, and a production build. Docker Compose defines PostgreSQL
+frontend linting, tests, a production build, and a dependency security audit. Docker Compose defines PostgreSQL
 and the API with health checks; the API container applies migrations before
 starting.
 
@@ -369,8 +387,11 @@ starting.
 \chapter{Results and Evaluation}
 
 \section{Testing Methodology}
-All results were reproduced locally on \ReportDate\ at revision \texttt{\Revision},
-with dependencies installed at the versions the project declares
+Automated tests were run on \ReportDate\ at revision \texttt{\Revision}, locally
+and in continuous integration, with dependencies installed at the versions the
+project declares. Retrieval, load, and voice measurements were taken on the same
+backend code at earlier revisions; the backend has since changed only in a test
+configuration setting and in citation links
 \cite{implementation}. Table~\ref{tab:tests} lists the tests performed.
 
 \begin{table}[htbp]
@@ -387,7 +408,14 @@ PostgreSQL integration & Migration round trip, schema agreement, concurrent
   publication, event numbering, competing state transitions & pytest, PostgreSQL 16 \\
 Voice-runtime tests & Worker cleanup, notifications, session behaviour, prompt
   and client contracts & pytest \\
-Frontend tests & Token route security and voice-event handling & Vitest \\
+Frontend tests & Token route security, voice-event handling, and the landing
+  page: every published scheme on its category's ring, the scroll timeline on ten
+  screen shapes, and the name placement rule & Vitest \\
+Browser layout check & Every scheme name visible, inside the screen, and clear of
+  the wordmark, call action, and other names at six screen sizes & Chrome,
+  Playwright \\
+Continuous integration & Backend, frontend, and documentation workflows on the
+  final revision & GitHub Actions \\
 Static analysis & Code style and correctness rules & Ruff, ESLint \\
 Production build & Type checking and compilation & Next.js \\
 End-to-end API checks & Health, authentication, catalogue, conversation
@@ -429,7 +457,9 @@ Table~\ref{tab:results} summarises the outcome of each test.
 \endfoot
 Backend test pass rate & 100\% & Includes PostgreSQL and voice-runtime modules;
   none excluded \\
-Frontend test pass rate & 100\% & \\
+Frontend test pass rate & 100\% & Includes the landing page tests \\
+Scheme names unobstructed & 100\% & At every tested screen size \\
+CI workflows passing & 100\% & Backend, frontend, and documentation \\
 Static analysis & Passed & Ruff and ESLint report no issues \\
 Production build & Passed & \\
 End-to-end API checks & 96.9\% & The one unmet check is a housing phrasing
@@ -610,10 +640,11 @@ Janmitra has progressed from a proposed phone-accessible guidance system to a
 working browser voice service on a tested, modular backend. The delivered system
 includes typed guidance tools, a published 18-scheme catalogue, deterministic
 eligibility and document logic, versioned publication with reviewer attestation,
-an operator handoff queue, audit trails, migrations, containers, CI, and a
-phone-style call screen with live captions.
+an operator handoff queue, audit trails, migrations, containers, CI, a
+scroll-driven landing page, and a phone-style call screen with live captions.
 
-The final evaluation found a 100\% pass rate across backend and frontend tests,
+The final evaluation found a 100\% pass rate across backend and frontend tests
+and every CI workflow,
 96.9\% of end-to-end API checks passing, 97.1\% retrieval recall with 100\% on
 every multilingual group, and throughput above every scaling target by more than
 tenfold at a 0\% error rate. Live voice calls retrieved correctly in every case and
