@@ -217,7 +217,7 @@ export default function VoiceCall() {
   return (
     <SessionProvider session={session}>
       <RoomAudioRenderer volume={speaker ? volume / MAX_VOLUME : 0} />
-      <main className="stage">
+      <div className="stage">
         <div className="device">
           <span className="device-buttons" aria-hidden="true" />
           <section className={`screen is-${screen}`} aria-live="polite" aria-label="Janmitra call">
@@ -225,7 +225,7 @@ export default function VoiceCall() {
             <StatusBar />
 
             <header className="caller">
-              <h1 className="caller-name">Janmitra AI</h1>
+              <h3 className="caller-name">Janmitra AI</h3>
               {screen === 'idle' && <p className="caller-status">Public information helpline</p>}
               {screen === 'connecting' && <p className="caller-status">calling…</p>}
               {screen === 'active' && (
@@ -318,7 +318,7 @@ export default function VoiceCall() {
             <span className="home-indicator" aria-hidden="true" />
           </section>
         </div>
-      </main>
+      </div>
     </SessionProvider>
   );
 }
