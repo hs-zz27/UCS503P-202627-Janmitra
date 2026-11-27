@@ -1,0 +1,360 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-27T13:50:03+00:00",
+  "title": "Design System: Janmitra",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(0% 0 0)",
+        "tonalRamp": [
+          "oklch(15% 0.000 0)",
+          "oklch(26% 0.000 0)",
+          "oklch(38% 0.000 0)",
+          "oklch(49% 0.000 0)",
+          "oklch(61% 0.000 0)",
+          "oklch(72% 0.000 0)",
+          "oklch(84% 0.000 0)",
+          "oklch(95% 0.000 0)"
+        ]
+      },
+      "disc": {
+        "role": "neutral",
+        "displayName": "Centre Disc",
+        "canonical": "oklch(16% 0.006 286)",
+        "tonalRamp": [
+          "oklch(15% 0.001 286)",
+          "oklch(26% 0.004 286)",
+          "oklch(38% 0.004 286)",
+          "oklch(49% 0.005 286)",
+          "oklch(61% 0.006 286)",
+          "oklch(72% 0.005 286)",
+          "oklch(84% 0.004 286)",
+          "oklch(95% 0.002 286)"
+        ]
+      },
+      "chip-ground": {
+        "role": "neutral",
+        "displayName": "Chip Ground",
+        "canonical": "oklch(15.1% 0.006 286)",
+        "tonalRamp": [
+          "oklch(15% 0.001 286)",
+          "oklch(26% 0.004 286)",
+          "oklch(38% 0.004 286)",
+          "oklch(49% 0.005 286)",
+          "oklch(61% 0.006 286)",
+          "oklch(72% 0.005 286)",
+          "oklch(84% 0.004 286)",
+          "oklch(95% 0.002 286)"
+        ]
+      },
+      "ring-1": {
+        "role": "primary",
+        "displayName": "Ring Violet",
+        "canonical": "oklch(55.2% 0.267 298)",
+        "tonalRamp": [
+          "oklch(15% 0.061 298)",
+          "oklch(26% 0.159 298)",
+          "oklch(38% 0.196 298)",
+          "oklch(49% 0.233 298)",
+          "oklch(61% 0.265 298)",
+          "oklch(72% 0.228 298)",
+          "oklch(84% 0.191 298)",
+          "oklch(95% 0.077 298)"
+        ]
+      },
+      "ring-2": {
+        "role": "primary",
+        "displayName": "Signal Blue",
+        "canonical": "oklch(58.1% 0.229 264)",
+        "tonalRamp": [
+          "oklch(15% 0.053 264)",
+          "oklch(26% 0.137 264)",
+          "oklch(38% 0.168 264)",
+          "oklch(49% 0.200 264)",
+          "oklch(61% 0.227 264)",
+          "oklch(72% 0.196 264)",
+          "oklch(84% 0.164 264)",
+          "oklch(95% 0.066 264)"
+        ]
+      },
+      "ring-3": {
+        "role": "primary",
+        "displayName": "Field Green",
+        "canonical": "oklch(72.1% 0.182 153)",
+        "tonalRamp": [
+          "oklch(15% 0.042 153)",
+          "oklch(26% 0.109 153)",
+          "oklch(38% 0.134 153)",
+          "oklch(49% 0.159 153)",
+          "oklch(61% 0.180 153)",
+          "oklch(72% 0.155 153)",
+          "oklch(84% 0.131 153)",
+          "oklch(95% 0.053 153)"
+        ]
+      },
+      "ring-4": {
+        "role": "primary",
+        "displayName": "Saffron",
+        "canonical": "oklch(81.1% 0.166 85)",
+        "tonalRamp": [
+          "oklch(15% 0.038 85)",
+          "oklch(26% 0.099 85)",
+          "oklch(38% 0.122 85)",
+          "oklch(49% 0.145 85)",
+          "oklch(61% 0.165 85)",
+          "oklch(72% 0.142 85)",
+          "oklch(84% 0.119 85)",
+          "oklch(95% 0.048 85)"
+        ]
+      },
+      "ring-5": {
+        "role": "primary",
+        "displayName": "Rose",
+        "canonical": "oklch(62% 0.231 13)",
+        "tonalRamp": [
+          "oklch(15% 0.053 13)",
+          "oklch(26% 0.138 13)",
+          "oklch(38% 0.170 13)",
+          "oklch(49% 0.201 13)",
+          "oklch(61% 0.229 13)",
+          "oklch(72% 0.197 13)",
+          "oklch(84% 0.166 13)",
+          "oklch(95% 0.067 13)"
+        ]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "oklch(100% 0 0)",
+        "tonalRamp": [
+          "oklch(15% 0.000 0)",
+          "oklch(26% 0.000 0)",
+          "oklch(38% 0.000 0)",
+          "oklch(49% 0.000 0)",
+          "oklch(61% 0.000 0)",
+          "oklch(72% 0.000 0)",
+          "oklch(84% 0.000 0)",
+          "oklch(95% 0.000 0)"
+        ]
+      },
+      "text-soft": {
+        "role": "neutral",
+        "displayName": "Lavender Mist",
+        "canonical": "oklch(87.6% 0.04 298)",
+        "tonalRamp": [
+          "oklch(15% 0.009 298)",
+          "oklch(26% 0.024 298)",
+          "oklch(38% 0.029 298)",
+          "oklch(49% 0.035 298)",
+          "oklch(61% 0.040 298)",
+          "oklch(72% 0.034 298)",
+          "oklch(84% 0.029 298)",
+          "oklch(95% 0.012 298)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Wordmark",
+        "purpose": "The wordmark in the centre disc only."
+      },
+      "headline": {
+        "displayName": "Statement",
+        "purpose": "The three scroll statements; max 22ch, centred, balanced."
+      },
+      "title": {
+        "displayName": "Section Line",
+        "purpose": "The line introducing the phone."
+      },
+      "body": {
+        "displayName": "Tagline",
+        "purpose": "Tagline (max 24ch); language line and footer use nearby sizes."
+      },
+      "label": {
+        "displayName": "Scheme Label",
+        "purpose": "Scheme names on the rings."
+      },
+      "script-devanagari": {
+        "displayName": "Anek Devanagari",
+        "purpose": "Applied via :lang(hi), falling back to Anek Latin."
+      },
+      "script-gurmukhi": {
+        "displayName": "Anek Gurmukhi",
+        "purpose": "Applied via :lang(pa), falling back to Anek Latin."
+      }
+    },
+    "shadows": [
+      {
+        "name": "ring-glow",
+        "value": "0 0 calc(var(--band) * 0.55vmin) color-mix(in srgb, var(--c) 38%, transparent), inset 0 0 calc(var(--band) * 0.45vmin) color-mix(in srgb, var(--c) 30%, transparent)",
+        "purpose": "Every ring band, tinted by its own hue."
+      },
+      {
+        "name": "disc-edge",
+        "value": "inset 0 0 0 1px rgba(255, 255, 255, 0.06)",
+        "purpose": "Centre disc rim."
+      },
+      {
+        "name": "action-lift",
+        "value": "0 10px 28px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4)",
+        "purpose": "Primary action at rest, floating over the rings."
+      },
+      {
+        "name": "action-lift-hover",
+        "value": "0 16px 36px rgba(0, 0, 0, 0.55), 0 3px 8px rgba(0, 0, 0, 0.4)",
+        "purpose": "Primary action on hover, with a 2px rise."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Primary action hover lift, 220ms; dropped under reduced motion."
+      },
+      {
+        "name": "story-track",
+        "value": "500vh scroll track, sticky 100dvh stage",
+        "purpose": "Scroll-scrubbed flight; progress p in 0..1 drives every stage property per animation frame."
+      },
+      {
+        "name": "ring-flight",
+        "value": "scale = exp(ramp(p, 0.02, 0.32) * (1.85 + 0.28 * i)) for rings 2-5; disc exp(fly * 1.75)",
+        "purpose": "Exponential per-ring scale; outer rings open faster, reading as a tunnel at constant speed."
+      },
+      {
+        "name": "violet-cap",
+        "value": "min(exp(fly * 2.13), 0.9 * cornerDistance / ((r0 + gap) * vmin)); opacity 1 -> 0.7 over p 0.20-0.30",
+        "purpose": "The inner ring stops short of the frame corners and frames the statements."
+      },
+      {
+        "name": "violet-names-exit",
+        "value": ".ring-names.ring-zoom-1 opacity --names1-o: 1 -> 0 over p 0.10-0.18",
+        "purpose": "Ring 1's name layer leaves before the rim settles, so no name pill is cut by the frame edge; the violet band keeps --ring1-o."
+      },
+      {
+        "name": "fades",
+        "value": "disc out p 0.08-0.20; outer rings out p 0.24-0.34; hero out and to 1.35x over p 0.02-0.12",
+        "purpose": "Clears the stage for the statements."
+      },
+      {
+        "name": "beat-reveal",
+        "value": "windows [0.22,0.30,0.46,0.53] [0.53,0.61,0.72,0.79] [0.79,0.87,stay]; enter ease 1-2^(-10t) from +2.5rem and 10px blur; leave -2rem with 6px blur",
+        "purpose": "Statements rise inside the violet ring in turn."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce or no JS -> stacked static sections",
+        "purpose": "Same content without the scrubbed stage; no autonomous animation anywhere."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "portrait",
+        "value": "(orientation: portrait)",
+        "purpose": "Scheme pills switch to their portrait angle set."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single white pill action that jumps to the working phone.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#call\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z\"/></svg>Talk to Janmitra</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 0.55em; padding: 0.85em 1.45em; border-radius: 999px; background: #ffffff; color: #000000; font-family: var(--font-display), 'Anek Latin', ui-sans-serif, system-ui, sans-serif; font-weight: 650; font-size: 1.125rem; line-height: 1; text-decoration: none; white-space: nowrap; box-shadow: 0 10px 28px rgba(0,0,0,0.5), 0 2px 6px rgba(0,0,0,0.4); transition: transform 220ms cubic-bezier(0.16,1,0.3,1), box-shadow 220ms cubic-bezier(0.16,1,0.3,1); } .ds-btn-primary svg { width: 1.1em; height: 1.1em; } .ds-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(0,0,0,0.55), 0 3px 8px rgba(0,0,0,0.4); } .ds-btn-primary:focus-visible { outline: 3px solid #f2b705; outline-offset: 4px; }"
+    },
+    {
+      "name": "Scheme Pill",
+      "kind": "chip",
+      "refersTo": "ring-chip",
+      "description": "A real scheme name riding its category ring in a name layer (.ring-names) painted above all bands; ring 1's names fade out early (--names1-o) while its band stays as the rim; border takes the ring hue at 70%.",
+      "html": "<div class=\"ds-chip-row\"><span class=\"ds-chip\" style=\"--c:#8b2cf5\">Atal Pension</span><span class=\"ds-chip\" style=\"--c:#2f6bff\">Ayushman Bharat</span><span class=\"ds-chip\" style=\"--c:#16c46a\">MUDRA</span><span class=\"ds-chip\" style=\"--c:#f2b705\">PM-KISAN</span><span class=\"ds-chip\" style=\"--c:#f0255c\">Jan Dhan</span></div>",
+      "css": ".ds-chip-row { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px; background: #000000; } .ds-chip { padding: 0.45em 0.85em; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--c) 70%, transparent); background: #0b0b0e; color: #ffffff; font-family: var(--font-display), 'Anek Latin', ui-sans-serif, system-ui, sans-serif; font-weight: 600; font-size: 0.92rem; line-height: 1; letter-spacing: 0.01em; white-space: nowrap; }"
+    },
+    {
+      "name": "Scroll Cue",
+      "kind": "chip",
+      "refersTo": "scroll-cue",
+      "description": "Quiet pill under the primary action inviting the scroll.",
+      "html": "<span class=\"ds-cue\">Scroll<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\"/></svg></span>",
+      "css": ".ds-cue { display: inline-flex; align-items: center; gap: 0.3em; padding: 0.4em 0.75em 0.4em 0.9em; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); background: #0b0b0e; color: #d9d1ee; font-family: var(--font-display), 'Anek Latin', ui-sans-serif, system-ui, sans-serif; font-weight: 500; font-size: 0.82rem; line-height: 1; } .ds-cue svg { width: 1em; height: 1em; }"
+    },
+    {
+      "name": "Ring Target",
+      "kind": "custom",
+      "refersTo": "centre-disc",
+      "description": "Signature: five concentric category rings around the dark centre disc holding the wordmark.",
+      "html": "<div class=\"ds-target\"><div class=\"ds-ring\" style=\"--k:4;--c:#f0255c\"></div><div class=\"ds-ring\" style=\"--k:3;--c:#f2b705\"></div><div class=\"ds-ring\" style=\"--k:2;--c:#16c46a\"></div><div class=\"ds-ring\" style=\"--k:1;--c:#2f6bff\"></div><div class=\"ds-ring\" style=\"--k:0;--c:#8b2cf5\"></div><div class=\"ds-disc\"><span>Janmitra</span></div></div>",
+      "css": ".ds-target { --u: 3px; position: relative; width: calc(2 * (21 + 5 * 10.6) * var(--u)); aspect-ratio: 1; background: #000000; } .ds-ring { --R: calc((21 + 4.2 + var(--k) * 10.6) * var(--u)); position: absolute; left: 50%; top: 50%; width: calc(2 * (var(--R) + 6.4 * var(--u))); aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; border: calc(6.4 * var(--u)) solid var(--c); box-shadow: 0 0 calc(3.5 * var(--u)) color-mix(in srgb, var(--c) 38%, transparent), inset 0 0 calc(2.9 * var(--u)) color-mix(in srgb, var(--c) 30%, transparent); } .ds-disc { position: absolute; left: 50%; top: 50%; width: calc(42 * var(--u)); aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; background: #0d0d10; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06); display: grid; place-items: center; } .ds-disc span { color: #fff; font-family: var(--font-display), 'Anek Latin', ui-sans-serif, system-ui, sans-serif; font-weight: 800; font-size: 1.6rem; letter-spacing: -0.035em; }"
+    },
+    {
+      "name": "Statement",
+      "kind": "custom",
+      "refersTo": "headline",
+      "description": "A scroll statement: heavy white headline with one key phrase in a ring hue.",
+      "html": "<p class=\"ds-beat\">But it is buried in long documents, on websites made for people who <em>already know what to search for</em>.</p>",
+      "css": ".ds-beat { margin: 0; padding: 32px 16px; max-width: 22ch; background: #000000; color: #ffffff; font-family: var(--font-display), 'Anek Latin', ui-sans-serif, system-ui, sans-serif; font-weight: 700; font-size: 2.25rem; line-height: 1.06; letter-spacing: -0.025em; text-align: center; text-wrap: balance; } .ds-beat em { font-style: normal; color: #f0255c; } .ds-beat::selection, .ds-beat em::selection { background: #f2b705; color: #000; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Catalogue Made Visible",
+    "overview": "Janmitra's world is a black ground holding five concentric rings of saturated colour, one ring per scheme category, each carrying the real schemes it contains. The rings are the content, not decoration: the published catalogue drawn as a target the visitor can see whole in one viewport and then enter. A dark centre disc holds the wordmark; everything else is white type set heavy in Anek Latin, an Indian multi-script superfamily, so Latin, Devanagari and Gurmukhi share one voice.\n\nDepth comes from flight, not from stacked surfaces. A scroll-scrubbed stage flies the viewer into the rings, outer rings opening faster as in a tunnel, until the dark centre fills the screen and three short statements rise inside it one at a time. The page then releases into an embedded phone that actually places the call. Density is low and type is large, honouring readers with low literacy and low-end phones.\n\nThe landing world and the call screen are two systems on one page. The call screen is an embedded device surface: a deliberate iOS in-call imitation with its own native tokens, which the landing world frames but never restyles.",
+    "keyCharacteristics": [
+      "Black ground, five saturated ring hues, white heavy type.",
+      "Each ring is a scheme category; its schemes ride it as dark pills.",
+      "One signature motion: scroll-scrubbed flight into the rings; nothing moves on its own.",
+      "Pills everywhere a shape is needed; circles for the rings and disc; no rectangles with corners.",
+      "Without JavaScript or with reduced motion, the same content reads as plain stacked sections."
+    ],
+    "rules": [
+      {
+        "name": "The Ring Order Rule",
+        "body": "The five hues always appear in the same order, inner to outer: violet, blue, green, saffron, rose. A hue names its category; do not reassign it.",
+        "section": "colors"
+      },
+      {
+        "name": "The Borrowed Accent Rule",
+        "body": "Accents in type are borrowed from the rings, never introduced. A statement's key phrase takes one ring hue; selection and focus take saffron.",
+        "section": "colors"
+      },
+      {
+        "name": "The Own Script Rule",
+        "body": "Text in Hindi or Punjabi carries its `lang` attribute and renders in Anek's own Devanagari or Gurmukhi cut, so every language shares one family. Language names inside a sentence step up to white at 650.",
+        "section": "typography"
+      },
+      {
+        "name": "The Names-Above-Bands Rule",
+        "body": "Scheme names never share a stacking layer with ring bands. Bands render first, then the disc, then every ring's names, so a name that spills past its own band is never covered by an outer band. A new ring or name goes into the matching layer, never inside its band's element.",
+        "section": "layout"
+      },
+      {
+        "name": "The Solved Angle Rule",
+        "body": "A new scheme name gets an angle solved against its measured size and the 12px clearances above, in both orientations. Never space names evenly by count, and never rely on the hide script as the placement method; it is a safety net.",
+        "section": "layout"
+      },
+      {
+        "name": "The Self-Lit Ring Rule",
+        "body": "A ring glows only in its own colour. No neutral glows, no glow on type.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** keep the five ring hues in their fixed order, inner violet to outer rose, one per scheme category.",
+      "**Do** put real scheme names on the rings, upright, at landscape and portrait angles solved for 12px clearance from each other, the wordmark and the action, and hide any that still clip or collide rather than nudging them.",
+      "**Do** set all landing type in Anek Latin at weights 500 to 800, with script text in Anek's Devanagari or Gurmukhi cut via `lang`.",
+      "**Do** tint secondary text toward the violet ring (Lavender Mist), and borrow accent colours only from the rings.",
+      "**Do** drive motion from scroll position, and give no-JS and reduced-motion visitors the same content as stacked sections.",
+      "**Do** keep the call device's iOS tokens inside the device; frame it from landing.css with only stage and `--u` overrides."
+    ],
+    "donts": [
+      "**Don't** add autonomous ring spin, looping animation, or motion that runs without scroll.",
+      "**Don't** introduce grey secondary text or a sixth accent hue.",
+      "**Don't** use squared or slightly-rounded corners on the landing; shapes are circles and pills.",
+      "**Don't** bring the SF font stack or iOS colours out of the call device into the landing world.",
+      "**Don't** place more than one white solid action in a viewport; the white pill is the primary action."
+    ]
+  }
+}
