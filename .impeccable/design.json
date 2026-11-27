@@ -230,8 +230,8 @@
       },
       {
         "name": "violet-names-exit",
-        "value": ".ring-names.ring-zoom-1 opacity --names1-o: 1 -> 0 over p 0.10-0.18",
-        "purpose": "Ring 1's name layer leaves before the rim settles, so no name pill is cut by the frame edge; the violet band keeps --ring1-o."
+        "value": ".ring-names.ring-zoom-1 opacity --names1-o = 1 - ramp(toCap, 0.6, 0.9), toCap = ln(ring-1 scale) / ln(cap); computed in storyFrame, code/frontend/lib/landing-story.ts",
+        "purpose": "Ring 1's name layer leaves on the ring's own progress toward its cap, so on every viewport shape the names are gone before the rim settles and no name pill is cut by the frame edge; the violet band keeps --ring1-o. tests/landing-story.test.ts asserts zero names opacity at the cap."
       },
       {
         "name": "fades",
@@ -270,7 +270,7 @@
       "name": "Scheme Pill",
       "kind": "chip",
       "refersTo": "ring-chip",
-      "description": "A real scheme name riding its category ring in a name layer (.ring-names) painted above all bands; ring 1's names fade out early (--names1-o) while its band stays as the rim; border takes the ring hue at 70%.",
+      "description": "A real scheme name riding its category ring in a name layer (.ring-names) painted above all bands; ring 1's names fade out as the ring nears its cap (--names1-o) while its band stays as the rim; border takes the ring hue at 70%.",
       "html": "<div class=\"ds-chip-row\"><span class=\"ds-chip\" style=\"--c:#8b2cf5\">Atal Pension</span><span class=\"ds-chip\" style=\"--c:#2f6bff\">Ayushman Bharat</span><span class=\"ds-chip\" style=\"--c:#16c46a\">MUDRA</span><span class=\"ds-chip\" style=\"--c:#f2b705\">PM-KISAN</span><span class=\"ds-chip\" style=\"--c:#f0255c\">Jan Dhan</span></div>",
       "css": ".ds-chip-row { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px; background: #000000; } .ds-chip { padding: 0.45em 0.85em; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--c) 70%, transparent); background: #0b0b0e; color: #ffffff; font-family: var(--font-display), 'Anek Latin', ui-sans-serif, system-ui, sans-serif; font-weight: 600; font-size: 0.92rem; line-height: 1; letter-spacing: 0.01em; white-space: nowrap; }"
     },
