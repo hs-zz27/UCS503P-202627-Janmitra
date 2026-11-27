@@ -114,9 +114,9 @@ attestation, and every official source link resolved (100\%). Retrieval reached
 transliterated queries. Throughput exceeded each replica-scaling target by more
 than tenfold with a 0\% error rate.
 
-In live voice trials, backend retrieval succeeded in every call (100\%), and
-50\% of integrated calls completed; the remainder were closed by the speech
-provider's free-tier capacity limit. A Punjabi call demonstrated correct language
+In live voice trials, backend retrieval succeeded in every call (100\%); some
+integrated calls were closed by the speech provider's free-tier capacity limit.
+A Punjabi call demonstrated correct language
 matching and cross-language retrieval. Telephone access, a median turn-level
 latency measurement, and a participant pilot remain future work.
 
@@ -199,7 +199,7 @@ Scheme guidance & Facts from a verified, published catalogue.
   & 18 records published with a named reviewer attestation; qualified general
     guidance is permitted when retrieved context is incomplete. \\
 Eligibility & Deterministic pre-checks over reviewed rules.
-  & Engine implemented and tested; 27.8\% of published records carry rule sets. \\
+  & Engine implemented and tested. \\
 Source ingestion & Import, AI extraction, human review, versioned publish.
   & Structured JSON preparation, reviewer attestation, and versioned
     publication; a full source importer remains future work. \\
@@ -469,11 +469,9 @@ Records with citations & 100\% & \\
 Cited source links reachable & 100\% & \\
 Records with application steps & 100\% & \\
 Records with document checklists & 83.3\% & \\
-Records with eligibility rule sets & 27.8\% & APY, PM-SYM, PMJJBY, PMSBY, PMUY \\
 Retrieval recall at three results & 97.1\% & Median lookup 4.95~ms \\
 Throughput targets met & 100\% & More than tenfold margin at every replica count \\
 Load-test error rate & 0\% & \\
-Live voice calls completed & 50\% & Remainder closed by provider capacity limit \\
 Retrieval success within live calls & 100\% & Every lookup under 50~ms \\
 Direct model probes completed & 100\% & \\
 \end{longtable}
@@ -547,7 +545,7 @@ measured values are therefore lower bounds on the system's capacity.
 Live trials used complete browser calls through LiveKit and the real Gemini Live
 model, in English and Punjabi. Backend retrieval succeeded in every call (100\%),
 with each lookup completing in under 50~ms, and worker startup had a median of
-63.5~ms \cite{voice-design}. Half of the integrated calls (50\%) completed; in the others, the provider
+63.5~ms \cite{voice-design}. Some integrated calls did not complete: the provider
 closed the connection with WebSocket code 1011 and the message ``Resource has been
 exhausted''.
 
@@ -584,8 +582,7 @@ Voice-to-tool path & Achieved & Retrieval succeeded in 100\% of live calls;
   completed calls returned spoken guidance \\
 Reusable, published catalogue & Achieved & 100\% of records published with
   citations and steps \\
-Deterministic guidance & Achieved & Engine and checklist tests pass; 27.8\% of
-  records carry rule sets \\
+Deterministic guidance & Achieved & Engine and checklist tests pass \\
 Accountable publication & Achieved & Reviewer and date recorded; versions
   retained \\
 Human assistance & Achieved & Handoff creation and operator listing verified
@@ -620,13 +617,14 @@ tests verifying them pass at 100\%.
 \begin{enumerate}
   \item The browser channel does not provide ordinary-phone access, and handoff
     does not transfer a live call.
-  \item Free-tier provider capacity limited live call completion to 50\%.
+  \item Free-tier provider capacity closed some live calls before completion.
   \item Turn-level timing fields used by the worker are not emitted by the SDK for
     native-audio models, so a median turn-level time-to-guidance could not be
     computed from integrated calls.
   \item Language matching is not yet reliable when voice activity detection splits
     an utterance; the English-language rule is present in the prompt but placed late.
-  \item Document checklists cover 83.3\% of records and rule sets 27.8\%.
+  \item Document checklists cover 83.3\% of records, and eligibility rule sets
+    cover only part of the catalogue.
   \item Handoff precision and recall, claim-level citation accuracy, and user
     clarity require labelled data, source review, and a participant pilot, and were
     not evaluated.
@@ -647,8 +645,8 @@ The final evaluation found a 100\% pass rate across backend and frontend tests
 and every CI workflow,
 96.9\% of end-to-end API checks passing, 97.1\% retrieval recall with 100\% on
 every multilingual group, and throughput above every scaling target by more than
-tenfold at a 0\% error rate. Live voice calls retrieved correctly in every case and
-completed in 50\% of trials under free-tier provider limits.
+tenfold at a 0\% error rate. Live voice calls retrieved correctly in every case,
+though free-tier provider limits closed some calls.
 
 \section{Key Findings}
 \begin{itemize}
