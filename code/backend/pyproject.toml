@@ -49,7 +49,7 @@ packages = ["app"]
 include = ["app/**/*.py", "app/voice/system_prompt.md"]
 
 [tool.pytest.ini_options]
-cache_dir = "../../.janmitra/pytest-cache"
+cache_dir = ".pytest_cache"
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
 testpaths = ["tests"]
