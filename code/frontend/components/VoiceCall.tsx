@@ -13,24 +13,48 @@ import {
   CircleAlert,
   Mic,
   MicOff,
+  Minus,
   Phone,
-  PhoneOff,
-  ShieldCheck,
-  Volume1,
+  Plus,
   Volume2,
   VolumeX,
 } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type CSSProperties } from 'react';
 import { parseVoiceEvent } from '../lib/voice-events';
 
 const AGENT_NAME = process.env.NEXT_PUBLIC_LIVEKIT_AGENT_NAME || 'janmitra-agent';
-const TOPICS = ['Crop insurance', 'Old-age pensions', 'Housing schemes', 'Small-business support'];
 const MAX_VOLUME = 10;
 
 type Screen = 'idle' | 'connecting' | 'active' | 'ended';
 
 function formatTime(seconds: number) {
-  return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+  return `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
+}
+
+// Status-bar clock, read from the device clock after hydration.
+function subscribeClock(onChange: () => void) {
+  const timer = window.setInterval(onChange, 15000);
+  return () => window.clearInterval(timer);
+}
+function readClock() {
+  return new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }).replace(/\s?[AP]M$/, '');
+}
+function serverClock() {
+  return '9:41';
+}
+
+function StatusBar() {
+  const clock = useSyncExternalStore(subscribeClock, readClock, serverClock);
+  return (
+    <div className="status-bar" aria-hidden="true">
+      <span className="status-time">{clock}</span>
+      <span className="status-icons">
+        <svg className="icon-signal" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx="0.7" /><rect x="4.67" y="5" width="3" height="6" rx="0.7" /><rect x="9.33" y="2.5" width="3" height="8.5" rx="0.7" /><rect x="14" y="0" width="3" height="11" rx="0.7" /></svg>
+        <svg className="icon-wifi" viewBox="0 0 16 11"><path d="M8 2.3c2.2 0 4.2.8 5.7 2.2l1.1-1.1A9.6 9.6 0 0 0 8 .7 9.6 9.6 0 0 0 1.2 3.4l1.1 1.1A8 8 0 0 1 8 2.3Z" /><path d="M8 5.6c1.3 0 2.5.5 3.4 1.3l1.1-1.1A6.4 6.4 0 0 0 8 4a6.4 6.4 0 0 0-4.5 1.8l1.1 1.1c.9-.8 2.1-1.3 3.4-1.3Z" /><path d="M8 8.4c.5 0 1 .2 1.3.5L8 10.3 6.7 8.9c.3-.3.8-.5 1.3-.5Z" /></svg>
+        <svg className="icon-battery" viewBox="0 0 25 12"><rect className="battery-shell" x="0.5" y="0.5" width="21" height="11" rx="3" /><rect x="2" y="2" width="18" height="8" rx="1.8" /><path d="M23 4v4c.8-.3 1.3-1.1 1.3-2S23.8 4.3 23 4Z" fillOpacity="0.4" /></svg>
+      </span>
+    </div>
+  );
 }
 
 export default function VoiceCall() {
@@ -54,6 +78,7 @@ export default function VoiceCall() {
   const [ended, setEnded] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [callStartedAt, setCallStartedAt] = useState(0);
+  const captionsRef = useRef<HTMLDivElement>(null);
   const active = session.isConnected;
   const connecting = !active && session.connectionState === 'connecting';
 
@@ -127,166 +152,171 @@ export default function VoiceCall() {
     ? 'Janmitra could not connect. End the call and try again.' : null);
   const transcript = messages.filter((message) => message.timestamp >= callStartedAt
     && (message.type === 'userTranscript' || message.type === 'agentTranscript')).slice(-8);
-  const speaking = active && agent.state === 'speaking';
+  const lastLine = transcript.at(-1);
+  const captionsKey = lastLine ? `${lastLine.id}:${lastLine.message.length}` : '';
 
-  const transcriptList = transcript.length === 0
-    ? <p className="transcript-empty">Your words and Janmitra’s replies appear here during the call.</p>
-    : (
-      <ol className="transcript-list">
-        {transcript.map((message) => (
-          <li key={message.id} className={message.type === 'userTranscript' ? 'from-user' : 'from-agent'}>
-            <strong>{message.type === 'userTranscript' ? 'You' : 'Janmitra'}</strong>
-            <p>{message.message}</p>
-          </li>
-        ))}
-      </ol>
-    );
+  // Keep the newest caption line in view, as iOS Live Captions does.
+  useEffect(() => {
+    const panel = captionsRef.current;
+    if (panel) panel.scrollTop = panel.scrollHeight;
+  }, [captionsKey, captions, screen]);
+
+  const errorLine = displayError
+    && <p className="call-error" role="alert"><CircleAlert size={16} aria-hidden="true" />{displayError}</p>;
+  const controlsDisabled = screen !== 'active';
+
+  const controls = (
+    <div className="control-grid">
+      <div className="control">
+        <button type="button" className={`round ${muted ? 'is-on' : ''}`} onClick={toggleMute}
+          disabled={controlsDisabled} aria-pressed={muted} aria-label={muted ? 'Unmute microphone' : 'Mute microphone'}>
+          {muted ? <MicOff aria-hidden="true" /> : <Mic aria-hidden="true" />}
+        </button>
+        <span>{muted ? 'unmute' : 'mute'}</span>
+      </div>
+      <div className="control">
+        <button type="button" className={`round ${speaker ? 'is-on' : ''}`} onClick={() => setSpeaker(!speaker)}
+          disabled={controlsDisabled} aria-pressed={speaker} aria-label="Speaker">
+          {speaker ? <Volume2 aria-hidden="true" /> : <VolumeX aria-hidden="true" />}
+        </button>
+        <span>speaker</span>
+      </div>
+      <div className="control">
+        <button type="button" className={`round ${captions ? 'is-on' : ''}`} onClick={() => setCaptions(!captions)}
+          disabled={controlsDisabled} aria-pressed={captions} aria-label="Captions">
+          <Captions aria-hidden="true" />
+        </button>
+        <span>captions</span>
+      </div>
+      <div className="control">
+        <button type="button" className="round" onClick={() => setVolume(Math.max(0, volume - 1))}
+          disabled={controlsDisabled || volume === 0} aria-label="Volume down">
+          <Minus aria-hidden="true" />
+        </button>
+        <span>vol −</span>
+      </div>
+      <div className="control">
+        <div className={`round meter ${controlsDisabled ? 'is-disabled' : ''}`} role="meter" aria-label="Volume"
+          aria-valuemin={0} aria-valuemax={MAX_VOLUME} aria-valuenow={volume}>
+          <span className="meter-ring" aria-hidden="true"
+            style={{ '--level': `${(volume / MAX_VOLUME) * 100}%` } as CSSProperties} />
+          <span className="meter-value" aria-hidden="true">{volume}</span>
+        </div>
+        <span>volume</span>
+      </div>
+      <div className="control">
+        <button type="button" className="round" onClick={() => setVolume(Math.min(MAX_VOLUME, volume + 1))}
+          disabled={controlsDisabled || volume === MAX_VOLUME} aria-label="Volume up">
+          <Plus aria-hidden="true" />
+        </button>
+        <span>vol +</span>
+      </div>
+    </div>
+  );
 
   return (
     <SessionProvider session={session}>
       <RoomAudioRenderer volume={speaker ? volume / MAX_VOLUME : 0} />
-      <main className="call-app">
-        <header className="call-topbar">
-          <span className="brand"><span className="brand-mark">J</span>Janmitra</span>
-          <span className="secure"><ShieldCheck size={16} aria-hidden="true" />Secure browser call</span>
-        </header>
+      <main className="stage">
+        <div className="device">
+          <span className="device-buttons" aria-hidden="true" />
+          <section className={`screen is-${screen}`} aria-live="polite" aria-label="Janmitra call">
+            <div className="notch" aria-hidden="true"><span className="notch-speaker" /><span className="notch-camera" /></div>
+            <StatusBar />
 
-        <div className="call-body">
-          <aside className="side-panel side-help" aria-label="What you can ask">
-            <p className="eyebrow">You can ask about</p>
-            <ul className="topic-list">
-              {TOPICS.map((topic) => <li key={topic}>{topic}</li>)}
-            </ul>
-            <p className="side-note">
-              Speak in your own language; Janmitra detects it during the call. Reviewed guidance
-              comes first; general answers are labelled unverified.
-            </p>
-          </aside>
-
-          <section className="phone" aria-live="polite" aria-label="Janmitra call">
-            <div className="phone-top">
-              <span className="brand small"><span className="brand-mark">J</span>Janmitra</span>
-              <span className="secure"><ShieldCheck size={15} aria-hidden="true" />Secure call</span>
-            </div>
-
-            <div className={`avatar-rings ${screen === 'active' || screen === 'connecting' ? 'is-live' : ''} ${speaking ? 'is-speaking' : ''}`} aria-hidden="true">
-              <div className="ring"><div className="avatar">J</div></div>
-            </div>
-            <h1 className="caller-name">Janmitra AI</h1>
-
-            {screen === 'idle' && (
-              <>
-                <p className="caller-sub">Public information helpline</p>
-                <div className="phone-fill" />
-                <p className="phone-hint">
-                  Ask about crop insurance, pensions, housing, or support for a small business.
+            <header className="caller">
+              <h1 className="caller-name">Janmitra AI</h1>
+              {screen === 'idle' && <p className="caller-status">Public information helpline</p>}
+              {screen === 'connecting' && <p className="caller-status">calling…</p>}
+              {screen === 'active' && (
+                <p className="caller-status">
+                  <span className="caller-timer">{formatTime(seconds)}</span>
+                  <span className={`caller-state ${muted ? 'is-muted' : ''}`}>{status}</span>
                 </p>
-                {displayError && <p className="call-error" role="alert"><CircleAlert size={16} aria-hidden="true" />{displayError}</p>}
-                <button type="button" className="round-call start" onClick={start} aria-label="Call Janmitra">
-                  <Phone size={30} aria-hidden="true" />
-                </button>
-                <p className="round-label">Call</p>
-                <label className="access-code">
-                  Access code (if required)
-                  <input type="password" value={accessCode} autoComplete="off"
-                    onChange={(event) => setAccessCode(event.target.value)} />
-                </label>
-              </>
-            )}
+              )}
+              {screen === 'ended' && <p className="caller-status">Call ended · {formatTime(seconds)}</p>}
+            </header>
 
-            {screen === 'connecting' && (
-              <>
-                <p className="caller-sub">Calling…</p>
-                <p className="caller-sub small">Allow microphone access when asked</p>
-                <div className="phone-fill" />
-                <button type="button" className="round-call end" disabled aria-label="Connecting">
-                  <PhoneOff size={30} aria-hidden="true" />
-                </button>
-                <p className="round-label">Connecting</p>
-              </>
-            )}
-
-            {screen === 'active' && (
-              <>
-                <p className="caller-sub status-line">
-                  <span className={`status-dot ${muted ? 'is-muted' : ''}`} />
-                  {status} · {formatTime(seconds)}
-                </p>
-
-                <div className="phone-fill middle">
-                  {displayError && <p className="call-error" role="alert"><CircleAlert size={16} aria-hidden="true" />{displayError}</p>}
-                  {captions && <div className="captions-card">{transcriptList}</div>}
+            <div className="call-middle">
+              {screen === 'idle' && (
+                <div className="idle-panel">
+                  <p className="call-hint">
+                    Ask about crop insurance, pensions, housing, or support for a small business.
+                  </p>
+                  <label className="access-code">
+                    Access code (if required)
+                    <input type="password" value={accessCode} autoComplete="off"
+                      onChange={(event) => setAccessCode(event.target.value)} />
+                  </label>
+                  {errorLine}
                 </div>
+              )}
 
-                <div className="control-grid">
-                  <div className="control">
-                    <button type="button" className={`round ${muted ? 'is-on' : ''}`} onClick={toggleMute}
-                      aria-pressed={muted} aria-label={muted ? 'Unmute microphone' : 'Mute microphone'}>
-                      {muted ? <MicOff size={24} aria-hidden="true" /> : <Mic size={24} aria-hidden="true" />}
-                    </button>
-                    <span>{muted ? 'Unmute' : 'Mute'}</span>
-                  </div>
-                  <div className="control">
-                    <button type="button" className={`round ${speaker ? 'is-on' : ''}`} onClick={() => setSpeaker(!speaker)}
-                      aria-pressed={speaker} aria-label="Speaker">
-                      {speaker ? <Volume2 size={24} aria-hidden="true" /> : <VolumeX size={24} aria-hidden="true" />}
-                    </button>
-                    <span>Speaker</span>
-                  </div>
-                  <div className="control">
-                    <button type="button" className={`round ${captions ? 'is-on' : ''}`} onClick={() => setCaptions(!captions)}
-                      aria-pressed={captions} aria-label="Captions">
-                      <Captions size={24} aria-hidden="true" />
-                    </button>
-                    <span>Captions</span>
-                  </div>
-                  <div className="control">
-                    <button type="button" className="round" onClick={() => setVolume(Math.max(0, volume - 1))}
-                      disabled={volume === 0} aria-label="Volume down">
-                      <Volume1 size={24} aria-hidden="true" />
-                    </button>
-                    <span>Vol −</span>
-                  </div>
-                  <div className="control volume-meter">
-                    <div className="volume-bar" role="meter" aria-label="Volume" aria-valuemin={0}
-                      aria-valuemax={MAX_VOLUME} aria-valuenow={volume}>
-                      <div style={{ width: `${(volume / MAX_VOLUME) * 100}%` }} />
+              {screen === 'connecting' && <p className="call-hint">Allow microphone access when asked.</p>}
+
+              {screen === 'active' && (
+                <>
+                  {errorLine}
+                  {captions && (
+                    <div className="live-captions">
+                      <p className="live-captions-title"><Captions size={13} aria-hidden="true" />Live Captions</p>
+                      <div className="live-captions-scroll" ref={captionsRef}>
+                      {transcript.length === 0
+                        ? <p className="transcript-empty">Your words and Janmitra’s replies appear here during the call.</p>
+                        : (
+                          <ol className="transcript-list">
+                            {transcript.map((message) => (
+                              <li key={message.id} className={message.type === 'userTranscript' ? 'from-user' : 'from-agent'}>
+                                <strong>{message.type === 'userTranscript' ? 'You' : 'Janmitra'}</strong>
+                                <p>{message.message}</p>
+                              </li>
+                            ))}
+                          </ol>
+                        )}
+                      </div>
                     </div>
-                    <span>Volume {volume}</span>
-                  </div>
-                  <div className="control">
-                    <button type="button" className="round" onClick={() => setVolume(Math.min(MAX_VOLUME, volume + 1))}
-                      disabled={volume === MAX_VOLUME} aria-label="Volume up">
-                      <Volume2 size={24} aria-hidden="true" />
-                    </button>
-                    <span>Vol +</span>
-                  </div>
+                  )}
+                </>
+              )}
+
+              {screen === 'ended' && (
+                <div className="idle-panel">
+                  <p className="call-hint">Official decisions remain with the responsible department.</p>
+                  {errorLine}
                 </div>
+              )}
+            </div>
 
-                <button type="button" className="round-call end" onClick={stop} aria-label="End call">
-                  <PhoneOff size={30} aria-hidden="true" />
-                </button>
-              </>
-            )}
+            {(screen === 'connecting' || screen === 'active') && controls}
 
-            {screen === 'ended' && (
-              <>
-                <p className="caller-sub">Call ended · {formatTime(seconds)}</p>
-                <p className="phone-hint">Official decisions remain with the responsible department.</p>
-                <div className="phone-fill" />
-                {displayError && <p className="call-error" role="alert"><CircleAlert size={16} aria-hidden="true" />{displayError}</p>}
-                <button type="button" className="round-call start" onClick={start} aria-label="Call again">
-                  <Phone size={30} aria-hidden="true" />
+            <div className="call-action">
+              {screen === 'idle' && (
+                <button type="button" className="call-button start" onClick={start} aria-label="Call Janmitra">
+                  <Phone aria-hidden="true" />
                 </button>
-                <p className="round-label">Call again</p>
-              </>
-            )}
+              )}
+              {screen === 'connecting' && (
+                <button type="button" className="call-button end" disabled aria-label="Connecting">
+                  <Phone aria-hidden="true" />
+                </button>
+              )}
+              {screen === 'active' && (
+                <button type="button" className="call-button end" onClick={stop} aria-label="End call">
+                  <Phone aria-hidden="true" />
+                </button>
+              )}
+              {screen === 'ended' && (
+                <button type="button" className="call-button start" onClick={start} aria-label="Call again">
+                  <Phone aria-hidden="true" />
+                </button>
+              )}
+              {(screen === 'idle' || screen === 'ended') && (
+                <span className="call-label">{screen === 'idle' ? 'Call' : 'Call again'}</span>
+              )}
+            </div>
+
+            <span className="home-indicator" aria-hidden="true" />
           </section>
-
-          <aside className={`side-panel side-captions ${captions ? '' : 'is-hidden'}`} aria-label="Live captions">
-            <p className="eyebrow">Live captions <span>Last 8 lines</span></p>
-            {transcriptList}
-          </aside>
         </div>
       </main>
     </SessionProvider>
