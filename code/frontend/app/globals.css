@@ -1,19 +1,26 @@
+/*
+ * Janmitra call screen: an iPhone X running the iOS Phone in-call screen.
+ * Every device measurement is in iOS points multiplied by --u, so the whole
+ * device scales down as one piece on short or narrow viewports.
+ */
+
 :root {
-  --ground: #09110d;
-  --phone: #0f1914;
-  --surface: #131f19;
-  --control: #24332b;
-  --line: #1c2922;
-  --text: #f2f5f1;
-  --muted: #a9b5ad;
-  --soft: #c9d2cc;
-  --green: #1f8a57;
-  --green-dark: #176b45;
-  --green-light: #7fd8aa;
-  --live: #4cc38a;
-  --red: #d63b3b;
-  --red-dark: #b42f2f;
-  --yellow: #e5b63d;
+  --backdrop-top: #ececef;
+  --backdrop-bottom: #d6d6db;
+  --bezel: #0a0a0b;
+  --steel: #a7a7ad;
+  --label: #ffffff;
+  --label-secondary: rgba(235, 235, 245, 0.68);
+  --fill-control: rgba(255, 255, 255, 0.2);
+  --fill-control-hover: rgba(255, 255, 255, 0.28);
+  --fill-field: rgba(118, 118, 128, 0.32);
+  --ios-green: #34c759;
+  --ios-green-pressed: #2aa84a;
+  --ios-red: #ff3b30;
+  --ios-red-pressed: #d9302a;
+  --ios-orange: #ff9f0a;
+  --caption-agent: #64d2ff;
+  --font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'Segoe UI', system-ui, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -21,241 +28,424 @@
 html, body { margin: 0; min-height: 100%; }
 
 body {
-  background: var(--ground);
-  color: var(--text);
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  letter-spacing: 0;
+  background: linear-gradient(180deg, var(--backdrop-top), var(--backdrop-bottom));
+  color: var(--label);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
 }
 
 button { font: inherit; }
 
-/* Page frame */
-.call-app { min-height: 100dvh; display: flex; flex-direction: column; }
-
-.call-topbar {
-  height: 64px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 40px;
-  border-bottom: 1px solid var(--line);
+/* Desktop backdrop: the device sits centred */
+.stage {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 16px 12px;
 }
 
-.brand { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 700; }
-.brand.small { gap: 8px; font-size: 15px; }
-.brand-mark {
-  display: grid; place-items: center; width: 30px; height: 30px;
-  border-radius: 8px; background: var(--green); color: #fff; font-size: 15px;
+/* ---------- Device frame (decorative) ---------- */
+.device {
+  /* 1 iOS point. The frame is 399 x 836 pt including the bezel. */
+  --u: min(1px, calc((100dvh - 32px) / 836), calc((100vw - 24px) / 399));
+  position: relative;
+  width: calc(399 * var(--u));
+  height: calc(836 * var(--u));
+  padding: calc(12 * var(--u));
+  border-radius: calc(56 * var(--u));
+  background: var(--bezel);
+  box-shadow:
+    0 0 0 calc(2 * var(--u)) #3a3a3d,
+    0 0 0 calc(3.5 * var(--u)) var(--steel),
+    0 0 0 calc(4.5 * var(--u)) #6c6c72,
+    0 calc(30 * var(--u)) calc(60 * var(--u)) rgba(0, 0, 0, 0.28),
+    0 calc(8 * var(--u)) calc(18 * var(--u)) rgba(0, 0, 0, 0.18);
 }
-.brand.small .brand-mark { width: 26px; height: 26px; border-radius: 7px; font-size: 14px; }
-.secure { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 14px; }
 
-.call-body {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 56px;
-  padding: 24px 40px;
+/* Silent switch, volume up/down on the left; side button on the right */
+.device-buttons::before,
+.device-buttons::after {
+  content: '';
+  position: absolute;
+  width: calc(3 * var(--u));
+  background: var(--steel);
+}
+.device-buttons::before {
+  left: calc(-7 * var(--u));
+  top: calc(110 * var(--u));
+  height: calc(30 * var(--u));
+  border-radius: calc(2 * var(--u)) 0 0 calc(2 * var(--u));
+  box-shadow:
+    0 calc(56 * var(--u)) 0 0 var(--steel),
+    0 calc(132 * var(--u)) 0 0 var(--steel);
+}
+.device-buttons::after {
+  right: calc(-7 * var(--u));
+  top: calc(180 * var(--u));
+  height: calc(96 * var(--u));
+  border-radius: 0 calc(2 * var(--u)) calc(2 * var(--u)) 0;
 }
 
-/* Side panels (laptop / PC only) */
-.side-panel { display: none; }
-.eyebrow {
-  margin: 0 0 16px;
-  display: flex; justify-content: space-between; align-items: center;
-  color: var(--green-light); font-size: 13px; font-weight: 600;
-  letter-spacing: .08em; text-transform: uppercase;
-}
-.eyebrow span { color: var(--muted); font-size: 12px; font-weight: 400; letter-spacing: 0; text-transform: none; }
-.topic-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-.topic-list li { padding: 14px 16px; border-radius: 14px; background: var(--surface); font-size: 16px; }
-.side-note { margin: 18px 0 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
-
-.side-captions {
-  height: min(520px, calc(100dvh - 160px));
-  padding: 20px;
-  border-radius: 20px;
-  background: var(--surface);
-  flex-direction: column;
-}
-.side-captions .transcript-list { flex: 1; overflow-y: auto; }
-
-/* The phone-shaped call card */
-.phone {
-  width: 390px;
-  height: min(844px, calc(100dvh - 64px - 48px));
-  min-height: 640px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 28px 24px 36px;
-  border: 1px solid #23342b;
-  border-radius: 40px;
-  background: var(--phone);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, .45);
+/* ---------- Screen: 375 x 812 pt, 44 pt corners ---------- */
+.screen {
+  position: relative;
+  width: calc(375 * var(--u));
+  height: calc(812 * var(--u));
+  border-radius: calc(44 * var(--u));
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: calc(44 * var(--u)) calc(24 * var(--u)) calc(44 * var(--u));
+  /* iOS in-call idiom: a dark, softly blurred wash behind the caller */
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0) 55%),
+    linear-gradient(180deg, #3a3c42 0%, #26282d 42%, #131416 100%);
+  isolation: isolate;
+}
+.screen::before {
+  content: '';
+  position: absolute;
+  inset: calc(-40 * var(--u));
+  z-index: -1;
+  background: linear-gradient(160deg, rgba(120, 128, 140, 0.22), rgba(20, 20, 24, 0) 60%);
+  filter: blur(calc(30 * var(--u)));
 }
 
-.phone-top { width: 100%; display: flex; justify-content: space-between; align-items: center; }
-.phone-top .secure { font-size: 13px; }
-
-.avatar-rings {
-  margin-top: clamp(20px, 5dvh, 56px);
-  width: 208px; height: 208px; flex-shrink: 0;
+/* The notch is part of the frame cutting into the screen */
+.notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: calc(209 * var(--u));
+  height: calc(30 * var(--u));
+  transform: translateX(-50%);
+  background: var(--bezel);
+  border-radius: 0 0 calc(20 * var(--u)) calc(20 * var(--u));
+  z-index: 3;
+}
+.notch::before,
+.notch::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: calc(7 * var(--u));
+  height: calc(7 * var(--u));
+}
+.notch::before {
+  left: calc(-7 * var(--u));
+  background: radial-gradient(circle at 0 100%, transparent calc(7 * var(--u)), var(--bezel) calc(7.5 * var(--u)));
+}
+.notch::after {
+  right: calc(-7 * var(--u));
+  background: radial-gradient(circle at 100% 100%, transparent calc(7 * var(--u)), var(--bezel) calc(7.5 * var(--u)));
+}
+.notch-speaker {
+  position: absolute;
+  top: calc(8 * var(--u));
+  left: 50%;
+  width: calc(48 * var(--u));
+  height: calc(5 * var(--u));
+  transform: translateX(-50%);
+  border-radius: calc(3 * var(--u));
+  background: #1c1c1f;
+}
+.notch-camera {
+  position: absolute;
+  top: calc(6 * var(--u));
+  left: calc(50% + calc(38 * var(--u)));
+  width: calc(9 * var(--u));
+  height: calc(9 * var(--u));
   border-radius: 50%;
-  display: grid; place-items: center;
-  background: rgba(31, 138, 87, .06);
-}
-.avatar-rings .ring {
-  width: 164px; height: 164px; border-radius: 50%;
-  display: grid; place-items: center;
-  background: rgba(31, 138, 87, .12);
-}
-.avatar-rings.is-live { background: rgba(31, 138, 87, .14); }
-.avatar-rings.is-live .ring { background: rgba(31, 138, 87, .28); }
-.avatar-rings.is-speaking { animation: pulse 1.4s ease-in-out infinite; }
-.avatar {
-  width: 120px; height: 120px; border-radius: 50%;
-  display: grid; place-items: center;
-  background: var(--green); color: #fff; font-size: 52px; font-weight: 700;
-}
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.06); }
+  background: radial-gradient(circle at 35% 35%, #2b3a55 0, #10141c 55%, #08090c 100%);
 }
 
-.caller-name { margin: 22px 0 0; font-size: 30px; font-weight: 700; }
-.caller-sub { margin: 8px 0 0; color: var(--muted); font-size: 17px; text-align: center; }
-.caller-sub.small { margin-top: 6px; font-size: 14px; }
-.status-line { display: flex; align-items: center; gap: 8px; font-variant-numeric: tabular-nums; }
-.status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--live); }
-.status-dot.is-muted { background: var(--yellow); }
+/* Status bar split around the notch: (375 - 209) / 2 = 83 pt per ear */
+.status-bar {
+  position: absolute;
+  inset: 0 0 auto;
+  height: calc(44 * var(--u));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: calc(4 * var(--u));
+  color: var(--label);
+  z-index: 2;
+}
+.status-time,
+.status-icons {
+  width: calc(83 * var(--u));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.status-time {
+  padding-left: calc(10 * var(--u));
+  font-size: calc(15 * var(--u));
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+.status-icons { gap: calc(5 * var(--u)); padding-right: calc(10 * var(--u)); }
+.status-icons svg { fill: currentColor; height: calc(11 * var(--u)); }
+.icon-signal { width: calc(17 * var(--u)); }
+.icon-wifi { width: calc(16 * var(--u)); }
+.icon-battery { width: calc(25 * var(--u)); height: calc(12 * var(--u)) !important; }
+.icon-battery .battery-shell { fill: none; stroke: currentColor; stroke-opacity: 0.4; }
 
-.phone-fill { flex: 1; min-height: 12px; }
-.phone-fill.middle {
-  width: 100%;
+/* ---------- Caller identity, high on the screen ---------- */
+.caller {
+  margin-top: calc(48 * var(--u));
+  text-align: center;
+  flex-shrink: 0;
+}
+.caller-name {
+  margin: 0;
+  font-size: calc(34 * var(--u));
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+.caller-status {
+  margin: calc(6 * var(--u)) 0 0;
+  display: flex;
+  justify-content: center;
+  gap: calc(8 * var(--u));
+  color: var(--label-secondary);
+  font-size: calc(17 * var(--u));
+  line-height: 1.3;
+}
+.caller-timer { font-variant-numeric: tabular-nums; }
+.caller-state::before { content: '·'; margin-right: calc(8 * var(--u)); }
+.caller-state.is-muted { color: var(--ios-orange); }
+
+/* ---------- Middle: captions, hints, errors ---------- */
+.call-middle {
+  flex: 1;
   min-height: 0;
-  display: flex; flex-direction: column; justify-content: center; gap: 12px;
-  padding: 16px 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: calc(10 * var(--u));
+  padding: calc(18 * var(--u)) 0 calc(22 * var(--u));
 }
-.phone-hint { margin: 16px 0 24px; max-width: 290px; color: var(--muted); font-size: 15px; line-height: 1.5; text-align: center; }
+.screen.is-idle .call-middle,
+.screen.is-ended .call-middle,
+.screen.is-connecting .call-middle { justify-content: center; }
+
+.idle-panel { display: flex; flex-direction: column; align-items: center; gap: calc(18 * var(--u)); }
+
+.call-hint {
+  margin: 0 auto;
+  max-width: calc(280 * var(--u));
+  color: var(--label-secondary);
+  font-size: calc(15 * var(--u));
+  line-height: 1.45;
+  text-align: center;
+}
 
 .call-error {
-  display: flex; align-items: flex-start; gap: 8px;
-  max-width: 320px; margin: 0 0 16px;
-  color: #ff9c9c; font-size: 13px; line-height: 1.45;
+  display: flex;
+  align-items: flex-start;
+  gap: calc(8 * var(--u));
+  margin: 0;
+  padding: calc(9 * var(--u)) calc(12 * var(--u));
+  border-radius: calc(12 * var(--u));
+  background: rgba(255, 69, 58, 0.18);
+  color: #ffb4ae;
+  font-size: calc(13 * var(--u));
+  line-height: 1.4;
   overflow-wrap: anywhere;
 }
-.call-error svg { flex: 0 0 auto; margin-top: 1px; }
+.call-error svg { flex: 0 0 auto; width: calc(16 * var(--u)); height: calc(16 * var(--u)); margin-top: calc(1 * var(--u)); }
 
-/* Captions inside the call card (phones and tablets) */
-.captions-card {
+/* iOS Live Captions overlay, floating above the control grid */
+.live-captions {
+  flex: 0 1 auto;
+  min-height: 0;
   max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: calc(18 * var(--u));
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(calc(24 * var(--u))) saturate(140%);
+  backdrop-filter: blur(calc(24 * var(--u))) saturate(140%);
+  box-shadow: inset 0 0 0 calc(0.5 * var(--u)) rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+.live-captions-title {
+  flex-shrink: 0;
+  margin: 0;
+  padding: calc(10 * var(--u)) calc(14 * var(--u)) calc(4 * var(--u));
+  display: flex;
+  align-items: center;
+  gap: calc(6 * var(--u));
+  color: var(--label-secondary);
+  font-size: calc(12 * var(--u));
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.live-captions-title svg { width: calc(13 * var(--u)); height: calc(13 * var(--u)); }
+.live-captions-scroll {
+  min-height: 0;
   overflow-y: auto;
-  padding: 14px 16px;
-  border-radius: 16px;
-  background: #1a2620;
+  overscroll-behavior: contain;
+  padding: calc(6 * var(--u)) calc(14 * var(--u)) calc(12 * var(--u));
+  /* older lines fade out under the header, as in iOS Live Captions */
+  -webkit-mask: linear-gradient(180deg, transparent 0, #000 calc(18 * var(--u)));
+  mask: linear-gradient(180deg, transparent 0, #000 calc(18 * var(--u)));
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
 }
 
-.transcript-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
-.transcript-list li strong { display: block; font-size: 13px; color: var(--text); }
-.transcript-list li.from-agent strong { color: var(--green-light); }
-.transcript-list li p { margin: 2px 0 0; color: var(--soft); font-size: 15px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
-.transcript-empty { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.transcript-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: calc(9 * var(--u)); }
+.transcript-list strong { display: block; font-size: calc(12 * var(--u)); font-weight: 600; color: #aeaeb2; }
+.transcript-list .from-agent strong { color: var(--caption-agent); }
+.transcript-list p {
+  margin: calc(1 * var(--u)) 0 0;
+  color: #e5e5ea;
+  font-size: calc(15 * var(--u));
+  line-height: 1.35;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.transcript-list .from-agent p { color: var(--label); }
+.transcript-empty { margin: 0; color: var(--label-secondary); font-size: calc(14 * var(--u)); line-height: 1.45; }
 
-/* Call controls */
+/* ---------- 3 x 2 control grid ---------- */
 .control-grid {
   width: 100%;
+  flex-shrink: 0;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  row-gap: 20px; column-gap: 12px;
+  row-gap: calc(20 * var(--u));
   justify-items: center;
 }
-.control { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--soft); font-size: 13px; }
+.control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(8 * var(--u));
+  color: var(--label);
+  font-size: calc(13 * var(--u));
+  letter-spacing: 0.01em;
+}
+
 .round {
-  width: 64px; height: 64px; border: 0; border-radius: 50%;
-  display: grid; place-items: center;
-  background: var(--control); color: var(--text);
-  cursor: pointer; transition: background .15s ease, transform .1s ease;
+  position: relative;
+  width: calc(72 * var(--u));
+  height: calc(72 * var(--u));
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--fill-control);
+  -webkit-backdrop-filter: blur(calc(20 * var(--u)));
+  backdrop-filter: blur(calc(20 * var(--u)));
+  color: var(--label);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
 }
-.round:hover { background: #2e4136; }
-.round.is-on { background: var(--text); color: var(--phone); }
-.round:active, .round-call:active { transform: scale(.95); }
-.round:disabled { opacity: .4; cursor: default; }
+.round svg { width: calc(30 * var(--u)); height: calc(30 * var(--u)); stroke-width: 1.75; }
+button.round:hover { background: var(--fill-control-hover); }
+.round.is-on { background: var(--label); color: #1c1c1e; }
+button.round.is-on:hover { background: #e5e5ea; }
+button.round:active { transform: scale(0.94); }
+.round:disabled, .round.is-disabled { opacity: 0.45; cursor: default; }
+button.round:disabled:hover { background: var(--fill-control); }
+button.round.is-on:disabled:hover { background: var(--label); }
 
-.volume-meter { justify-content: center; height: 64px; gap: 10px; }
-.volume-bar { width: 64px; height: 6px; border-radius: 3px; background: var(--control); overflow: hidden; }
-.volume-bar div { height: 100%; border-radius: 3px; background: var(--live); transition: width .15s ease; }
-
-.round-call {
-  width: 76px; height: 76px; flex-shrink: 0; border: 0; border-radius: 50%;
-  display: grid; place-items: center; color: #fff;
-  cursor: pointer; transition: background .15s ease, transform .1s ease;
+/* The volume meter reads as one of the six round controls */
+.meter { cursor: default; }
+.meter-ring {
+  position: absolute;
+  inset: calc(5 * var(--u));
+  border-radius: 50%;
+  background: conic-gradient(var(--label) var(--level), rgba(255, 255, 255, 0.22) 0);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - calc(3.5 * var(--u))), #000 calc(100% - calc(3 * var(--u))));
+  mask: radial-gradient(farthest-side, transparent calc(100% - calc(3.5 * var(--u))), #000 calc(100% - calc(3 * var(--u))));
 }
-.round-call.start { background: var(--green); }
-.round-call.start:hover { background: var(--green-dark); }
-.round-call.end { margin-top: 28px; background: var(--red); }
-.round-call.end:hover { background: var(--red-dark); }
-.round-call:disabled { cursor: wait; opacity: .7; }
-.round-label { margin: 10px 0 0; font-size: 15px; font-weight: 600; }
+.meter-value { font-size: calc(24 * var(--u)); font-weight: 300; font-variant-numeric: tabular-nums; }
 
-.round:focus-visible, .round-call:focus-visible, .access-code input:focus-visible {
-  outline: 3px solid var(--green-light);
-  outline-offset: 3px;
+/* ---------- The one saturated element: the call button ---------- */
+.call-action {
+  flex-shrink: 0;
+  margin-top: calc(30 * var(--u));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(8 * var(--u));
+}
+.call-button {
+  width: calc(76 * var(--u));
+  height: calc(76 * var(--u));
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+.call-button svg { width: calc(34 * var(--u)); height: calc(34 * var(--u)); fill: currentColor; stroke-width: 0; }
+.call-button.start { background: var(--ios-green); }
+.call-button.start:hover { background: var(--ios-green-pressed); }
+.call-button.end { background: var(--ios-red); }
+.call-button.end:hover { background: var(--ios-red-pressed); }
+.call-button.end svg { transform: rotate(135deg); }
+.call-button:active { transform: scale(0.94); }
+.call-button:disabled { cursor: wait; opacity: 0.7; }
+.screen.is-connecting .call-button.end { animation: ringing 1.6s ease-in-out infinite; }
+.call-label { font-size: calc(13 * var(--u)); }
+@keyframes ringing {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.45); }
+  50% { box-shadow: 0 0 0 calc(10 * var(--u)) rgba(255, 59, 48, 0); }
 }
 
-/* Hosted harness access control */
-.access-code { width: 100%; max-width: 260px; display: grid; gap: 6px; margin-top: 20px; color: var(--muted); font-size: 12px; }
+/* ---------- Access code field ---------- */
+.access-code {
+  width: calc(240 * var(--u));
+  display: grid;
+  gap: calc(6 * var(--u));
+  color: var(--label-secondary);
+  font-size: calc(12 * var(--u));
+}
 .access-code input {
-  width: 100%; min-width: 0; padding: 9px 10px;
-  border: 1px solid #2e4136; border-radius: 8px;
-  background: var(--surface); color: var(--text);
+  width: 100%;
+  min-width: 0;
+  height: calc(38 * var(--u));
+  padding: 0 calc(12 * var(--u));
+  border: 0;
+  border-radius: calc(10 * var(--u));
+  background: var(--fill-field);
+  color: var(--label);
+  font: inherit;
+  font-size: calc(16 * var(--u));
 }
 
-/* Laptop / PC: show the side panels */
-@media (min-width: 1100px) {
-  .side-panel { display: flex; flex-direction: column; }
-  .side-help { width: 300px; }
-  .side-captions { width: 340px; }
-  .side-captions.is-hidden { visibility: hidden; }
-  .captions-card { display: none; }
+.round:focus-visible,
+.call-button:focus-visible,
+.access-code input:focus-visible,
+.live-captions-scroll:focus-visible {
+  outline: calc(3 * var(--u)) solid #0a84ff;
+  outline-offset: calc(3 * var(--u));
 }
 
-/* Phones: the call card fills the screen */
-@media (max-width: 700px) {
-  .call-topbar { display: none; }
-  .call-body { padding: 0; }
-  .phone {
-    width: 100%;
-    height: 100dvh;
-    min-height: 560px;
-    border: 0;
-    border-radius: 0;
-    box-shadow: none;
-    padding: 20px 20px 28px;
-  }
-  .avatar-rings { width: 168px; height: 168px; }
-  .avatar-rings .ring { width: 132px; height: 132px; }
-  .avatar { width: 96px; height: 96px; font-size: 42px; }
-  .caller-name { font-size: 26px; }
-}
-
-/* Short laptop screens (e.g. 1366×768) */
-@media (min-width: 701px) and (max-height: 820px) {
-  .avatar-rings { width: 160px; height: 160px; }
-  .avatar-rings .ring { width: 126px; height: 126px; }
-  .avatar { width: 92px; height: 92px; font-size: 40px; }
-  .caller-name { margin-top: 16px; }
-  .round { width: 56px; height: 56px; }
-  .volume-meter { height: 56px; }
-  .round-call { width: 68px; height: 68px; }
-  .round-call.end { margin-top: 20px; }
+/* Home indicator */
+.home-indicator {
+  position: absolute;
+  bottom: calc(8 * var(--u));
+  left: 50%;
+  width: calc(134 * var(--u));
+  height: calc(5 * var(--u));
+  transform: translateX(-50%);
+  border-radius: calc(3 * var(--u));
+  background: var(--label);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .avatar-rings.is-speaking { animation: none; }
-  .round, .round-call, .volume-bar div { transition: none; }
+  .screen.is-connecting .call-button.end { animation: none; }
+  .round, .call-button { transition: none; }
+  button.round:active, .call-button:active { transform: none; }
 }
